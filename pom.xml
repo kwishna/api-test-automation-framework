@@ -354,7 +354,7 @@
                     <systemPropertyVariables>
                         <!--                        <PLAYWRIGHT_JAVA_SRC>${project.basedir}</PLAYWRIGHT_JAVA_SRC>-->
                     </systemPropertyVariables>
-                    <systemPropertiesFile>${project.basedir}/src/test/resources/{test.env}.config.properties
+                    <systemPropertiesFile>${project.basedir}/src/test/resources/${test.env}.config.properties
                     </systemPropertiesFile>
                     <forkCount>8</forkCount>
                     <reuseForks>false</reuseForks>
