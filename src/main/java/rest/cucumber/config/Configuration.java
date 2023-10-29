@@ -8,9 +8,6 @@ import org.aeonbits.owner.ConfigCache;
 @LoadPolicy(LoadType.MERGE)
 @Config.Sources({
         "system:properties",
-        "classpath:local.properties",
-        "classpath:app.properties",
-        "classpath:grid.properties",
         "classpath:report.properties"
 })
 public interface Configuration extends Config {
@@ -33,7 +30,7 @@ public interface Configuration extends Config {
     @Key("url.api")
     String baseApiUrl();
 
-    @Key("url.base")
+    @Key("API_BASE")
     String baseUrl();
 
     @Key("client.id")

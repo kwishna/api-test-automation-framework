@@ -1,4 +1,4 @@
-package rest.cucumber.utils.properties;
+package rest.cucumber.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,13 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
 
-public class PropertyReader {
+public class PropertiesUtils {
 
-    public final Logger logger = LogManager.getLogger(PropertyReader.class);
+    public final Logger logger = LogManager.getLogger(PropertiesUtils.class);
     private final Path filePath;
     private Properties props;
 
-    public PropertyReader(Path filePath) {
+    public PropertiesUtils(Path filePath) {
         this.filePath = filePath;
     }
 
@@ -33,13 +33,13 @@ public class PropertyReader {
         }
     }
 
-    public static PropertyReader getPropertyFileReader(String fileName) {
+    public static PropertiesUtils getPropertyFileReader(String fileName) {
         if (fileName.isBlank()) {
             throw new RuntimeException("Property File Name Should Not Be Blank");
         } else if (!fileName.endsWith(".properties")) {
             fileName = fileName + ".properties";
         }
-        return new PropertyReader(Path.of(fileName));
+        return new PropertiesUtils(Path.of(fileName));
     }
 
     public String getValue(String key) {

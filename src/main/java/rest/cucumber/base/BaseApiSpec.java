@@ -11,12 +11,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.concurrent.TimeUnit;
 
 @NoArgsConstructor
-public class APIBasePage {
+public class BaseApiSpec {
 
     private static final ThreadLocal<RequestSpecBuilder> REQ_SPEC_BUILDER = ThreadLocal.withInitial(RequestSpecBuilder::new);
     private static final ThreadLocal<ResponseSpecBuilder> RES_SPEC_BUILDER = ThreadLocal.withInitial(ResponseSpecBuilder::new);
-
-    private final Logger LOGGER = LogManager.getLogger(APIBasePage.class);
+    private final Logger LOGGER = LogManager.getLogger(BaseApiSpec.class);
 
     public static RequestSpecBuilder getReqSpecBuilder() {
         return REQ_SPEC_BUILDER.get();
@@ -24,10 +23,6 @@ public class APIBasePage {
 
     public static ResponseSpecBuilder getResSpecBuilder() {
         return RES_SPEC_BUILDER.get();
-    }
-
-    public static void reset() {
-        RestAssured.reset();
     }
 
     public static void waitFor(long time) {

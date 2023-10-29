@@ -3,7 +3,7 @@ package rest.cucumber.examples;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import rest.cucumber.utils.properties.PropertyReader;
+import rest.cucumber.utils.PropertiesUtils;
 
 import java.io.IOException;
 
@@ -11,12 +11,12 @@ import static io.restassured.RestAssured.given;
 
 public class RestFiveParamterization {
 
-	static PropertyReader prop;
+	static PropertiesUtils prop;
 
 //	@BeforeTest
 	public static void loadProperties() throws IOException {
 
-		prop = PropertyReader.getPropertyFileReader("resources");
+		prop = PropertiesUtils.getPropertyFileReader("resources");
 	}
 	
 //	@Test(dataProvider="dp")

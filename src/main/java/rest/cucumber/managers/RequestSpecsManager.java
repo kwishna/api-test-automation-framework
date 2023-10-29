@@ -4,7 +4,6 @@ import io.restassured.authentication.AuthenticationScheme;
 import io.restassured.authentication.CertificateAuthSettings;
 import io.restassured.authentication.FormAuthConfig;
 import io.restassured.authentication.OAuthSignature;
-import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.Filter;
 import io.restassured.filter.log.LogDetail;
@@ -17,16 +16,12 @@ import io.restassured.specification.RequestSpecification;
 import lombok.NoArgsConstructor;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.restassured.config.MultiPartConfig.multiPartConfig;
-import static rest.cucumber.base.APIBasePage.getReqSpecBuilder;
+import static rest.cucumber.base.BaseApiSpec.getReqSpecBuilder;
 import static rest.cucumber.config.Configuration.configuration;
 
 /**
@@ -341,24 +336,5 @@ public class RequestSpecsManager {
         getReqSpecBuilder()
                 .setAuth(scheme);
         return this;
-    }
-
-    public void multiPartBuilder(byte[] bytes) throws IOException {
-        new MultiPartSpecBuilder(bytes);
-
-        new MultiPartSpecBuilder("jkbasdkjbsk").with().charset("UTF-8").and().with().controlName("other").
-                and().with().mimeType("application/vnd.some+json").build();
-
-        new MultiPartSpecBuilder("sdfdss").with().charset("UTF-8").and().with().controlName("other").
-                and().with().mimeType("application/vnd.some+json").
-                and().with().header("X-Header-1", "Value1").
-                and().with().header("X-Header-2", "Value2").build();
-
-        new MultiPartSpecBuilder(Files.newInputStream(Path.of(""), StandardOpenOption.READ)).with().and().with().controlName("file").
-                and().with().mimeType("application/vnd.some+json").and().with().fileName("my-file").build();
-
-
-        // given().
-        //                multiPart(new MultiPartSpecBuilder(bytes).build()).
     }
 }

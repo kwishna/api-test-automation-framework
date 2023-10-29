@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.authentication.FormAuthConfig;
+import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -23,6 +24,10 @@ import io.restassured.specification.ResponseSpecification;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -310,6 +315,25 @@ public class FakeRestApiTest {
                 get("/something").
                 then().
                 contentType(ContentType.JSON.withCharset(UTF_8));
+    }
+
+    public void multiPartBuilder(byte[] bytes) throws IOException {
+        new MultiPartSpecBuilder(bytes);
+
+        new MultiPartSpecBuilder("jkbasdkjbsk").with().charset("UTF-8").and().with().controlName("other").
+                and().with().mimeType("application/vnd.some+json").build();
+
+        new MultiPartSpecBuilder("sdfdss").with().charset("UTF-8").and().with().controlName("other").
+                and().with().mimeType("application/vnd.some+json").
+                and().with().header("X-Header-1", "Value1").
+                and().with().header("X-Header-2", "Value2").build();
+
+        new MultiPartSpecBuilder(Files.newInputStream(Path.of(""), StandardOpenOption.READ)).with().and().with().controlName("file").
+                and().with().mimeType("application/vnd.some+json").and().with().fileName("my-file").build();
+
+
+        // given().
+        //                multiPart(new MultiPartSpecBuilder(bytes).build()).
     }
 
 }

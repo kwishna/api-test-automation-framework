@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static rest.cucumber.base.APIBasePage.getResSpecBuilder;
+import static rest.cucumber.base.BaseApiSpec.getResSpecBuilder;
 
 /**
  * Add all Response Specifications here.

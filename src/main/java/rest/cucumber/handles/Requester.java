@@ -8,34 +8,34 @@ import io.restassured.http.Method;
 
 import java.util.Map;
 
-public class RequestHandler {
+public class Requester {
 
     private static Response getGetResponse(RequestSpecification reqSpec) {
-        return SerenityRest.given(reqSpec).get();
+        return SerenityRest.given(reqSpec).get().thenReturn();
     }
 
     private static Response getPostResponse(RequestSpecification reqSpec) {
-        return SerenityRest.given(reqSpec).post();
+        return SerenityRest.given(reqSpec).post().thenReturn();
     }
 
     private static Response getPutResponse(RequestSpecification reqSpec) {
-        return SerenityRest.given(reqSpec).put();
+        return SerenityRest.given(reqSpec).put().thenReturn();
     }
 
     private static Response getPatchResponse(RequestSpecification reqSpec) {
-        return SerenityRest.given(reqSpec).patch();
+        return SerenityRest.given(reqSpec).patch().thenReturn();
     }
 
     private static Response getHeadResponse(RequestSpecification reqSpec) {
-        return SerenityRest.given(reqSpec).head();
+        return SerenityRest.given(reqSpec).head().thenReturn();
     }
 
     private static Response getOptionsResponse(RequestSpecification reqSpec) {
-        return SerenityRest.given(reqSpec).options();
+        return SerenityRest.given(reqSpec).options().thenReturn();
     }
 
     private static Response getDeleteResponse(RequestSpecification reqSpec) {
-        return SerenityRest.given(reqSpec).delete();
+        return SerenityRest.given(reqSpec).delete().thenReturn();
     }
 
     public static Response getResponse(RequestSpecification reqSpec, Method method) {
@@ -62,31 +62,31 @@ public class RequestHandler {
     // ----
 
     private static Response getGetResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).get(url);
+        return SerenityRest.given(reqSpec).get(url).thenReturn();
     }
 
     private static Response getPostResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).post(url);
+        return SerenityRest.given(reqSpec).post(url).thenReturn();
     }
 
     private static Response getPutResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).put(url);
+        return SerenityRest.given(reqSpec).put(url).thenReturn();
     }
 
     private static Response getPatchResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).patch(url);
+        return SerenityRest.given(reqSpec).patch(url).thenReturn();
     }
 
     private static Response getHeadResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).head(url);
+        return SerenityRest.given(reqSpec).head(url).thenReturn();
     }
 
     private static Response getOptionsResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).options(url);
+        return SerenityRest.given(reqSpec).options(url).thenReturn();
     }
 
     private static Response getDeleteResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).delete(url);
+        return SerenityRest.given(reqSpec).delete(url).thenReturn();
     }
 
     public static Response getResponse(RequestSpecification reqSpec, String url, Method method) {
@@ -113,31 +113,31 @@ public class RequestHandler {
     // ----
 
     private static Response getGetResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
-        return SerenityRest.given(reqSpec, resSpec).get();
+        return SerenityRest.given(reqSpec, resSpec).get().thenReturn();
     }
 
     private static Response getPostResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
-        return SerenityRest.given(reqSpec, resSpec).post();
+        return SerenityRest.given(reqSpec, resSpec).post().thenReturn();
     }
 
     private static Response getPutResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
-        return SerenityRest.given(reqSpec, resSpec).put();
+        return SerenityRest.given(reqSpec, resSpec).put().thenReturn();
     }
 
     private static Response getPatchResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
-        return SerenityRest.given(reqSpec, resSpec).patch();
+        return SerenityRest.given(reqSpec, resSpec).patch().thenReturn();
     }
 
     private static Response getHeadResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
-        return SerenityRest.given(reqSpec, resSpec).head();
+        return SerenityRest.given(reqSpec, resSpec).head().thenReturn();
     }
 
     private static Response getOptionsResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
-        return SerenityRest.given(reqSpec, resSpec).options();
+        return SerenityRest.given(reqSpec, resSpec).options().thenReturn();
     }
 
     private static Response getDeleteResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
-        return SerenityRest.given(reqSpec, resSpec).options();
+        return SerenityRest.given(reqSpec, resSpec).options().thenReturn();
     }
 
     public static Response getResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, Method method) {
@@ -164,31 +164,31 @@ public class RequestHandler {
     // ----
 
     private static Response getGetResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).get(url);
+        return SerenityRest.given(reqSpec, resSpec).get(url).thenReturn();
     }
 
     private static Response getPostResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).post(url);
+        return SerenityRest.given(reqSpec, resSpec).post(url).thenReturn();
     }
 
     private static Response getPutResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).put(url);
+        return SerenityRest.given(reqSpec, resSpec).put(url).thenReturn();
     }
 
     private static Response getPatchResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).patch(url);
+        return SerenityRest.given(reqSpec, resSpec).patch(url).thenReturn();
     }
 
     private static Response getHeadResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).head(url);
+        return SerenityRest.given(reqSpec, resSpec).head(url).thenReturn();
     }
 
     private static Response getOptionsResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).options(url);
+        return SerenityRest.given(reqSpec, resSpec).options(url).thenReturn();
     }
 
     private static Response getDeleteResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).options(url);
+        return SerenityRest.given(reqSpec, resSpec).options(url).thenReturn();
     }
 
     public static Response getResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url, Method method) {
@@ -215,31 +215,31 @@ public class RequestHandler {
     // ----
 
     private static Response getGetResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).get(url, obj);
+        return SerenityRest.given(reqSpec).get(url, obj).thenReturn();
     }
 
     private static Response getPostResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).post(url, obj);
+        return SerenityRest.given(reqSpec).post(url, obj).thenReturn();
     }
 
     private static Response getPutResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).put(url, obj);
+        return SerenityRest.given(reqSpec).put(url, obj).thenReturn();
     }
 
     private static Response getPatchResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).patch(url, obj);
+        return SerenityRest.given(reqSpec).patch(url, obj).thenReturn();
     }
 
     private static Response getHeadResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).head(url, obj);
+        return SerenityRest.given(reqSpec).head(url, obj).thenReturn();
     }
 
     private static Response getOptionsResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).options(url, obj);
+        return SerenityRest.given(reqSpec).options(url, obj).thenReturn();
     }
 
     private static Response getDeleteResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).options(url, obj);
+        return SerenityRest.given(reqSpec).options(url, obj).thenReturn();
     }
 
     public static Response getResponse(RequestSpecification reqSpec, Method method, String url, Object... obj) {
@@ -266,31 +266,31 @@ public class RequestHandler {
     // ----
 
     private static Response getGetResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).get(url, map);
+        return SerenityRest.given(reqSpec).get(url, map).thenReturn();
     }
 
     private static Response getPostResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).post(url, map);
+        return SerenityRest.given(reqSpec).post(url, map).thenReturn();
     }
 
     private static Response getPutResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).put(url, map);
+        return SerenityRest.given(reqSpec).put(url, map).thenReturn();
     }
 
     private static Response getPatchResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).patch(url, map);
+        return SerenityRest.given(reqSpec).patch(url, map).thenReturn();
     }
 
     private static Response getHeadResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).head(url, map);
+        return SerenityRest.given(reqSpec).head(url, map).thenReturn();
     }
 
     private static Response getOptionsResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).options(url, map);
+        return SerenityRest.given(reqSpec).options(url, map).thenReturn();
     }
 
     private static Response getDeleteResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).options(url, map);
+        return SerenityRest.given(reqSpec).options(url, map).thenReturn();
     }
 
     public static Response getResponse(RequestSpecification reqSpec, Method method, String url, Map<String, ?> map) {

@@ -3,7 +3,7 @@ package rest.cucumber.examples;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
-import rest.cucumber.utils.properties.PropertyReader;
+import rest.cucumber.utils.PropertiesUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class RestAssuredOneJson {
 	
-	static PropertyReader prop;
+	static PropertiesUtils prop;
 	
 //	@BeforeTest
 	public static void loadProperties() throws IOException {
 		
-		prop = PropertyReader.getPropertyFileReader("resources");		
+		prop = PropertiesUtils.getPropertyFileReader("resources");
 	}
 	
 //	@Test

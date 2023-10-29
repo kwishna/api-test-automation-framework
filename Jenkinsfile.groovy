@@ -88,7 +88,10 @@ pipeline {
                     def tags = params.CUCUMBER_TAGS
 
                     // Construct Maven command with parameters
-                    def mavenCmd = "mvn clean verify -Dtest.env=${selectedEnv} -Dbase.url=${baseUrl} -Dcucumber.filter.tags=${tags} -Dfailsafe.rerunFailingTestsCount=${retryCount}"
+                    def mavenCmd = "mvn clean verify -Dtest.env=${selectedEnv}" +
+                            " -Dbase.url=${baseUrl}" +
+                            " -Dcucumber.filter.tags=${tags}" +
+                            " -Dfailsafe.rerunFailingTestsCount=${retryCount}"
 
                     // Run the Maven command
                     sh mavenCmd
@@ -104,9 +107,9 @@ pipeline {
 
                 // Define a map of report folders and their corresponding report files
                 def reportFolders = [
-                        'cucumber-reports': 'cucumber-report.html',
+                        'cucumber-reports'        : 'cucumber-report.html',
                         'extent-reports_2023/Html': 'ExtentHtml.html',
-                        'site/serenity': 'index.html'
+                        'site/serenity'           : 'index.html'
                 ]
 
                 // Iterate through the report folders and publish the report files

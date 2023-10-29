@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
-        <aspectj.version>1.9.20</aspectj.version>
+        <test.env>dev</test.env>
     </properties>
 
     <repositories>
@@ -354,7 +354,8 @@
                     <systemPropertyVariables>
                         <!--                        <PLAYWRIGHT_JAVA_SRC>${project.basedir}</PLAYWRIGHT_JAVA_SRC>-->
                     </systemPropertyVariables>
-                    <systemPropertiesFile>${project.basedir}/src/test/resources/config.properties</systemPropertiesFile>
+                    <systemPropertiesFile>${project.basedir}/src/test/resources/{test.env}.config.properties
+                    </systemPropertiesFile>
                     <forkCount>8</forkCount>
                     <reuseForks>false</reuseForks>
                     <useUnlimitedThreads>true</useUnlimitedThreads>
@@ -363,9 +364,9 @@
                     <argLine>-XX:MaxPermSize=256m</argLine>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                     <testFailureIgnore>true</testFailureIgnore>
-<!--                    <suiteXmlFiles>-->
-<!--                        <suiteXmlFile>testng.xml</suiteXmlFile>-->
-<!--                    </suiteXmlFiles>-->
+                    <!--                    <suiteXmlFiles>-->
+                    <!--                        <suiteXmlFile>testng.xml</suiteXmlFile>-->
+                    <!--                    </suiteXmlFiles>-->
                     <includes>
                         <include>**/*RunnerTest.java</include>
                     </includes>

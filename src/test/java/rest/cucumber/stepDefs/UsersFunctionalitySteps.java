@@ -4,14 +4,12 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.serenitybdd.rest.SerenityRest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.cucumber.base.BaseSteps;
-import rest.cucumber.pages.ReqresAPIEndpoint;
+import rest.cucumber.pages.ReqresAPI;
 import rest.cucumber.pojo.reqres.users.User;
-import rest.cucumber.resource.reqres.ReqresAPIResources;
-import rest.cucumber.specifications.request.reqres.users.UsersRequestSpecs;
-import rest.cucumber.utils.Assertions;
 import rest.cucumber.utils.Jsonutils;
 import rest.cucumber.utils.apis.ResponseUtils;
 import rest.cucumber.utils.data_sync.TestContext;
@@ -30,24 +28,25 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Given("I set up the headers")
     public void iSetTheHeaders(DataTable table) {
-        ReqresAPIEndpoint.getReqSpecMngr().setHeaders(table.asMap());
+        ReqresAPI.getReqSpecMngr().setHeaders(table.asMap());
 //        CommonRequestSpecs.reqSpecManager().setHeaders(table.asMap());
     }
 
     @Given("I setup GET user request for {string}")
     public void iSetupGETUserRequest(String apiEndPoint) {
-        ReqresAPIEndpoint.getReqSpecMngr().setBasePath(apiEndPoint);
+        ReqresAPI.getReqSpecMngr().setBasePath(apiEndPoint);
 //        UsersRequestSpecs.userRequestSpec(ReqresAPIResources.of(apiEndPoint));
     }
 
     @When("I make GET user API calls to {string}")
     public void iMakeAPICallsTo(String userIndex) {
-        this.ctx.response = ReqresAPIEndpoint.UserAPI.getUserRequest(userIndex);
+        this.ctx.response = ReqresAPI.UserAPI.getUser(userIndex);
     }
 
     @Then("I verify response code {int}")
     public void iVerifyResponseCode(int statusCode) {
-        Assertions.matches(this.ctx.response.statusCode(), equalTo(statusCode));
+        SerenityRest.expect().statusCode(equalTo(statusCode));
+//        Assertions.matches(this.ctx.response.statusCode(), equalTo(statusCode));
 
     }
 
