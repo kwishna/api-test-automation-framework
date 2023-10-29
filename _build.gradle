@@ -1,0 +1,93 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:4.0.16"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id "net.serenity-bdd.serenity-gradle-plugin" version "4.0.16"
+}
+
+defaultTasks 'clean', 'test', 'aggregate'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://jitpack.io" }
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://repo.maven.apache.org/maven2" }
+    maven { url "https://plugins.gradle.org/m2/" }
+}
+
+dependencies {
+    implementation 'com.github.javadev:underscore11:1.19'
+    implementation 'org.apache.commons:commons-csv:1.7'
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.3'
+    implementation 'org.apache.poi:poi:5.2.4'
+    implementation 'org.apache.poi:poi-ooxml:5.2.4'
+    implementation 'commons-io:commons-io:2.14.0'
+    implementation 'net.serenity-bdd:serenity-rest-assured:4.0.18'
+    implementation 'net.serenity-bdd:serenity-core:4.0.18'
+    implementation 'net.serenity-bdd.maven.plugins:serenity-maven-plugin:4.0.18'
+    implementation 'org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M7'
+    implementation 'org.apache.maven.plugins:maven-failsafe-plugin:3.0.0-M7'
+    implementation 'org.apache.maven.plugins:maven-compiler-plugin:3.11.0'
+    implementation 'com.aventstack:extentreports:5.1.1'
+    implementation 'org.apache.logging.log4j:log4j-api:2.21.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.21.1'
+    implementation 'net.datafaker:datafaker:2.0.2'
+    implementation 'org.aeonbits.owner:owner:1.0.12'
+    implementation 'io.cucumber:cucumber-java:7.14.0'
+    implementation 'io.cucumber:cucumber-junit:7.14.0'
+    implementation 'net.masterthought:cucumber-reporting:5.7.7'
+    implementation 'tech.grasshopper:extentreports-cucumber7-adapter:1.14.0'
+    implementation 'com.codoid.products:fillo:1.22'
+    implementation 'org.hamcrest:hamcrest:2.2'
+    implementation 'junit:junit:4.13.2'
+    implementation 'net.serenity-bdd:serenity-cucumber:4.0.18'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+}
+
+group = 'rest.cucumber'
+version = '1.0-SNAPSHOT'
+description = 'api-test-automation-framework'
+java.sourceCompatibility = JavaVersion.VERSION_17
+
+//publishing {
+//    publications {
+//        maven(MavenPublication) {
+//            from(components.java)
+//        }
+//    }
+//}
+
+// Failsafe Plugin configuration
+test {
+    minHeapSize = "512m"
+    maxHeapSize = "1024m"
+    // set JVM arguments for the test JVM(s)
+    jvmArgs '-XX:MaxPermSize=512m'
+    maxParallelForks = 8
+    useJUnit()
+    testLogging {
+        exceptionFormat "full"
+    }
+    include '**/*Test.java' // Example: Running integration tests with IT suffix
+}
+
+
+
+gradle.startParameter.continueOnFailure = true
+
+test.finalizedBy(aggregate)

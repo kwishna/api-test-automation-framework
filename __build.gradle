@@ -1,0 +1,131 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:4.0.16"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id "net.serenity-bdd.serenity-gradle-plugin" version "4.0.16"
+}
+
+group 'rest.cucumber'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://jitpack.io" }
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+    maven {
+        url = uri("https://plugins.gradle.org/m2/")
+    }
+}
+
+dependencies {
+    // JUnit
+    testImplementation 'junit:junit:4.13.2'
+
+    // underscore11
+    implementation 'com.github.javadev:underscore11:1.19'
+
+    // Commons CSV
+    implementation 'org.apache.commons:commons-csv:1.7'
+
+    // Commons Lang
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
+
+    // Jackson
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.3'
+
+    // Apache POI
+    implementation 'org.apache.poi:poi:5.2.4'
+    implementation 'org.apache.poi:poi-ooxml:5.2.4'
+
+    // Commons IO
+    implementation 'commons-io:commons-io:2.14.0'
+
+    // Serenity
+    implementation 'net.serenity-bdd:serenity-rest-assured:4.0.18'
+    implementation 'net.serenity-bdd:serenity-core:4.0.18'
+    testImplementation 'net.serenity-bdd:serenity-cucumber:4.0.18'
+
+    // Serenity Maven Plugin
+    implementation 'net.serenity-bdd.maven.plugins:serenity-maven-plugin:4.0.18'
+
+    // Maven Surefire Plugin
+    implementation 'org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M7'
+
+    // Maven Failsafe Plugin
+    implementation 'org.apache.maven.plugins:maven-failsafe-plugin:3.0.0-M7'
+
+    // Maven Compiler Plugin
+    implementation 'org.apache.maven.plugins:maven-compiler-plugin:3.11.0'
+
+    // Extent Reports
+    implementation 'com.aventstack:extentreports:5.1.1'
+
+    // Log4j
+    implementation 'org.apache.logging.log4j:log4j-api:2.21.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.21.1'
+
+    // DataFaker
+    implementation 'net.datafaker:datafaker:2.0.2'
+
+    implementation 'org.aeonbits.owner:owner:1.0.12'
+
+    // Lombok (provided scope)
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // Cucumber
+    implementation 'io.cucumber:cucumber-java:7.14.0'
+    implementation 'io.cucumber:cucumber-junit:7.14.0'
+
+    // Cucumber Reporting
+    implementation 'net.masterthought:cucumber-reporting:5.7.7'
+
+    // Extent Cucumber 7 Adapter
+    implementation 'tech.grasshopper:extentreports-cucumber7-adapter:1.14.0'
+
+    // Fillo
+    implementation 'com.codoid.products:fillo:1.22'
+
+    // Hamcrest
+    implementation 'org.hamcrest:hamcrest:2.2'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+// Failsafe Plugin configuration
+test {
+    systemProperties()
+    maxParallelForks = 8
+    useJUnitPlatform()
+    include '**/*Test.class' // Example: Running integration tests with IT suffix
+}
+
+// Serenity aggregate goal configuration
+serenity {
+    reportsDirName = 'target/site/serenity' // Specify the directory where aggregated reports will be generated
+}
+
+defaultTasks 'clean', 'test', 'aggregate'
+
+gradle.startParameter.continueOnFailure = true
+
+test.finalizedBy(aggregate)
