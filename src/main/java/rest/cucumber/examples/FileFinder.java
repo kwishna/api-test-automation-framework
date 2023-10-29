@@ -1,6 +1,8 @@
 package rest.cucumber.examples;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +10,8 @@ import java.nio.file.Files;
 import java.util.List;
 
 public class FileFinder {
+
+	private static final Logger LOGGER = LogManager.getLogger(FileFinder.class);
 
 	public static void findTextInThisWorkSpace(String workSpace, String textToFind) {
 

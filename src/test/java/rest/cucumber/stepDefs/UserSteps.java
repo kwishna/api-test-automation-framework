@@ -14,7 +14,7 @@ public class UserSteps {
 
     private TestContext ctx;
 
-    Logger logger = LogManager.getLogger(UserSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(UserSteps.class);
 
     RequestSpecification rSpec;
     String body;
@@ -44,7 +44,7 @@ public class UserSteps {
         this.ctx.response = rSpec.post(string);
 
         ExtentCucumberAdapter.addTestStepLog(this.ctx.response.asString());
-        logger.info("Response is: - "+this.ctx.response.asString());
+        LOGGER.info("Response is: - "+this.ctx.response.asString());
     }
 
     @Then("I get the response code as {int}")
@@ -54,7 +54,7 @@ public class UserSteps {
 
     @Then("I extract {string} Header")
     public void iExtractHeader(String string) {
-        logger.info(this.ctx.response.getHeader(string));
+        LOGGER.info(this.ctx.response.getHeader(string));
         this.ctx.response.then().log().all();
     }
 }

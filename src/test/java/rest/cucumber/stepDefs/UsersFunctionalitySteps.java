@@ -28,8 +28,9 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Given("I set up the headers")
     public void iSetTheHeaders(DataTable table) {
-        ReqresAPI.getReqSpecMngr().setBasicRequestSpecs();
-        ReqresAPI.getReqSpecMngr().setHeaders(table.asMap());
+        ReqresAPI.getReqSpecMngr()
+                .setBasicRequestSpecs()
+                .setHeaders(table.asMap());
 //        CommonRequestSpecs.reqSpecManager().setHeaders(table.asMap());
     }
 

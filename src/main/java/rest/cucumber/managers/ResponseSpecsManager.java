@@ -4,6 +4,8 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.ResponseSpecification;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hamcrest.Matcher;
 
 import java.util.HashMap;
@@ -17,6 +19,8 @@ import static rest.cucumber.base.BaseApiSpec.getResSpecBuilder;
  */
 @NoArgsConstructor
 public class ResponseSpecsManager {
+
+    private static final Logger LOGGER = LogManager.getLogger(ResponseSpecsManager.class);
 
     private static Map getBasicHeaders() {
         // Create a HashMap to represent HTTP headers

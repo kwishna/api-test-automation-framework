@@ -1,6 +1,8 @@
 package rest.cucumber.data_provider;
 
 import net.datafaker.Faker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Locale;
 
@@ -10,6 +12,8 @@ import static rest.cucumber.config.Configuration.configuration;
  * Generates Fake Data.
  */
 public class FakerDataFactory {
+
+	private static final Logger LOGGER = LogManager.getLogger(FakerDataFactory.class);
 
 	private static final Faker faker = new Faker(new Locale(configuration().faker()));
 	

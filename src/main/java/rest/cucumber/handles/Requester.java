@@ -5,10 +5,14 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import net.serenitybdd.rest.SerenityRest;
 import io.restassured.http.Method;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
 public class Requester {
+
+    private static final Logger LOGGER = LogManager.getLogger(Requester.class);
 
     private static Response getGetResponse(RequestSpecification reqSpec) {
         return SerenityRest.given(reqSpec).get().thenReturn();

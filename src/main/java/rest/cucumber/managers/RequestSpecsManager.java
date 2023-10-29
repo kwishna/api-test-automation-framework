@@ -14,6 +14,8 @@ import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.ProxySpecification;
 import io.restassured.specification.RequestSpecification;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -29,6 +31,8 @@ import static rest.cucumber.config.Configuration.configuration;
  */
 @NoArgsConstructor
 public class RequestSpecsManager {
+
+    private static final Logger LOGGER = LogManager.getLogger(RequestSpecsManager.class);
 
     private static Map getBasicHeaders() {
         // Create a HashMap to represent HTTP headers

@@ -8,6 +8,8 @@ import net.thucydides.model.domain.TestResult;
 import net.thucydides.model.screenshots.ScreenshotAndHtmlSource;
 import net.thucydides.model.steps.ExecutedStepDescription;
 import net.thucydides.model.steps.StepFailure;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.Map;
  * TODO: Implementation Pending
  */
 public class StepListener extends RestStepListener {
+
+    private static final Logger LOGGER = LogManager.getLogger(StepListener.class);
     @Override
     public void testSuiteStarted(Class<?> storyClass) {
 

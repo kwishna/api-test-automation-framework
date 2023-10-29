@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class BaseSteps {
 
-    Logger logger = LogManager.getLogger(BaseApiSpec.class);
+    private static final Logger LOGGER = LogManager.getLogger(BaseSteps.class);
 
     public TestContext ctx;
 

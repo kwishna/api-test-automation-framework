@@ -8,7 +8,7 @@ import rest.cucumber.handles.Requester;
 
 public class ReqresAPI extends BaseAPI {
 
-    private final Logger LOGGER = LogManager.getLogger(ReqresAPI.class);
+    private static final Logger LOGGER = LogManager.getLogger(ReqresAPI.class);
 
     public ReqresAPI() {
         super();

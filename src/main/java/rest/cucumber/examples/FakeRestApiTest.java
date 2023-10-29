@@ -22,6 +22,8 @@ import io.restassured.specification.FilterableResponseSpecification;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.commons.lang3.mutable.MutableObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -41,6 +43,9 @@ import static org.hamcrest.Matchers.*;
 import static rest.cucumber.listeners.ExtentLogger.fail;
 
 public class FakeRestApiTest {
+
+    private static final Logger LOGGER = LogManager.getLogger(FakeRestApiTest.class);
+
     RequestSpecification reqSpec;
     ResponseSpecification getRespSpec;
     ObjectMapper mapper = new ObjectMapper();

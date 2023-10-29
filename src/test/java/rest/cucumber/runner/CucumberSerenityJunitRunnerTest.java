@@ -8,7 +8,10 @@ import io.cucumber.junit.CucumberOptions;
 import io.cucumber.junit.CucumberOptions.SnippetType;
 import io.cucumber.picocontainer.PicoFactory;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.runner.RunWith;
+import rest.cucumber.stepDefs.UsersFunctionalitySteps;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
@@ -28,6 +31,6 @@ import org.junit.runner.RunWith;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
         }
 )
-public class CucumberSerenityJunitRunnerTest /** extends AbstractTestNGCucumberTests */ {
-
+public class CucumberSerenityJunitRunnerTest {
+    private static final Logger LOGGER = LogManager.getLogger(CucumberSerenityJunitRunnerTest.class);
 }
