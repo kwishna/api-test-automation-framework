@@ -22,8 +22,6 @@ public class Rough {
         CommonRequestSpecs.setBasicRequestSpecs();
         PlaceRequestSpecs.prepareAddPlaceSpecs();
 
-        System.out.println(RequestSpecsManager.getInstance().getSpec().get(""));
-
 
     }
 }
