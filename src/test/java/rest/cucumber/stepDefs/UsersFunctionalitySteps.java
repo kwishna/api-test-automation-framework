@@ -4,12 +4,12 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.rest.SerenityRest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.cucumber.base.BaseSteps;
 import rest.cucumber.pages.ReqresAPI;
 import rest.cucumber.pojo.reqres.users.User;
+import rest.cucumber.utils.Assertions;
 import rest.cucumber.utils.Jsonutils;
 import rest.cucumber.utils.apis.ResponseUtils;
 import rest.cucumber.utils.data_sync.TestContext;
@@ -20,7 +20,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 public class UsersFunctionalitySteps extends BaseSteps {
 
-    Logger logger = LogManager.getLogger(UserSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(UsersFunctionalitySteps.class);
 
     public UsersFunctionalitySteps(TestContext context) {
         super(context);
@@ -28,6 +28,7 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Given("I set up the headers")
     public void iSetTheHeaders(DataTable table) {
+        ReqresAPI.getReqSpecMngr().setBasicRequestSpecs();
         ReqresAPI.getReqSpecMngr().setHeaders(table.asMap());
 //        CommonRequestSpecs.reqSpecManager().setHeaders(table.asMap());
     }
@@ -45,13 +46,12 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Then("I verify response code {int}")
     public void iVerifyResponseCode(int statusCode) {
-        SerenityRest.expect().statusCode(equalTo(statusCode));
-//        Assertions.matches(this.ctx.response.statusCode(), equalTo(statusCode));
+        Assertions.matches(this.ctx.response.statusCode(), equalTo(statusCode));
 
     }
 
-    @Then("I verify reponse body")
-    public void iVerifyReponseBody(String docString) {
+    @Then("I verify response body")
+    public void iVerifyResponseBody(String docString) {
         Map<String, Object> _map = Jsonutils.jsonStringToMap(docString);
         System.out.println(_map);
         User user = ResponseUtils.deserializeJsonResponseToObject(this.ctx.response, User.class);

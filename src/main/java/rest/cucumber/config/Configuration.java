@@ -27,10 +27,10 @@ public interface Configuration extends Config {
     @Key("headless")
     Boolean headless();
 
-    @Key("url.api")
+    @Key("API_BASE")
     String baseApiUrl();
 
-    @Key("API_BASE")
+    @Key("url.base")
     String baseUrl();
 
     @Key("client.id")

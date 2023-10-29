@@ -1,6 +1,6 @@
 Feature: As an user I want to make API calls to /user. So that I can verify that the user API is working fine.
 
-  @all
+  @all @getUser
   Scenario: Get user details
     Given I set up the headers
       | Content-Type | application/json |
@@ -8,7 +8,7 @@ Feature: As an user I want to make API calls to /user. So that I can verify that
     And I setup GET user request for "/api/users"
     When I make GET user API calls to "/2"
     Then I verify response code 200
-    Then I verify reponse body
+    Then I verify response body
       """
       {
           "data": {
