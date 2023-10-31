@@ -1,6 +1,5 @@
 package rest.cucumber.pages;
 
-import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,17 +11,17 @@ import rest.cucumber.managers.ResponseSpecsManager;
 public class BaseAPI {
 
     private static final Logger LOGGER = LogManager.getLogger(BaseAPI.class);
-    private static final ThreadLocal<RequestSpecsManager> REQ_SPEC_MNGR = ThreadLocal.withInitial(RequestSpecsManager::new);
-    private static final ThreadLocal<ResponseSpecsManager> RES_SPEC_MNGR = ThreadLocal.withInitial(ResponseSpecsManager::new);
+    private static final ThreadLocal<RequestSpecsManager> REQUEST_SPECIFICATION_MNGR = ThreadLocal.withInitial(RequestSpecsManager::new);
+    private static final ThreadLocal<ResponseSpecsManager> RESPONSE_SPECIFICATION_MANAGER = ThreadLocal.withInitial(ResponseSpecsManager::new);
     private static final ThreadLocal<Requester> REQUESTER = ThreadLocal.withInitial(Requester::new);
     private static final ThreadLocal<Responder> RESPONDER = ThreadLocal.withInitial(Responder::new);
 
-    public static RequestSpecsManager getReqSpecMngr() {
-        return REQ_SPEC_MNGR.get();
+    public static RequestSpecsManager getRequestSpecMngr() {
+        return REQUEST_SPECIFICATION_MNGR.get();
     }
 
-    public static ResponseSpecsManager getResSpecMngr() {
-        return RES_SPEC_MNGR.get();
+    public static ResponseSpecsManager getResponseSpecMngr() {
+        return RESPONSE_SPECIFICATION_MANAGER.get();
     }
 
     public static Requester getRequester() {
@@ -34,10 +33,7 @@ public class BaseAPI {
     }
 
     public static void resetAPI() {
+        LOGGER.warn("Resetting rest api");
         SerenityRest.reset();
-    }
-
-    public static Response getLastResponse() {
-        return SerenityRest.lastResponse();
     }
 }

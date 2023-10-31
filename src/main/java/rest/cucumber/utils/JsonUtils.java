@@ -13,6 +13,7 @@ import io.restassured.response.ValidatableResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +28,43 @@ public class JsonUtils {
      * @param object
      * @return
      */
-    public static String serializeObjectToJson(Object object) {
+    public static String objectToJson(Object object) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(object);
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle the exception as needed
+            return null;
+        }
+    }
+
+    /**
+     * Method that can be used to serialize any Java value as JSON output, written to File provided
+     *
+     * @param file
+     * @param obj
+     * @return
+     */
+    public static void objectIntoFile(File file, Object obj) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(file, obj);
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle the exception as needed
+        }
+    }
+
+    /**
+     * Method to deserialize JSON content from given file into given Java type.
+     *
+     * @param file
+     * @param clazz
+     * @return
+     */
+    public static <T> T fileToClass(File file, Class<T> clazz) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(file, clazz);
         } catch (Exception e) {
             e.printStackTrace(); // Handle the exception as needed
             return null;
@@ -43,7 +77,7 @@ public class JsonUtils {
      * @param object
      * @return
      */
-    public static String serializeObjectToPrettyJson(Object object) {
+    public static String objectToPrettyJson(Object object) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
@@ -61,7 +95,7 @@ public class JsonUtils {
      * @param <T>
      * @return
      */
-    public static <T> T deserializeJsonResponseToObject(Response response, Class<T> clazz) {
+    public static <T> T jsonResponseToObject(Response response, Class<T> clazz) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(response.asString(), clazz);
@@ -79,8 +113,8 @@ public class JsonUtils {
      * @param <T>
      * @return
      */
-    public static <T> T deserializeJsonResponseToObject(ValidatableResponse response, Class<T> clazz) {
-        return deserializeJsonResponseToObject(response.extract().response(), clazz);
+    public static <T> T jsonResponseToObject(ValidatableResponse response, Class<T> clazz) {
+        return jsonResponseToObject(response.extract().response(), clazz);
     }
 
     /**
@@ -91,7 +125,7 @@ public class JsonUtils {
      */
     public static Map<String, Object> jsonStringToMap(String jsonString) {
         try {
-            return new ObjectMapper().readValue(jsonString, new TypeReference<Map<String, Object>>() {
+            return new ObjectMapper().readValue(jsonString, new TypeReference<>() {
             });
         } catch (Exception e) {
             e.printStackTrace();

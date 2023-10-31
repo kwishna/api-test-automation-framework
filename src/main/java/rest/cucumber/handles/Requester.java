@@ -7,12 +7,61 @@ import net.serenitybdd.rest.SerenityRest;
 import io.restassured.http.Method;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rest.cucumber.pages.BaseAPI;
 
 import java.util.Map;
 
 public class Requester {
 
     private static final Logger LOGGER = LogManager.getLogger(Requester.class);
+
+    private Response makeGetRequest(String path) {
+        LOGGER.debug("Making 'GET' request");
+        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).get(path).thenReturn();
+    }
+
+    private Response makePostRequest(String path) {
+        LOGGER.debug("Making 'POST' request");
+        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).post(path).thenReturn();
+    }
+
+    private Response makePutRequest(String path) {
+        LOGGER.debug("Making 'PUT' request");
+        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).put(path).thenReturn();
+    }
+
+    private Response makePatchRequest(String path) {
+        LOGGER.debug("Making 'PATCH' request");
+        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).patch(path).thenReturn();
+    }
+
+    private Response makeHeadRequest(String path) {
+        LOGGER.debug("Making 'HEAD' request");
+        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).head(path).thenReturn();
+    }
+
+    private Response makeOptionsRequest(String path) {
+        LOGGER.debug("Making 'OPTIONS' request");
+        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).options(path).thenReturn();
+    }
+
+    private Response makeDeleteRequest(String path) {
+        LOGGER.debug("Making 'DELETE' request");
+        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).delete(path).thenReturn();
+    }
+
+    public Response makeRequest(String path, Method method) {
+        return switch (method) {
+            case GET -> makeGetRequest(path);
+            case POST -> makePostRequest(path);
+            case PUT -> makePutRequest(path);
+            case PATCH -> makePatchRequest(path);
+            case HEAD -> makeHeadRequest(path);
+            case OPTIONS -> makeOptionsRequest(path);
+            case DELETE -> makeDeleteRequest(path);
+            default -> throw new RuntimeException("No such request method found - " + method);
+        };
+    }
 
     private Response makeGetRequest(RequestSpecification reqSpec) {
         LOGGER.debug("Making 'GET' request");

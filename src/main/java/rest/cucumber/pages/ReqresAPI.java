@@ -16,7 +16,7 @@ public class ReqresAPI extends BaseAPI {
     public static class UserAPI {
         public static Response getUser(String index) {
             return getRequester()
-                    .makeRequest(getReqSpecMngr().getSpec(), Method.GET, index);
+                    .makeRequest(getRequestSpecMngr().getSpec(), Method.GET, index);
         }
 
     }

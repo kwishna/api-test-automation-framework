@@ -1,10 +1,12 @@
 package rest.cucumber.handles;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
+import net.serenitybdd.rest.SerenityRest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,6 +19,28 @@ import java.util.concurrent.TimeUnit;
 public class Responder {
 
     private static final Logger LOGGER = LogManager.getLogger(Responder.class);
+
+    public static Response getLastResponse() {
+        return SerenityRest.lastResponse();
+    }
+
+    /**
+     * De-serialize Response to class
+     *
+     * @param response
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> T deserializeJsonResponseToObject(Response response, Class<T> clazz) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(response.asString(), clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * Validate response specifications.
@@ -56,6 +80,10 @@ public class Responder {
         return response.headers();
     }
 
+    public String getHeaderValue(Response response, String headerName) {
+        return response.headers().get(headerName).getValue();
+    }
+
     public <T> T extractFromBody(Response response, String path, Class<T> objectType) {
         return response.body().jsonPath().getObject(path, objectType);
     }
@@ -90,27 +118,5 @@ public class Responder {
 
     public long getResponseTime(Response response, TimeUnit timeUnit) {
         return response.getTimeIn(timeUnit);
-    }
-
-    public String getResponseAsString(Response response) {
-        return response.getBody().asString();
-    }
-
-    /**
-     * De-serialize Response to class
-     *
-     * @param response
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    public static <T> T deserializeJsonResponseToObject(Response response, Class<T> clazz) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(response.asString(), clazz);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

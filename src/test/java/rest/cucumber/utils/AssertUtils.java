@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 //import rest.cucumber.reportings.ExtentLogger;
 import org.hamcrest.Matcher;
-import rest.cucumber.base.BaseSteps;
 //import org.testng.Assert;
 
 import java.util.Arrays;
@@ -16,9 +15,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
 
-public class Assertions {
+public class AssertUtils {
 
-    private static final Logger LOGGER = LogManager.getLogger(Assertions.class);
+    private static final Logger LOGGER = LogManager.getLogger(AssertUtils.class);
 
     public static <T> void assertEquals(T actual, T expected, String message) {
         try {

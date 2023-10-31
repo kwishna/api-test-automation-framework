@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import rest.cucumber.base.BaseSteps;
 import rest.cucumber.pages.ReqresAPI;
 import rest.cucumber.pojo.reqres.users.User;
-import rest.cucumber.utils.Assertions;
+import rest.cucumber.utils.AssertUtils;
 import rest.cucumber.utils.JsonUtils;
 import rest.cucumber.utils.apis.ResponseUtils;
 import rest.cucumber.utils.TestContext;
@@ -28,7 +28,7 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Given("I set up the headers")
     public void iSetTheHeaders(DataTable table) {
-        ReqresAPI.getReqSpecMngr()
+        ReqresAPI.getRequestSpecMngr()
                 .setBasicRequestSpecs()
                 .setHeaders(table.asMap());
 //        CommonRequestSpecs.reqSpecManager().setHeaders(table.asMap());
@@ -36,7 +36,7 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Given("I setup GET user request for {string}")
     public void iSetupGETUserRequest(String apiEndPoint) {
-        ReqresAPI.getReqSpecMngr().setBasePath(apiEndPoint);
+        ReqresAPI.getRequestSpecMngr().setBasePath(apiEndPoint);
 //        UsersRequestSpecs.userRequestSpec(ReqresAPIResources.of(apiEndPoint));
     }
 
@@ -47,7 +47,7 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Then("I verify response code {int}")
     public void iVerifyResponseCode(int statusCode) {
-        Assertions.matches(this.ctx.response.statusCode(), equalTo(statusCode));
+        AssertUtils.matches(this.ctx.response.statusCode(), equalTo(statusCode));
 
     }
 
