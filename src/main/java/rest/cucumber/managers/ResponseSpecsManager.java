@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hamcrest.Matcher;
-import rest.cucumber.constants.APIContants;
+import rest.cucumber.constants.APIConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,8 +28,8 @@ public class ResponseSpecsManager {
         Map<String, Object> headers = new HashMap<>();
 
         // Add common HTTP headers to the HashMap
-        headers.put(APIContants.HEADER_CONTENT_TYPE, APIContants.CONTENT_JSON);
-        headers.put(APIContants.HEADER_ACCEPT, APIContants.CONTENT_JSON);
+        headers.put(APIConstants.HEADER_CONTENT_TYPE, APIConstants.APPLICATION_JSON);
+        headers.put(APIConstants.HEADER_ACCEPT, APIConstants.APPLICATION_JSON);
 //        headers.put("Authorization", "Bearer your-access-token");
 //        headers.put("UserAPI-Agent", "YourApp/1.0");
 //        headers.put("Accept-Encoding", "gzip, deflate");

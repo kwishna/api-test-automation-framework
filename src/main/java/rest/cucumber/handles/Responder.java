@@ -2,7 +2,6 @@ package rest.cucumber.handles;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,6 +1,5 @@
 package rest.cucumber.utils;
 
-import org.apache.commons.io.FileUtils;
 import rest.cucumber.config.Configurations;
 
 import java.io.FileWriter;
@@ -9,10 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public final class Utilities {
 

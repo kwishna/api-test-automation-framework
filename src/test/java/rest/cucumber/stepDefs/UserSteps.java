@@ -12,7 +12,7 @@ import rest.cucumber.utils.TestContext;
 
 public class UserSteps {
 
-    private TestContext ctx;
+    private final TestContext ctx;
 
     private static final Logger LOGGER = LogManager.getLogger(UserSteps.class);
 
