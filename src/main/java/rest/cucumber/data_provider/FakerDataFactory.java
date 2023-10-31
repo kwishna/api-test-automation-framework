@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Locale;
 
-import static rest.cucumber.config.Configuration.configuration;
+import static rest.cucumber.config.Configurations.configuration;
 
 /**
  * Generates Fake Data.

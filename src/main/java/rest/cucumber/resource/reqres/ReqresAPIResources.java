@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ReqresAPIResources {
 
     LIST_USERS("/api/users"),
-    UNKNWON_USER("/api/unknown"),
+    UNKNOWN_USER("/api/unknown"),
     REGISTER_USER("/api/register"),
     LOGIN_USER("/api/login");
 

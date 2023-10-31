@@ -10,9 +10,9 @@ import org.aeonbits.owner.ConfigCache;
         "system:properties",
         "classpath:report.properties"
 })
-public interface Configuration extends Config {
-    static Configuration configuration() {
-        return ConfigCache.getOrCreate(Configuration.class);
+public interface Configurations extends Config {
+    static Configurations configuration() {
+        return ConfigCache.getOrCreate(Configurations.class);
     }
 
     @Key("user.dir")
@@ -21,17 +21,14 @@ public interface Configuration extends Config {
     @Key("target")
     String target();
 
-    @Key("browser")
-    String browser();
-
-    @Key("headless")
-    Boolean headless();
-
     @Key("API_BASE")
     String baseApiUrl();
 
     @Key("url.base")
     String baseUrl();
+
+    @Key("url.home")
+    String userHome();
 
     @Key("client.id")
     String clientId();
@@ -45,20 +42,8 @@ public interface Configuration extends Config {
     @Key("timeout")
     int timeout();
 
-    @Key("grid.url")
-    String gridUrl();
-
-    @Key("grid.port")
-    String gridPort();
-
     @Key("faker.locale")
     String faker();
-
-    @Key("auto.login")
-    boolean autoLogin();
-
-    @Key("enable.tracing")
-    boolean enableTracing();
 
     @Key("action.delay")
     double slowMotion();

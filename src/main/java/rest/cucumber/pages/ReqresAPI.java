@@ -4,7 +4,6 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import rest.cucumber.handles.Requester;
 
 public class ReqresAPI extends BaseAPI {
 
@@ -16,8 +15,8 @@ public class ReqresAPI extends BaseAPI {
 
     public static class UserAPI {
         public static Response getUser(String index) {
-            return Requester
-                    .getResponse(getReqSpecMngr().getSpec(), Method.GET, index);
+            return getRequester()
+                    .makeRequest(getReqSpecMngr().getSpec(), Method.GET, index);
         }
 
     }

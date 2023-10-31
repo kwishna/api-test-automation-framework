@@ -2,7 +2,7 @@ package rest.cucumber.base;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import rest.cucumber.utils.data_sync.TestContext;
+import rest.cucumber.utils.TestContext;
 
 import java.io.IOException;
 

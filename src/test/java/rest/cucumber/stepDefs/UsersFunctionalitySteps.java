@@ -10,9 +10,9 @@ import rest.cucumber.base.BaseSteps;
 import rest.cucumber.pages.ReqresAPI;
 import rest.cucumber.pojo.reqres.users.User;
 import rest.cucumber.utils.Assertions;
-import rest.cucumber.utils.Jsonutils;
+import rest.cucumber.utils.JsonUtils;
 import rest.cucumber.utils.apis.ResponseUtils;
-import rest.cucumber.utils.data_sync.TestContext;
+import rest.cucumber.utils.TestContext;
 
 import java.util.Map;
 
@@ -53,7 +53,7 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Then("I verify response body")
     public void iVerifyResponseBody(String docString) {
-        Map<String, Object> _map = Jsonutils.jsonStringToMap(docString);
+        Map<String, Object> _map = JsonUtils.jsonStringToMap(docString);
         System.out.println(_map);
         User user = ResponseUtils.deserializeJsonResponseToObject(this.ctx.response, User.class);
         System.out.println(user);

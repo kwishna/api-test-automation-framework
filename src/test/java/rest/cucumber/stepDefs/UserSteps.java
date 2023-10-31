@@ -8,7 +8,7 @@ import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import rest.cucumber.utils.data_sync.TestContext;
+import rest.cucumber.utils.TestContext;
 
 public class UserSteps {
 

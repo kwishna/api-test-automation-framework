@@ -40,7 +40,7 @@ public class CucumberHooks {
         // After Scenario
         LOGGER.info("Completed :: " + scenario.getName());
         try {
-            Serenity.recordReportData().withTitle("Log").fromFile(Path.of(System.getProperty("base.dir") + "/output_data/logs/app.log"));
+            Serenity.recordReportData().withTitle("Log").fromFile(Path.of(System.getProperty("base.dir") + "/target/logs/app.log"));
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

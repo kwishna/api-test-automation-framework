@@ -1,11 +1,8 @@
-package rest.cucumber.utils.data_sync;
+package rest.cucumber.utils;
 
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
-import io.restassured.response.ValidatableResponseOptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import rest.cucumber.base.BaseSteps;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -16,12 +13,8 @@ import java.util.Set;
  * class to sync data for sharing between steps.
  */
 public final class TestContext {
-
     private static final Logger LOGGER = LogManager.getLogger(TestContext.class);
-
     private static final ThreadLocal<Map<String, Object>> LOCAL_CONTEXT = ThreadLocal.withInitial(HashMap::new);
-    // Use this variable cautiously.
-    public final ThreadLocal<Map<String, Object>> session = ThreadLocal.withInitial(HashMap::new);
     public Response response;
 
     /**

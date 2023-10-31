@@ -7,6 +7,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rest.cucumber.handles.Requester;
 
 import java.util.concurrent.TimeUnit;
 

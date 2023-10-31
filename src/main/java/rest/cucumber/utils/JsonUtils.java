@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class Jsonutils {
+public class JsonUtils {
 
-    private static final Logger LOGGER = LogManager.getLogger(Jsonutils.class);
+    private static final Logger LOGGER = LogManager.getLogger(JsonUtils.class);
 
     /**
      * Serialize a Java object to a JSON string

@@ -14,307 +14,302 @@ public class Requester {
 
     private static final Logger LOGGER = LogManager.getLogger(Requester.class);
 
-    private static Response getGetResponse(RequestSpecification reqSpec) {
+    private Response makeGetRequest(RequestSpecification reqSpec) {
+        LOGGER.debug("Making 'GET' request");
         return SerenityRest.given(reqSpec).get().thenReturn();
     }
 
-    private static Response getPostResponse(RequestSpecification reqSpec) {
+    private Response makePostRequest(RequestSpecification reqSpec) {
+        LOGGER.debug("Making 'POST' request");
         return SerenityRest.given(reqSpec).post().thenReturn();
     }
 
-    private static Response getPutResponse(RequestSpecification reqSpec) {
+    private Response makePutRequest(RequestSpecification reqSpec) {
+        LOGGER.debug("Making 'PUT' request");
         return SerenityRest.given(reqSpec).put().thenReturn();
     }
 
-    private static Response getPatchResponse(RequestSpecification reqSpec) {
+    private Response makePatchRequest(RequestSpecification reqSpec) {
+        LOGGER.debug("Making 'PATCH' request");
         return SerenityRest.given(reqSpec).patch().thenReturn();
     }
 
-    private static Response getHeadResponse(RequestSpecification reqSpec) {
+    private Response makeHeadRequest(RequestSpecification reqSpec) {
+        LOGGER.debug("Making 'HEAD' request");
         return SerenityRest.given(reqSpec).head().thenReturn();
     }
 
-    private static Response getOptionsResponse(RequestSpecification reqSpec) {
+    private Response makeOptionsRequest(RequestSpecification reqSpec) {
+        LOGGER.debug("Making 'OPTIONS' request");
         return SerenityRest.given(reqSpec).options().thenReturn();
     }
 
-    private static Response getDeleteResponse(RequestSpecification reqSpec) {
+    private Response makeDeleteRequest(RequestSpecification reqSpec) {
+        LOGGER.debug("Making 'DELETE' request");
         return SerenityRest.given(reqSpec).delete().thenReturn();
     }
 
-    public static Response getResponse(RequestSpecification reqSpec, Method method) {
-        switch (method) {
-            case GET:
-                return getGetResponse(reqSpec);
-            case POST:
-                return getPostResponse(reqSpec);
-            case PUT:
-                return getPutResponse(reqSpec);
-            case PATCH:
-                return getPatchResponse(reqSpec);
-            case HEAD:
-                return getHeadResponse(reqSpec);
-            case OPTIONS:
-                return getOptionsResponse(reqSpec);
-            case DELETE:
-                return getDeleteResponse(reqSpec);
-            default:
-                throw new RuntimeException("No such request method found - " + method);
-        }
+    public Response makeRequest(RequestSpecification reqSpec, Method method) {
+        return switch (method) {
+            case GET -> makeGetRequest(reqSpec);
+            case POST -> makePostRequest(reqSpec);
+            case PUT -> makePutRequest(reqSpec);
+            case PATCH -> makePatchRequest(reqSpec);
+            case HEAD -> makeHeadRequest(reqSpec);
+            case OPTIONS -> makeOptionsRequest(reqSpec);
+            case DELETE -> makeDeleteRequest(reqSpec);
+            default -> throw new RuntimeException("No such request method found - " + method);
+        };
     }
 
     // ----
 
-    private static Response getGetResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).get(url).thenReturn();
+    private Response makeGetRequest(RequestSpecification reqSpec, String path) {
+        LOGGER.debug("Making 'GET' request");
+        return SerenityRest.given(reqSpec).get(path).thenReturn();
     }
 
-    private static Response getPostResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).post(url).thenReturn();
+    private Response makePostRequest(RequestSpecification reqSpec, String path) {
+        LOGGER.debug("Making 'POST' request");
+        return SerenityRest.given(reqSpec).post(path).thenReturn();
     }
 
-    private static Response getPutResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).put(url).thenReturn();
+    private Response makePutRequest(RequestSpecification reqSpec, String path) {
+        LOGGER.debug("Making 'PUT' request");
+        return SerenityRest.given(reqSpec).put(path).thenReturn();
     }
 
-    private static Response getPatchResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).patch(url).thenReturn();
+    private Response makePatchRequest(RequestSpecification reqSpec, String path) {
+        LOGGER.debug("Making 'PATCH' request");
+        return SerenityRest.given(reqSpec).patch(path).thenReturn();
     }
 
-    private static Response getHeadResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).head(url).thenReturn();
+    private Response makeHeadRequest(RequestSpecification reqSpec, String path) {
+        LOGGER.debug("Making 'HEAD' request");
+        return SerenityRest.given(reqSpec).head(path).thenReturn();
     }
 
-    private static Response getOptionsResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).options(url).thenReturn();
+    private Response makeOptionsRequest(RequestSpecification reqSpec, String path) {
+        LOGGER.debug("Making 'OPTIONS' request");
+        return SerenityRest.given(reqSpec).options(path).thenReturn();
     }
 
-    private static Response getDeleteResponse(RequestSpecification reqSpec, String url) {
-        return SerenityRest.given(reqSpec).delete(url).thenReturn();
+    private Response makeDeleteRequest(RequestSpecification reqSpec, String path) {
+        LOGGER.debug("Making 'DELETE' request");
+        return SerenityRest.given(reqSpec).delete(path).thenReturn();
     }
 
-    public static Response getResponse(RequestSpecification reqSpec, String url, Method method) {
-        switch (method) {
-            case GET:
-                return getGetResponse(reqSpec, url);
-            case POST:
-                return getPostResponse(reqSpec, url);
-            case PUT:
-                return getPutResponse(reqSpec, url);
-            case PATCH:
-                return getPatchResponse(reqSpec, url);
-            case HEAD:
-                return getHeadResponse(reqSpec, url);
-            case OPTIONS:
-                return getOptionsResponse(reqSpec, url);
-            case DELETE:
-                return getDeleteResponse(reqSpec, url);
-            default:
-                throw new RuntimeException("No such request method found - " + method);
-        }
+    public Response makeRequest(RequestSpecification reqSpec, String path, Method method) {
+        return switch (method) {
+            case GET -> makeGetRequest(reqSpec, path);
+            case POST -> makePostRequest(reqSpec, path);
+            case PUT -> makePutRequest(reqSpec, path);
+            case PATCH -> makePatchRequest(reqSpec, path);
+            case HEAD -> makeHeadRequest(reqSpec, path);
+            case OPTIONS -> makeOptionsRequest(reqSpec, path);
+            case DELETE -> makeDeleteRequest(reqSpec, path);
+            default -> throw new RuntimeException("No such request method found - " + method);
+        };
     }
 
     // ----
 
-    private static Response getGetResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+    private Response makeGetRequest(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+        LOGGER.debug("Making 'GET' request");
         return SerenityRest.given(reqSpec, resSpec).get().thenReturn();
     }
 
-    private static Response getPostResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+    private Response makePostRequest(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+        LOGGER.debug("Making 'POST' request");
         return SerenityRest.given(reqSpec, resSpec).post().thenReturn();
     }
 
-    private static Response getPutResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+    private Response makePutRequest(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+        LOGGER.debug("Making 'PUT' request");
         return SerenityRest.given(reqSpec, resSpec).put().thenReturn();
     }
 
-    private static Response getPatchResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+    private Response makePatchRequest(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+        LOGGER.debug("Making 'PATCH' request");
         return SerenityRest.given(reqSpec, resSpec).patch().thenReturn();
     }
 
-    private static Response getHeadResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+    private Response makeHeadRequest(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+        LOGGER.debug("Making 'HEAD' request");
         return SerenityRest.given(reqSpec, resSpec).head().thenReturn();
     }
 
-    private static Response getOptionsResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+    private Response makeOptionsRequest(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+        LOGGER.debug("Making 'OPTIONS' request");
         return SerenityRest.given(reqSpec, resSpec).options().thenReturn();
     }
 
-    private static Response getDeleteResponse(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+    private Response makeDeleteRequest(RequestSpecification reqSpec, ResponseSpecification resSpec) {
+        LOGGER.debug("Making 'DELETE' request");
         return SerenityRest.given(reqSpec, resSpec).options().thenReturn();
     }
 
-    public static Response getResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, Method method) {
-        switch (method) {
-            case GET:
-                return getGetResponse(reqSpec, resSpec);
-            case POST:
-                return getPostResponse(reqSpec, resSpec);
-            case PUT:
-                return getPutResponse(reqSpec, resSpec);
-            case PATCH:
-                return getPatchResponse(reqSpec, resSpec);
-            case HEAD:
-                return getHeadResponse(reqSpec, resSpec);
-            case OPTIONS:
-                return getOptionsResponse(reqSpec, resSpec);
-            case DELETE:
-                return getDeleteResponse(reqSpec, resSpec);
-            default:
-                throw new RuntimeException("No such request method found - " + method);
-        }
+    public Response makeRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, Method method) {
+        return switch (method) {
+            case GET -> makeGetRequest(reqSpec, resSpec);
+            case POST -> makePostRequest(reqSpec, resSpec);
+            case PUT -> makePutRequest(reqSpec, resSpec);
+            case PATCH -> makePatchRequest(reqSpec, resSpec);
+            case HEAD -> makeHeadRequest(reqSpec, resSpec);
+            case OPTIONS -> makeOptionsRequest(reqSpec, resSpec);
+            case DELETE -> makeDeleteRequest(reqSpec, resSpec);
+            default -> throw new RuntimeException("No such request method found - " + method);
+        };
     }
 
     // ----
 
-    private static Response getGetResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).get(url).thenReturn();
+    private Response makeGetRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, String path) {
+        LOGGER.debug("Making 'GET' request");
+        return SerenityRest.given(reqSpec, resSpec).get(path).thenReturn();
     }
 
-    private static Response getPostResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).post(url).thenReturn();
+    private Response makePostRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, String path) {
+        LOGGER.debug("Making 'POST' request");
+        return SerenityRest.given(reqSpec, resSpec).post(path).thenReturn();
     }
 
-    private static Response getPutResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).put(url).thenReturn();
+    private Response makePutRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, String path) {
+        LOGGER.debug("Making 'PUT' request");
+        return SerenityRest.given(reqSpec, resSpec).put(path).thenReturn();
     }
 
-    private static Response getPatchResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).patch(url).thenReturn();
+    private Response makePatchRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, String path) {
+        LOGGER.debug("Making 'PATCH' request");
+        return SerenityRest.given(reqSpec, resSpec).patch(path).thenReturn();
     }
 
-    private static Response getHeadResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).head(url).thenReturn();
+    private Response makeHeadRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, String path) {
+        LOGGER.debug("Making 'HEAD' request");
+        return SerenityRest.given(reqSpec, resSpec).head(path).thenReturn();
     }
 
-    private static Response getOptionsResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).options(url).thenReturn();
+    private Response makeOptionsRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, String path) {
+        LOGGER.debug("Making 'OPTIONS' request");
+        return SerenityRest.given(reqSpec, resSpec).options(path).thenReturn();
     }
 
-    private static Response getDeleteResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url) {
-        return SerenityRest.given(reqSpec, resSpec).options(url).thenReturn();
+    private Response makeDeleteRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, String path) {
+        LOGGER.debug("Making 'DELETE' request");
+        return SerenityRest.given(reqSpec, resSpec).options(path).thenReturn();
     }
 
-    public static Response getResponse(RequestSpecification reqSpec, ResponseSpecification resSpec, String url, Method method) {
-        switch (method) {
-            case GET:
-                return getGetResponse(reqSpec, resSpec, url);
-            case POST:
-                return getPostResponse(reqSpec, resSpec, url);
-            case PUT:
-                return getPutResponse(reqSpec, resSpec, url);
-            case PATCH:
-                return getPatchResponse(reqSpec, resSpec, url);
-            case HEAD:
-                return getHeadResponse(reqSpec, resSpec, url);
-            case OPTIONS:
-                return getOptionsResponse(reqSpec, resSpec, url);
-            case DELETE:
-                return getDeleteResponse(reqSpec, resSpec, url);
-            default:
-                throw new RuntimeException("No such request method found - " + method);
-        }
-    }
-
-    // ----
-
-    private static Response getGetResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).get(url, obj).thenReturn();
-    }
-
-    private static Response getPostResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).post(url, obj).thenReturn();
-    }
-
-    private static Response getPutResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).put(url, obj).thenReturn();
-    }
-
-    private static Response getPatchResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).patch(url, obj).thenReturn();
-    }
-
-    private static Response getHeadResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).head(url, obj).thenReturn();
-    }
-
-    private static Response getOptionsResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).options(url, obj).thenReturn();
-    }
-
-    private static Response getDeleteResponse(RequestSpecification reqSpec, String url, Object... obj) {
-        return SerenityRest.given(reqSpec).options(url, obj).thenReturn();
-    }
-
-    public static Response getResponse(RequestSpecification reqSpec, Method method, String url, Object... obj) {
-        switch (method) {
-            case GET:
-                return getGetResponse(reqSpec, url, obj);
-            case POST:
-                return getPostResponse(reqSpec, url, obj);
-            case PUT:
-                return getPutResponse(reqSpec, url, obj);
-            case PATCH:
-                return getPatchResponse(reqSpec, url, obj);
-            case HEAD:
-                return getHeadResponse(reqSpec, url, obj);
-            case OPTIONS:
-                return getOptionsResponse(reqSpec, url, obj);
-            case DELETE:
-                return getDeleteResponse(reqSpec, url, obj);
-            default:
-                throw new RuntimeException("No such request method found - " + method);
-        }
+    public Response makeRequest(RequestSpecification reqSpec, ResponseSpecification resSpec, String path, Method method) {
+        return switch (method) {
+            case GET -> makeGetRequest(reqSpec, resSpec, path);
+            case POST -> makePostRequest(reqSpec, resSpec, path);
+            case PUT -> makePutRequest(reqSpec, resSpec, path);
+            case PATCH -> makePatchRequest(reqSpec, resSpec, path);
+            case HEAD -> makeHeadRequest(reqSpec, resSpec, path);
+            case OPTIONS -> makeOptionsRequest(reqSpec, resSpec, path);
+            case DELETE -> makeDeleteRequest(reqSpec, resSpec, path);
+            default -> throw new RuntimeException("No such request method found - " + method);
+        };
     }
 
     // ----
 
-    private static Response getGetResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).get(url, map).thenReturn();
+    private Response makeGetRequest(RequestSpecification reqSpec, String path, Object... obj) {
+        LOGGER.debug("Making 'GET' request");
+        return SerenityRest.given(reqSpec).get(path, obj).thenReturn();
     }
 
-    private static Response getPostResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).post(url, map).thenReturn();
+    private Response makePostRequest(RequestSpecification reqSpec, String path, Object... obj) {
+        LOGGER.debug("Making 'POST' request");
+        return SerenityRest.given(reqSpec).post(path, obj).thenReturn();
     }
 
-    private static Response getPutResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).put(url, map).thenReturn();
+    private Response makePutRequest(RequestSpecification reqSpec, String path, Object... obj) {
+        LOGGER.debug("Making 'PUT' request");
+        return SerenityRest.given(reqSpec).put(path, obj).thenReturn();
     }
 
-    private static Response getPatchResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).patch(url, map).thenReturn();
+    private Response makePatchRequest(RequestSpecification reqSpec, String path, Object... obj) {
+        LOGGER.debug("Making 'PATCH' request");
+        return SerenityRest.given(reqSpec).patch(path, obj).thenReturn();
     }
 
-    private static Response getHeadResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).head(url, map).thenReturn();
+    private Response makeHeadRequest(RequestSpecification reqSpec, String path, Object... obj) {
+        LOGGER.debug("Making 'HEAD' request");
+        return SerenityRest.given(reqSpec).head(path, obj).thenReturn();
     }
 
-    private static Response getOptionsResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).options(url, map).thenReturn();
+    private Response makeOptionsRequest(RequestSpecification reqSpec, String path, Object... obj) {
+        LOGGER.debug("Making 'OPTIONS' request");
+        return SerenityRest.given(reqSpec).options(path, obj).thenReturn();
     }
 
-    private static Response getDeleteResponse(RequestSpecification reqSpec, String url, Map<String, ?> map) {
-        return SerenityRest.given(reqSpec).options(url, map).thenReturn();
+    private Response makeDeleteRequest(RequestSpecification reqSpec, String path, Object... obj) {
+        LOGGER.debug("Making 'DELETE' request");
+        return SerenityRest.given(reqSpec).options(path, obj).thenReturn();
     }
 
-    public static Response getResponse(RequestSpecification reqSpec, Method method, String url, Map<String, ?> map) {
-        switch (method) {
-            case GET:
-                return getGetResponse(reqSpec, url, map);
-            case POST:
-                return getPostResponse(reqSpec, url, map);
-            case PUT:
-                return getPutResponse(reqSpec, url, map);
-            case PATCH:
-                return getPatchResponse(reqSpec, url, map);
-            case HEAD:
-                return getHeadResponse(reqSpec, url, map);
-            case OPTIONS:
-                return getOptionsResponse(reqSpec, url, map);
-            case DELETE:
-                return getDeleteResponse(reqSpec, url, map);
-            default:
-                throw new RuntimeException("No such request method found - " + method);
-        }
+    public Response   makeRequest(RequestSpecification reqSpec, Method method, String path, Object... obj) {
+        return switch (method) {
+            case GET -> makeGetRequest(reqSpec, path, obj);
+            case POST -> makePostRequest(reqSpec, path, obj);
+            case PUT -> makePutRequest(reqSpec, path, obj);
+            case PATCH -> makePatchRequest(reqSpec, path, obj);
+            case HEAD -> makeHeadRequest(reqSpec, path, obj);
+            case OPTIONS -> makeOptionsRequest(reqSpec, path, obj);
+            case DELETE -> makeDeleteRequest(reqSpec, path, obj);
+            default -> throw new RuntimeException("No such request method found - " + method);
+        };
+    }
+
+    // ----
+
+    private Response makeGetRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
+        LOGGER.debug("Making 'GET' request");
+        return SerenityRest.given(reqSpec).get(path, pathParams).thenReturn();
+    }
+
+    private Response makePostRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
+        LOGGER.debug("Making 'POST' request");
+        return SerenityRest.given(reqSpec).post(path, pathParams).thenReturn();
+    }
+
+    private Response makePutRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
+        LOGGER.debug("Making 'PUT' request");
+        return SerenityRest.given(reqSpec).put(path, pathParams).thenReturn();
+    }
+
+    private Response makePatchRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
+        LOGGER.debug("Making 'PATCH' request");
+        return SerenityRest.given(reqSpec).patch(path, pathParams).thenReturn();
+    }
+
+    private Response makeHeadRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
+        LOGGER.debug("Making 'HEAD' request");
+        return SerenityRest.given(reqSpec).head(path, pathParams).thenReturn();
+    }
+
+    private Response makeOptionsRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
+        LOGGER.debug("Making 'OPTIONS' request");
+        return SerenityRest.given(reqSpec).options(path, pathParams).thenReturn();
+    }
+
+    private Response makeDeleteRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
+        LOGGER.debug("Making 'DELETE' request");
+        return SerenityRest.given(reqSpec).options(path, pathParams).thenReturn();
+    }
+
+    public Response makeRequest(RequestSpecification reqSpec, Method method, String path, Map<String, ?> pathParams) {
+        return switch (method) {
+            case GET -> makeGetRequest(reqSpec, path, pathParams);
+            case POST -> makePostRequest(reqSpec, path, pathParams);
+            case PUT -> makePutRequest(reqSpec, path, pathParams);
+            case PATCH -> makePatchRequest(reqSpec, path, pathParams);
+            case HEAD -> makeHeadRequest
+                    (reqSpec, path, pathParams);
+            case OPTIONS -> makeOptionsRequest(reqSpec, path, pathParams);
+            case DELETE -> makeDeleteRequest(reqSpec, path, pathParams);
+            default -> throw new RuntimeException("No such request method found - " + method);
+        };
     }
 }

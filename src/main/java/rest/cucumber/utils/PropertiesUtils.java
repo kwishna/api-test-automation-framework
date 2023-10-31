@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class PropertiesUtils {
 
-    public final Logger logger = LogManager.getLogger(PropertiesUtils.class);
+    public static final Logger LOGGER = LogManager.getLogger(PropertiesUtils.class);
     private final Path filePath;
     private Properties props;
 

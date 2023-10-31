@@ -16,6 +16,7 @@ import io.restassured.specification.RequestSpecification;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rest.cucumber.constants.APIConstants;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import static rest.cucumber.base.BaseApiSpec.getReqSpecBuilder;
-import static rest.cucumber.config.Configuration.configuration;
+import static rest.cucumber.config.Configurations.configuration;
 
 /**
  * Add all Request Specifications here: -
@@ -34,13 +35,13 @@ public class RequestSpecsManager {
 
     private static final Logger LOGGER = LogManager.getLogger(RequestSpecsManager.class);
 
-    private static Map getBasicHeaders() {
+    private static Map<String, String> getBasicHeaders() {
         // Create a HashMap to represent HTTP headers
         Map<String, String> headers = new HashMap<>();
 
         // Add common HTTP headers to the HashMap
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "application/json");
+        headers.put(APIConstants.HEADER_CONTENT_TYPE, APIConstants.APPLICATION_JSON);
+        headers.put(APIConstants.HEADER_ACCEPT, APIConstants.APPLICATION_JSON);
 //        headers.put("Authorization", "Bearer your-access-token");
 //        headers.put("UserAPI-Agent", "YourApp/1.0");
 //        headers.put("Accept-Encoding", "gzip, deflate");

@@ -116,8 +116,8 @@ public class ResponseUtils {
             );
         } catch (IOException e) {
             e.printStackTrace();
-            return;
         }
+        return;
     }
 
     public static JsonSchemaValidator getJsonSchemaValidator(Response res, String schemaFilePath) {
@@ -125,7 +125,11 @@ public class ResponseUtils {
     }
 
     public static String prettyPrintJson(Response res) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(new JsonParser().parse(res.asString()));
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(
+                        JsonParser.parseString(res.asString())
+                );
     }
 }
