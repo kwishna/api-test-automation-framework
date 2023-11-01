@@ -1,4 +1,4 @@
-package rest.cucumber.examples;
+package rest.cucumber.rough_files;
 
 import com.codoid.products.exception.FilloException;
 import com.codoid.products.fillo.Connection;

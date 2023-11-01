@@ -1,5 +1,6 @@
 package rest.cucumber.pages;
 
+import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,5 +36,13 @@ public class BaseAPI {
     public static void resetAPI() {
         LOGGER.warn("Resetting rest api");
         SerenityRest.reset();
+    }
+
+    public static void logResponse(Response response) {
+        getResponder().logResponse(response);
+    }
+
+    public static void logResponseBody(Response response) {
+        getResponder().logBody(response);
     }
 }

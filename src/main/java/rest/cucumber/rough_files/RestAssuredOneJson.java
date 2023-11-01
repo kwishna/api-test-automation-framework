@@ -1,4 +1,4 @@
-package rest.cucumber.examples;
+package rest.cucumber.rough_files;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

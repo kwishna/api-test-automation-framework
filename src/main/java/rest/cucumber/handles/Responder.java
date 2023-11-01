@@ -64,11 +64,11 @@ public class Responder {
         return response.body().jsonPath();
     }
 
-    public <T> T getBody(Response response, Class<T> clazz) {
+    public <T> T getBodyAs(Response response, Class<T> clazz) {
         return response.body().as(clazz);
     }
 
-    public <T> T getBody(Response response, Type cls) {
+    public <T> T getBodyAs(Response response, Type cls) {
         return response.body().as(cls);
     }
 
@@ -118,5 +118,13 @@ public class Responder {
 
     public long getResponseTime(Response response, TimeUnit timeUnit) {
         return response.getTimeIn(timeUnit);
+    }
+
+    public void logResponse(Response response) {
+        response.then().log().all(true);
+    }
+
+    public void logBody(Response response) {
+        response.then().log().body(true);
     }
 }

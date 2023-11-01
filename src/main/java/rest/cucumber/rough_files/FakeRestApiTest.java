@@ -1,4 +1,4 @@
-package rest.cucumber.examples;
+package rest.cucumber.rough_files;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

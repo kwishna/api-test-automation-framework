@@ -1,4 +1,4 @@
-package rest.cucumber.examples;
+package rest.cucumber.rough_files;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;

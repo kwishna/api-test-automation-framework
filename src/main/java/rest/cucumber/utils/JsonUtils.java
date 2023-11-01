@@ -123,7 +123,7 @@ public class JsonUtils {
      * @param jsonString
      * @return
      */
-    public static Map<String, Object> jsonStringToMap(String jsonString) {
+    public static Map<String, Object> jsonStringToType(String jsonString) {
         try {
             return new ObjectMapper().readValue(jsonString, new TypeReference<>() {
             });
@@ -158,9 +158,36 @@ public class JsonUtils {
      * @param <T>
      * @return
      */
-    public static <T> T jsonStringToClass(String jsonString, Class<?> T) {
+    public static <T> T jsonStringToType(String jsonString, Class<?> T) {
         try {
             return new ObjectMapper().readValue(jsonString, new TypeReference<T>() {
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
+        try {
+            return new ObjectMapper().readValue(jsonString, clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Converts Map to a Class.
+     *
+     * @param map
+     * @param T
+     * @param <T>
+     * @return
+     */
+    public static <T> T mapToType(Map<String, Object> map, Class<?> T) {
+        try {
+            return new ObjectMapper().readValue(mapToJson(map), new TypeReference<T>() {
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -176,10 +203,9 @@ public class JsonUtils {
      * @param <T>
      * @return
      */
-    public static <T> T mapToClass(Map<String, Object> map, Class<?> T) {
+    public static <T> T mapToObject(Map<String, Object> map, Class<T> clazz) {
         try {
-            return new ObjectMapper().readValue(mapToJson(map), new TypeReference<T>() {
-            });
+            return new ObjectMapper().readValue(mapToJson(map), clazz);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -211,7 +237,7 @@ public class JsonUtils {
      */
     public static List<Object> jsonArrayToList(String jsonArrayString) {
         try {
-            return new ObjectMapper().readValue(jsonArrayString, new TypeReference<List<Object>>() {
+            return new ObjectMapper().readValue(jsonArrayString, new TypeReference<>() {
             });
         } catch (Exception e) {
             e.printStackTrace();

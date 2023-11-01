@@ -53,7 +53,7 @@ public class UsersFunctionalitySteps extends BaseSteps {
 
     @Then("I verify response body")
     public void iVerifyResponseBody(String docString) {
-        Map<String, Object> _map = JsonUtils.jsonStringToMap(docString);
+        Map<String, Object> _map = JsonUtils.jsonStringToType(docString);
         System.out.println(_map);
         User user = ResponseUtils.deserializeJsonResponseToObject(this.ctx.response, User.class);
         System.out.println(user);
