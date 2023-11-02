@@ -1,5 +1,6 @@
 package rest.cucumber.pages;
 
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
@@ -7,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import rest.cucumber.pojo.reqres.users.SimpleUser;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class ReqresAPI extends BaseAPI {
 
@@ -30,7 +32,7 @@ public class ReqresAPI extends BaseAPI {
         }
 
         public static void setHeaderToCreateUserRequest(Map<String, String> headers) {
-            getRequestSpecMngr().setHeaders(headers);
+            getRequestSpecMngr().setHeaders(headers).setLog(LogDetail.ALL);
         }
 
         public static void setBodyToCreateUserRequest(Object body) {
@@ -44,6 +46,7 @@ public class ReqresAPI extends BaseAPI {
                             path,
                             Method.POST
                     );
+            Objects.requireNonNull(UserAPI.response, "'postCreateUserRequest' Response is null.");
             return UserAPI.response;
         }
 

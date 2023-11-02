@@ -2,6 +2,8 @@ package rest.cucumber.stepDefs;
 
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.DataTableType;
+import io.cucumber.java.DocStringType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.specification.RequestSpecification;
@@ -12,6 +14,8 @@ import rest.cucumber.pojo.reqres.users.SimpleUser;
 import rest.cucumber.utils.AssertUtils;
 import rest.cucumber.utils.JsonUtils;
 import rest.cucumber.utils.TestContext;
+
+import java.util.Map;
 
 public class UserSteps {
 
@@ -24,6 +28,38 @@ public class UserSteps {
     public UserSteps(TestContext context) {
         this.ctx = context;
     }
+
+    // ----------------------------------------------------------------------
+
+//    @DataTableType
+//    public Author authorEntry(Map<String, String> entry) {
+//        return new Author(
+//                entry.get("firstName"),
+//                entry.get("lastName"),
+//                entry.get("famousBook"));
+//    }
+//
+//    @Given("There are my favorite authors")
+//    public void these_are_my_favourite_authors(List<Author> authors) {
+//        // step implementation
+//    }
+
+// ----------------------------------------------------------------------
+
+//    @ParameterType(".*")
+//    public Book book(String bookName) {
+//        return new Book(bookName);
+//    }
+//
+//    @Given("{book} is my favorite book")
+//    public void this_is_my_favorite_book(Book book) {
+//        // step implementation
+//    }
+
+//    @DocStringType
+//    public SimpleUser simpleUser(String docString) {
+//        return JsonUtils.jsonStringToObject(docString, SimpleUser.class);
+//    }
 
     @Given("I prepare request specification")
     public void iPrepareRequestSpec() {
@@ -90,6 +126,8 @@ public class UserSteps {
 
     @Then("I get the response code as {int}")
     public void iGetTheResponseCodeAs(int responseCode) {
+
+        ReqresAPI.UserAPI.logResponse();
 
         // *** 1) Using wrapper class (Page Object Model) ***
         int statusCode = ReqresAPI.UserAPI.getResponseStatusCodeForCreateUser();

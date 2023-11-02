@@ -7,10 +7,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Collection;
 
 public class CucumberHooks {
 
     private static final Logger LOGGER = LogManager.getLogger(CucumberHooks.class);
+    private static final String[] TO_BE_SKIPPED = new String[] {"@skip", "@ignore", "@disable", "@pending"};
 
     @Before
     public void beforeScenario(Scenario scenario) {
@@ -19,6 +21,7 @@ public class CucumberHooks {
         //				.configure()
         //				.systemProperties()
         //				.load();
+        Collection<String> tags = scenario.getSourceTagNames();
         LOGGER.info("Starting :: " + scenario.getName());
     }
 

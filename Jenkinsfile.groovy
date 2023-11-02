@@ -97,7 +97,7 @@ pipeline {
                     def mavenCmd = "${BUILD}" +
                             " -Dtest.env=${selectedEnv}" +
                             " -Dbase.url=${baseUrl}" +
-                            " -Dcucumber.filter.tags=${tags}" +
+                            " -Dcucumber.filter.tags=(${tags}) and (not @skip)" +
                             " -Dfailsafe.rerunFailingTestsCount=${retryCount}"
 
                     // Run the Maven command
@@ -114,9 +114,9 @@ pipeline {
 
                 // Define a map of report folders and their corresponding report files
                 def reportFolders = [
-                        "cucumber-reports"            : "cucumber-report.html",
-                        "extent-reports_${today}/Html": "ExtentHtml.html",
-                        "site/serenity"               : "index.html"
+                        "cucumber-reports"                       : "cucumber-report.html",
+                        "extent-reports_${today}/Html".toString(): "ExtentHtml.html",
+                        "site/serenity"                          : "index.html"
                 ]
 
                 // Iterate through the report folders and publish the report files
