@@ -1,3 +1,4 @@
+<!--suppress VulnerableLibrariesLocal -->
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +14,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
-        <aspectj.version>1.9.20</aspectj.version>
+        <cucumber.filter.tags>@debug</cucumber.filter.tags>
+        <test.env>dev</test.env>
     </properties>
 
     <repositories>
@@ -36,7 +38,6 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
-        <!--suppress VulnerableLibrariesLocal -->
         <!--        <dependency>-->
         <!--            <groupId>org.testng</groupId>-->
         <!--            <artifactId>testng</artifactId>-->
@@ -233,19 +234,19 @@
             <version>7.14.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-picocontainer</artifactId>
-            <version>7.14.0</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
         <!--        <dependency>-->
         <!--            <groupId>io.cucumber</groupId>-->
         <!--            <artifactId>cucumber-testng</artifactId>-->
         <!--            <version>7.14.0</version>-->
         <!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.14.0</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
         <dependency>
@@ -302,13 +303,6 @@
             <version>3.0.2</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.15.3</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/com.fasterxml/jackson-databind-databind -->
         <dependency>
             <groupId>com.fasterxml</groupId>
@@ -350,11 +344,13 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.0.0-M7</version>
                 <configuration>
-                    <parallel>classesAndMethods</parallel>
+                    <!--                    <parallel>classesAndMethods</parallel>-->
                     <systemPropertyVariables>
+                        <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
                         <!--                        <PLAYWRIGHT_JAVA_SRC>${project.basedir}</PLAYWRIGHT_JAVA_SRC>-->
                     </systemPropertyVariables>
-                    <systemPropertiesFile>${project.basedir}/src/test/resources/config.properties</systemPropertiesFile>
+                    <systemPropertiesFile>${project.basedir}/src/test/resources/${test.env}.config.properties
+                    </systemPropertiesFile>
                     <forkCount>8</forkCount>
                     <reuseForks>false</reuseForks>
                     <useUnlimitedThreads>true</useUnlimitedThreads>
@@ -362,16 +358,17 @@
                     <argLine>-Xmx2048m</argLine>
                     <argLine>-XX:MaxPermSize=256m</argLine>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <testFailureIgnore>true</testFailureIgnore>
-<!--                    <suiteXmlFiles>-->
-<!--                        <suiteXmlFile>testng.xml</suiteXmlFile>-->
-<!--                    </suiteXmlFiles>-->
+                    <!--                    <suiteXmlFiles>-->
+                    <!--                        <suiteXmlFile>testng.xml</suiteXmlFile>-->
+                    <!--                    </suiteXmlFiles>-->
                     <includes>
                         <include>**/*RunnerTest.java</include>
                     </includes>
                 </configuration>
                 <executions>
                     <execution>
+                        <id>integration-test</id>
+                        <phase>integration-test</phase>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
@@ -426,6 +423,7 @@
                 <version>4.0.18</version>
                 <configuration>
                     <featureFilesDirectory>${basedir}/src/test/resources/features</featureFilesDirectory>
+                    <allowDuplicateFeatureNames>true</allowDuplicateFeatureNames>
                     <!--                    <tags>@junit</tags>-->
                 </configuration>
                 <executions>

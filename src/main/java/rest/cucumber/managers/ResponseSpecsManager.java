@@ -4,13 +4,16 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.ResponseSpecification;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hamcrest.Matcher;
+import rest.cucumber.constants.APIConstants;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static rest.cucumber.base.APIBasePage.getResSpecBuilder;
+import static rest.cucumber.base.BaseApiSpec.getResSpecBuilder;
 
 /**
  * Add all Response Specifications here.
@@ -18,13 +21,15 @@ import static rest.cucumber.base.APIBasePage.getResSpecBuilder;
 @NoArgsConstructor
 public class ResponseSpecsManager {
 
-    private static Map getBasicHeaders() {
+    private static final Logger LOGGER = LogManager.getLogger(ResponseSpecsManager.class);
+
+    private static Map<String, Object> getBasicHeaders() {
         // Create a HashMap to represent HTTP headers
-        Map<String, String> headers = new HashMap<>();
+        Map<String, Object> headers = new HashMap<>();
 
         // Add common HTTP headers to the HashMap
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "application/json");
+        headers.put(APIConstants.HEADER_CONTENT_TYPE, APIConstants.APPLICATION_JSON);
+        headers.put(APIConstants.HEADER_ACCEPT, APIConstants.APPLICATION_JSON);
 //        headers.put("Authorization", "Bearer your-access-token");
 //        headers.put("UserAPI-Agent", "YourApp/1.0");
 //        headers.put("Accept-Encoding", "gzip, deflate");

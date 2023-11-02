@@ -3,6 +3,8 @@ package rest.cucumber.managers;
 import io.restassured.config.*;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.path.json.config.JsonPathConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +13,8 @@ import java.util.concurrent.TimeUnit;
  * All Rest Assured Configs.
  */
 public class RestAssuredConfigs {
+
+    private static final Logger LOGGER = LogManager.getLogger(RestAssuredConfigs.class);
 
     public static RestAssuredConfig getSslConfig(String sessionName, String sessionValue) {
         // Configure ssl settings

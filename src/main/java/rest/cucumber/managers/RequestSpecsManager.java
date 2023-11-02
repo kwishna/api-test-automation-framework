@@ -4,7 +4,6 @@ import io.restassured.authentication.AuthenticationScheme;
 import io.restassured.authentication.CertificateAuthSettings;
 import io.restassured.authentication.FormAuthConfig;
 import io.restassured.authentication.OAuthSignature;
-import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.Filter;
 import io.restassured.filter.log.LogDetail;
@@ -15,19 +14,18 @@ import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.ProxySpecification;
 import io.restassured.specification.RequestSpecification;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import rest.cucumber.constants.APIConstants;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.restassured.config.MultiPartConfig.multiPartConfig;
-import static rest.cucumber.base.APIBasePage.getReqSpecBuilder;
-import static rest.cucumber.config.Configuration.configuration;
+import static rest.cucumber.base.BaseApiSpec.getReqSpecBuilder;
+import static rest.cucumber.config.Configurations.configuration;
 
 /**
  * Add all Request Specifications here: -
@@ -35,13 +33,15 @@ import static rest.cucumber.config.Configuration.configuration;
 @NoArgsConstructor
 public class RequestSpecsManager {
 
-    private static Map getBasicHeaders() {
+    private static final Logger LOGGER = LogManager.getLogger(RequestSpecsManager.class);
+
+    private static Map<String, String> getBasicHeaders() {
         // Create a HashMap to represent HTTP headers
         Map<String, String> headers = new HashMap<>();
 
         // Add common HTTP headers to the HashMap
-        headers.put("Content-Type", "application/json");
-        headers.put("Accept", "application/json");
+        headers.put(APIConstants.HEADER_CONTENT_TYPE, APIConstants.APPLICATION_JSON);
+        headers.put(APIConstants.HEADER_ACCEPT, APIConstants.APPLICATION_JSON);
 //        headers.put("Authorization", "Bearer your-access-token");
 //        headers.put("UserAPI-Agent", "YourApp/1.0");
 //        headers.put("Accept-Encoding", "gzip, deflate");
@@ -341,24 +341,5 @@ public class RequestSpecsManager {
         getReqSpecBuilder()
                 .setAuth(scheme);
         return this;
-    }
-
-    public void multiPartBuilder(byte[] bytes) throws IOException {
-        new MultiPartSpecBuilder(bytes);
-
-        new MultiPartSpecBuilder("jkbasdkjbsk").with().charset("UTF-8").and().with().controlName("other").
-                and().with().mimeType("application/vnd.some+json").build();
-
-        new MultiPartSpecBuilder("sdfdss").with().charset("UTF-8").and().with().controlName("other").
-                and().with().mimeType("application/vnd.some+json").
-                and().with().header("X-Header-1", "Value1").
-                and().with().header("X-Header-2", "Value2").build();
-
-        new MultiPartSpecBuilder(Files.newInputStream(Path.of(""), StandardOpenOption.READ)).with().and().with().controlName("file").
-                and().with().mimeType("application/vnd.some+json").and().with().fileName("my-file").build();
-
-
-        // given().
-        //                multiPart(new MultiPartSpecBuilder(bytes).build()).
     }
 }

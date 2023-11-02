@@ -1,8 +1,8 @@
 @all
 Feature: As an user, I want to get started with Api challenge. So that, We can start the project.
 
-  @smoke
-  Scenario: Getting Started With The Api
+  @smoke @createUser
+  Scenario: Create User
     Given I prepare request specification
     Then I set the headers
       | Content-Type | application/json |

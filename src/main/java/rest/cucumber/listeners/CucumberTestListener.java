@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class CucumberTestListener implements ConcurrentEventListener {
-	private static final Logger LOG = LogManager.getLogger(CucumberTestListener.class);
+	private static final Logger LOGGER = LogManager.getLogger(CucumberTestListener.class);
 	
 	@Override
 	public void setEventPublisher(EventPublisher publisher) {
@@ -20,10 +20,10 @@ public class CucumberTestListener implements ConcurrentEventListener {
 		Throwable error = result.getError();
 		String scenarioName = testCase.getName();		
 		if(error != null) {
-			LOG.info(error);
+			LOGGER.info(error);
 		}
-		LOG.info("*****************************************************************************************");
-		LOG.info("	Scenario: "+scenarioName+" --> "+status.name());
-		LOG.info("*****************************************************************************************");
+		LOGGER.info("*****************************************************************************************");
+		LOGGER.info("	Scenario: "+scenarioName+" --> "+status.name());
+		LOGGER.info("*****************************************************************************************");
 	}
 }

@@ -4,6 +4,9 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.aventstack.extentreports.markuputils.Markup;
 
+/**
+ * Can be removed, if not required.
+ */
 public final class ExtentLogger {
 
     private ExtentLogger() {

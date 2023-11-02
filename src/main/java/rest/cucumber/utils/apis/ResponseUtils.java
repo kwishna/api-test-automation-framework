@@ -1,7 +1,6 @@
 package rest.cucumber.utils.apis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import io.restassured.module.jsv.JsonSchemaValidator;
@@ -116,8 +115,8 @@ public class ResponseUtils {
             );
         } catch (IOException e) {
             e.printStackTrace();
-            return;
         }
+        return;
     }
 
     public static JsonSchemaValidator getJsonSchemaValidator(Response res, String schemaFilePath) {
@@ -125,7 +124,11 @@ public class ResponseUtils {
     }
 
     public static String prettyPrintJson(Response res) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(new JsonParser().parse(res.asString()));
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(
+                        JsonParser.parseString(res.asString())
+                );
     }
 }

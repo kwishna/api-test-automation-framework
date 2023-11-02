@@ -1,15 +1,19 @@
 package rest.cucumber.data_provider;
 
 import net.datafaker.Faker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Locale;
 
-import static rest.cucumber.config.Configuration.configuration;
+import static rest.cucumber.config.Configurations.configuration;
 
 /**
  * Generates Fake Data.
  */
 public class FakerDataFactory {
+
+	private static final Logger LOGGER = LogManager.getLogger(FakerDataFactory.class);
 
 	private static final Faker faker = new Faker(new Locale(configuration().faker()));
 	
@@ -60,6 +64,7 @@ public class FakerDataFactory {
 	public static String getSwiftCode() {
 		return ""+faker.number().randomNumber(4, false);
 	}
+
 	public static String getTaxNumber() {
 		return ""+faker.number().randomNumber(7, false);
 	}
