@@ -64,6 +64,7 @@ public class FakerDataFactory {
 	public static String getSwiftCode() {
 		return ""+faker.number().randomNumber(4, false);
 	}
+
 	public static String getTaxNumber() {
 		return ""+faker.number().randomNumber(7, false);
 	}

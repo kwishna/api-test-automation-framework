@@ -1,7 +1,6 @@
 package rest.cucumber.handles;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -118,6 +117,10 @@ public class Responder {
 
     public long getResponseTime(Response response, TimeUnit timeUnit) {
         return response.getTimeIn(timeUnit);
+    }
+
+    public String getResponseBodyAsPrettyString(Response response) {
+        return response.body().asPrettyString();
     }
 
     public void logResponse(Response response) {

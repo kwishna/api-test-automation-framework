@@ -18,9 +18,9 @@ import java.util.Map;
 /**
  * TODO: Implementation Pending
  */
-public class StepListener extends RestStepListener {
+public class SerenityStepListener extends RestStepListener {
 
-    private static final Logger LOGGER = LogManager.getLogger(StepListener.class);
+    private static final Logger LOGGER = LogManager.getLogger(SerenityStepListener.class);
     @Override
     public void testSuiteStarted(Class<?> storyClass) {
 
