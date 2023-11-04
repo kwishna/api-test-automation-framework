@@ -13,8 +13,8 @@ import org.junit.runner.RunWith;
         objectFactory = PicoFactory.class,
         snippets = SnippetType.UNDERSCORE,
         features = {"src/test/resources/features"},
-        glue = {"rest.cucumber.stepDefs"},
-//        tags = "@junit",
+        glue = {"rest.cucumber.stepDefs", "rest.cucumber.hooks"},
+        tags = "@all",
         plugin = {
                 "pretty",
                 "usage:target/cucumber-reports/cucumber-usage.json",

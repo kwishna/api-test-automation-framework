@@ -49,7 +49,7 @@
         <dependency>
             <groupId>com.github.javadev</groupId>
             <artifactId>underscore11</artifactId>
-            <version>1.19</version>
+            <version>1.40</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
-            <version>1.7</version>
+            <version>1.10.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
@@ -309,6 +309,22 @@
             <artifactId>jackson-xml-databind</artifactId>
             <version>0.6.2</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis -->
+        <!--ScribeJava is a simple OAuth client for Java which helps manage the OAuth flow-->
+        <dependency>
+            <groupId>com.github.scribejava</groupId>
+            <artifactId>scribejava-apis</artifactId>
+            <version>8.3.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.wiremock/wiremock -->
+        <dependency>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
 
     </dependencies>
 

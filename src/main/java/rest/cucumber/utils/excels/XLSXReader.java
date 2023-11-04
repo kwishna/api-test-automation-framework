@@ -6,7 +6,6 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -44,8 +43,7 @@ public class XLSXReader {
             return 0;
         else {
             sheet = workbook.getSheetAt(index);
-            int number = sheet.getLastRowNum() + 1;
-            return number;
+            return sheet.getLastRowNum() + 1;
         }
 
     }

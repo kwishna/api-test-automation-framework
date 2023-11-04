@@ -15,6 +15,7 @@ import io.restassured.filter.FilterContext;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.listener.ResponseValidationFailureListener;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.FilterableRequestSpecification;
@@ -22,14 +23,21 @@ import io.restassured.specification.FilterableResponseSpecification;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.commons.lang3.mutable.MutableObject;
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -49,6 +57,32 @@ public class FakeRestApiTest {
     RequestSpecification reqSpec;
     ResponseSpecification getRespSpec;
     ObjectMapper mapper = new ObjectMapper();
+
+    @Test
+    public static void setup() {
+        baseURI = "http://coop.apps.knpuniversity.com";
+
+        JsonPath token = given()
+                .formParam("client_id", "TestOAuth")
+                .formParam("client_secret", "<your_client_secret>")
+                .formParam("grant_type", "client_credentials")
+                .when()
+                .post("/token")
+                .andReturn()
+                .jsonPath();
+
+        String OAUTH_TOKEN = token.getString("access_token");
+
+        // -----
+        given()
+                .auth()
+                .oauth2(OAUTH_TOKEN)
+                .when()
+                .post("/api/1332/chickens-feed")
+                .then()
+                .assertThat()
+                .body("action", equalToIgnoringCase("chickens-feed"));
+    }
 
     public void beforeTest() {
 
@@ -73,22 +107,6 @@ public class FakeRestApiTest {
 
     public void tearDown() {
         RestAssured.reset();
-    }
-
-    public void serialize() throws JsonProcessingException {
-        ValidatableResponse response = given()
-                .spec(reqSpec)
-                .when()
-                .get("/Activities")
-                .then()
-                .spec(getRespSpec);
-
-        Response resp = response.extract().response();
-        String respStr = resp.asPrettyString();
-
-//        Activity[] activities = mapper.readValue(respStr, Activity[].class);
-//        assertThat(activities, arrayWithSize(30));
-//        assertThat(activities[0].isCompleted(), equalTo(false));
     }
 
 //    @Test
@@ -195,6 +213,22 @@ public class FakeRestApiTest {
      *  RestApi api = new ResApi(server);
      *  Response response = api.createUser(user, credential);
      */
+
+    public void serialize() throws JsonProcessingException {
+        ValidatableResponse response = given()
+                .spec(reqSpec)
+                .when()
+                .get("/Activities")
+                .then()
+                .spec(getRespSpec);
+
+        Response resp = response.extract().response();
+        String respStr = resp.asPrettyString();
+
+//        Activity[] activities = mapper.readValue(respStr, Activity[].class);
+//        assertThat(activities, arrayWithSize(30));
+//        assertThat(activities[0].isCompleted(), equalTo(false));
+    }
 
     /**
      * --> "[0].bookingid"
@@ -339,6 +373,42 @@ public class FakeRestApiTest {
 
         // given().
         //                multiPart(new MultiPartSpecBuilder(bytes).build()).
+    }
+
+    @Test
+    public void testGetWithKeyStore() {
+        KeyStore trustStore;
+        try {
+            trustStore = KeyStore.getInstance("PKCS12");
+            trustStore.load(new FileInputStream(new File("<location to p12>")), "passwork".toCharArray());
+            given()
+                    .trustStore(trustStore)
+                    .accept(ContentType.XML)
+                    .when()
+                    .get("/all")
+                    .thenReturn()
+                    .asString();
+        } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void test_file_upload() {
+        File uploadFile = new File("C:\\Users\\rathr1\\Desktop\\PipeLine-Command.txt");
+
+        given()
+                .log()
+                .all()
+                .multiPart("file", uploadFile, "multipart/form-data")
+                .when()
+                .post("https://jobportalkarate.herokuapp.com/normal/webapi/upload")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK);
+
+
     }
 
 }

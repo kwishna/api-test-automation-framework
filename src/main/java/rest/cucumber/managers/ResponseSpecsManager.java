@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static rest.cucumber.base.BaseApiSpec.getResSpecBuilder;
 
 /**
@@ -48,6 +50,7 @@ public class ResponseSpecsManager {
         this
                 .expectContentType(ContentType.JSON)
                 .expectHeaders(getBasicHeaders())
+                .expectBody("$", is(notNullValue()))
                 .setLog(LogDetail.ALL);
         return this;
     }
