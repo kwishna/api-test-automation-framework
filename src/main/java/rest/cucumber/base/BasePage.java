@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
+import static rest.cucumber.constants.Constants.TARGET_PATH;
+
 public class BasePage {
     private static final long TIMEOUT = 5L;
 
@@ -288,7 +290,7 @@ public class BasePage {
     protected static void takeElementScreenshot(By byObj) {
         byte[] file = WebDriversManager.getDriver().findElement(byObj).getScreenshotAs(OutputType.BYTES);
         try {
-            Files.write(Paths.get(System.getProperty("user.dir"), "media", Utilities.getTimeStamp() + ".PNG"), file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+            Files.write(Paths.get(TARGET_PATH, Utilities.getTimeStamp() + ".PNG"), file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -297,7 +299,7 @@ public class BasePage {
     protected static void takeElementScreenshot(By byObj, String fileName) {
         byte[] file = WebDriversManager.getDriver().findElement(byObj).getScreenshotAs(OutputType.BYTES);
         try {
-            Files.write(Paths.get(System.getProperty("user.dir"), "media", fileName + ".PNG"), file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+            Files.write(Paths.get(TARGET_PATH, fileName + ".PNG"), file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -306,7 +308,7 @@ public class BasePage {
     protected static void fullPageScreenshot(String fileName) {
         byte[] file = ((TakesScreenshot) WebDriversManager.getDriver()).getScreenshotAs(OutputType.BYTES);
         try {
-            Files.write(Paths.get(System.getProperty("user.dir"), "media", fileName + ".PNG"), file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+            Files.write(Paths.get(TARGET_PATH, fileName + ".PNG"), file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -315,7 +317,7 @@ public class BasePage {
     protected static void fullPageScreenshot() {
         byte[] file = ((TakesScreenshot) WebDriversManager.getDriver()).getScreenshotAs(OutputType.BYTES);
         try {
-            Files.write(Paths.get(System.getProperty("user.dir"), "media", Utilities.getTimeStamp() + ".PNG"), file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+            Files.write(Paths.get(TARGET_PATH, Utilities.getTimeStamp() + ".PNG"), file, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
         } catch (IOException e) {
             e.printStackTrace();
         }

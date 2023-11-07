@@ -5,8 +5,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.path.json.config.JsonPathConfig;
 import io.restassured.path.json.exception.JsonPathException;
 import org.hamcrest.Matchers;
-import org.testng.annotations.Test;
-import restassured.support.Book;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -337,7 +336,8 @@ public class JsonPathTest {
         assertThat(priceAsString, is("8.95"));
     }
 
-    @Test(expectedExceptions = JsonPathException.class)
+//    @Test(expectedExceptions = JsonPathException.class)
+    @Test
     public void malformedJson() {
         String MALFORMED_JSON = """
                 {

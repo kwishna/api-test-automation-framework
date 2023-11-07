@@ -4,18 +4,22 @@ import org.openqa.selenium.WebDriver;
 import rest.cucumber.config.Configurations;
 import rest.cucumber.constants.Browsers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public final class WebDriversManager {
     private static final ThreadLocal<WebDriver> DRIVER_THREAD_LOCAL = ThreadLocal.withInitial(() -> null);
     private static final String BROWSER_NAME = Configurations.configuration().browser();
 
-//    private static final List<WebDriver> wdList = new ArrayList<>();
-//    static {
-//        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-//            wdList.stream().filter(Objects::nonNull).forEach(WebDriver::quit);
-//        }));
-//    }
+    private static final List<WebDriver> wdList = new ArrayList<>();
+
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            wdList.stream().filter(Objects::nonNull).forEach(WebDriver::quit);
+        }));
+    }
 
     private WebDriversManager() {
     }
@@ -27,6 +31,7 @@ public final class WebDriversManager {
     public static WebDriver getDriver() {
         if (DRIVER_THREAD_LOCAL.get() == null) {
             WebDriver driver = BasicDriverManager.getDriver();
+            wdList.add(driver);
             setDriver(driver);
         }
         return DRIVER_THREAD_LOCAL.get();

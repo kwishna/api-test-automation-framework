@@ -1,5 +1,7 @@
 package rest.cucumber.constants;
 
+import rest.cucumber.config.Configurations;
+
 public interface Constants {
     String PROJECT_PATH = System.getProperty("user.dir");
     String ICON_SMILEY_PASS = "<i class='fa fa-smile-o' style='font-size:24px'></i>";
@@ -28,8 +30,8 @@ public interface Constants {
     String TARGET_PATH = PROJECT_PATH + "/target/";
     String EXTENT_REPORT_NAME = "ExtentReport.html";
     String ZIPPED_EXTENT_REPORTS_FOLDER_NAME = "ExtentReports.zip";
-    String PROJECT_NAME = System.getProperty("PROJECT_NAME", "API_TESTS");
-    String TEST_ENV = System.getProperty("TEST_ENV", "QA");
+    String PROJECT_NAME = Configurations.configuration().projectName();
+    String TEST_ENV = Configurations.configuration().testEnv();
     boolean SEND_MAIL = Boolean.parseBoolean(System.getProperty("SEND_MAIL", "false"));
 
 }

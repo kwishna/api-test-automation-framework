@@ -18,6 +18,12 @@ public interface Configurations extends Config {
     @Key("user.dir")
     String userDir();
 
+    @Key("project.name")
+    String projectName();
+
+    @Key("test.env")
+    String testEnv();
+
     @DefaultValue("chrome")
     @Key("browser")
     String browser();
@@ -45,10 +51,10 @@ public interface Configurations extends Config {
     @Key("target")
     String target();
 
-    @Key("API_BASE")
+    @Key("api.base")
     String baseApiUrl();
 
-    @Key("url.base")
+    @Key("base.url")
     String baseUrl();
 
     @Key("url.home")

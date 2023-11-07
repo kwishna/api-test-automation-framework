@@ -1,4 +1,5 @@
-Feature: As a learner, I want to test Selenium 4 New Features
+@all_ui
+Feature: As a learner, I want to test Selenium
 
   @ui
   Scenario: Capture screenshot of specific web element:

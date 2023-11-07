@@ -1,6 +1,7 @@
 package rest.cucumber.rough_files;
 
-import org.testng.annotations.Ignore;
+
+import org.junit.Ignore;
 
 import java.util.Objects;
 
