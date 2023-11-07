@@ -18,6 +18,30 @@ public interface Configurations extends Config {
     @Key("user.dir")
     String userDir();
 
+    @DefaultValue("chrome")
+    @Key("browser")
+    String browser();
+
+    @DefaultValue("true")
+    @Key("headless")
+    String headless();
+
+    @DefaultValue("./")
+    @Key("download.dir")
+    String downloadDir();
+
+    @DefaultValue("60")
+    @Key("pageload.timeout")
+    String pageLoadTimeout();
+
+    @DefaultValue("30")
+    @Key("implicit.timeout")
+    String implicitTimeout();
+
+    @DefaultValue("")
+    @Key("driver.arguments")
+    String driverArguments();
+
     @Key("target")
     String target();
 
@@ -77,4 +101,19 @@ public interface Configurations extends Config {
 
     @Key("report.theme")
     String reportTheme();
+
+    @Key("driver.chromedriver.path")
+    String chromeDriverPath();
+
+    @Key("driver.geckodriver.path")
+    String geckoDriverPath();
+
+    @Key("driver.edge.path")
+    String edgeDriverPath();
+
+    @Key("driver.ie.path")
+    String ieDriverPath();
+
+    @Key("driver.safari.path")
+    String safariDriverPath();
 }

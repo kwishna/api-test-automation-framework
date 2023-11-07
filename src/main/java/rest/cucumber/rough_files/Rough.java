@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -88,6 +89,9 @@ class Rough {
 //        String unZipFolderName = new File(newfileName).getName().split("\\.")[0];
 //        unZip(newfileName, dir + File.separator + unZipFolderName);
 //        readExcelFile(dir + File.separator + unZipFolderName + File.separator + "name.xlsx", "Select * from Sheet1");
-        System.out.println(new File("F:\\ABD\\GitHub\\RestAssuredUdemyLearn\\data\\name\\name.xlsx").getName().split("\\.")[0]);
+//        System.out.println(new File("F:\\ABD\\GitHub\\RestAssuredUdemyLearn\\data\\name\\name.xlsx").getName().split("\\.")[0]);
+
+        System.out.println(UUID.randomUUID());
+
     }
 }
