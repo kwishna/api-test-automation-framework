@@ -22,10 +22,10 @@ package rest.cucumber.runner;
 //                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
 //        }
 //)
-public class CucumberTestNGRunnerTest /* extends AbstractTestNGCucumberTests */ {
+//public class CucumberTestNGRunnerTest /* extends AbstractTestNGCucumberTests */ {
 //    @DataProvider(parallel = true)
 //    @Override
 //    public Object[][] scenarios() {
 //        return super.scenarios();
 //    }
-}
+//}

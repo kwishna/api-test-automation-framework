@@ -3,7 +3,7 @@ package rest.cucumber.config;
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.LoadPolicy;
 import org.aeonbits.owner.Config.LoadType;
-import org.aeonbits.owner.ConfigCache;
+import org.aeonbits.owner.ConfigFactory;
 
 @LoadPolicy(LoadType.MERGE)
 @Config.Sources({
@@ -12,7 +12,7 @@ import org.aeonbits.owner.ConfigCache;
 })
 public interface Configurations extends Config {
     static Configurations configuration() {
-        return ConfigCache.getOrCreate(Configurations.class);
+        return ConfigFactory.create(Configurations.class);
     }
 
     @Key("user.dir")

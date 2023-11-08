@@ -31,11 +31,11 @@
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>junit</groupId>-->
+<!--            <artifactId>junit</artifactId>-->
+<!--            <version>4.13.2</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <!--        <dependency>-->
@@ -155,6 +155,20 @@
             <groupId>net.serenity-bdd.maven.plugins</groupId>
             <artifactId>serenity-maven-plugin</artifactId>
             <version>4.0.18</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.serenity-bdd/serenity-single-page-report -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-single-page-report</artifactId>
+            <version>4.0.19</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.serenity-bdd/serenity-navigator-report -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-navigator-report</artifactId>
+            <version>4.0.19</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/net.serenity-bdd.maven.plugins/maven-surefire-plugin -->
@@ -331,6 +345,35 @@
             <version>4.14.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-devtools-v119 -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.seleniumhq.selenium</groupId>-->
+        <!--            <artifactId>selenium-devtools-v119</artifactId>-->
+        <!--            <version>4.15.0</version>-->
+        <!--        </dependency>-->
+
+        <!--         JUNIT 5 Dependencies -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>7.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.1</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -359,6 +402,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
+                    <enablePreview>true</enablePreview>
                     <source>17</source>
                     <target>17</target>
                 </configuration>
@@ -379,9 +423,9 @@
                     <parallel>classesAndMethods</parallel>
                     <systemPropertyVariables>
                         <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
-                        <!--                        <PLAYWRIGHT_JAVA_SRC>${project.basedir}</PLAYWRIGHT_JAVA_SRC>-->
                     </systemPropertyVariables>
-                    <systemPropertiesFile>${project.basedir}/src/test/resources/${test.env}.config.properties
+                    <systemPropertiesFile>
+                        ${project.basedir}/src/test/resources/${test.env}.config.properties
                     </systemPropertiesFile>
                     <forkCount>8</forkCount>
                     <reuseForks>false</reuseForks>
@@ -453,9 +497,17 @@
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
                 <artifactId>serenity-maven-plugin</artifactId>
                 <version>4.0.18</version>
+                <!--                <dependencies>-->
+                <!--                    <dependency>-->
+                <!--                        <groupId>net.serenity-bdd</groupId>-->
+                <!--                        <artifactId>serenity-single-page-report</artifactId>-->
+                <!--                        <version>4.0.19</version>-->
+                <!--                    </dependency>-->
+                <!--                </dependencies>-->
                 <configuration>
                     <featureFilesDirectory>${basedir}/src/test/resources/features</featureFilesDirectory>
                     <allowDuplicateFeatureNames>true</allowDuplicateFeatureNames>
+                    <reports>single-page-html,navigator</reports>
                     <!--                    <tags>@junit</tags>-->
                 </configuration>
                 <executions>

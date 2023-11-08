@@ -4,6 +4,7 @@ import io.cucumber.java.*;
 import net.serenitybdd.core.Serenity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rest.cucumber.config.Configurations;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -43,7 +44,7 @@ public class CucumberHooks {
         // After Scenario
         LOGGER.info("Completed :: " + scenario.getName());
         try {
-            Serenity.recordReportData().withTitle("Log").fromFile(Path.of(System.getProperty("base.dir") + "/target/logs/app.log"));
+            Serenity.recordReportData().withTitle("Log").fromFile(Path.of(Configurations.configuration().userDir() + "/target/logs/app.log"));
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
