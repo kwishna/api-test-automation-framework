@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Utilities {
 
@@ -77,6 +79,47 @@ public final class Utilities {
 
     public static String readFileAsString(String path) throws IOException {
         return new String(Files.readAllBytes(Paths.get(path)));
+    }
+
+
+    public static Map<String, String> injectSysProperty(Map<String, String> row) {
+
+        final Map<String, String> finalMap = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : row.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            // If the value contains "${VALUE}", then
+            if (value.startsWith("${") && value.endsWith("}")) {
+
+                String cleanedValue = value.substring(2, value.length() - 1).trim();
+                String systemPropertyValue = System.getProperty(cleanedValue);
+
+                if (systemPropertyValue != null) {
+                    finalMap.put(key, systemPropertyValue);
+                } else {
+                    System.out.println("NO PROPERTY FOUND TO INJECT FOR :: " + cleanedValue);
+                }
+            }
+
+            else if (value.startsWith("$${") && value.endsWith("}")) {
+
+                String cleanedValue = value.substring(2, value.length() - 1).trim();
+                String systemPropertyValue = TestContext.getSyncVal(cleanedValue).toString();
+
+                if (systemPropertyValue != null) {
+                    finalMap.put(key, systemPropertyValue);
+                } else {
+                    System.out.println("NO PROPERTY FOUND TO INJECT FOR :: " + cleanedValue);
+                }
+            }
+
+            else {
+                finalMap.put(key, value);
+            }
+        }
+        return finalMap;
     }
 
 

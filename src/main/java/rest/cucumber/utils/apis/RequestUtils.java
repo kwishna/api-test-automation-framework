@@ -10,8 +10,13 @@ public class RequestUtils {
     public static HashMap<String, String> getBasicAuthHeader(String username, String password) {
         String basicAuth = username + ":" + password;
         String encodeBasicAuth = Base64.getEncoder().encodeToString(basicAuth.getBytes());
-        return new HashMap<String, String>() {{
+        return new HashMap<>() {{
             put(APIConstants.HEADER_AUTHORIZATION, encodeBasicAuth);
         }};
+    }
+
+    public static String encodeToBasicAuth(String username, String password) {
+        String basicAuth = username + ":" + password;
+        return Base64.getEncoder().encodeToString(basicAuth.getBytes());
     }
 }

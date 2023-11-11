@@ -33,9 +33,9 @@ public class BaseAPI {
         return RESPONDER.get();
     }
 
-    public static void resetAPI() {
-        LOGGER.warn("Resetting rest api");
-        SerenityRest.reset();
+    public static void clearAPI() {
+        LOGGER.warn("Clearing Rest API.");
+        SerenityRest.clear();
     }
 
     public static void logResponse(Response response) {

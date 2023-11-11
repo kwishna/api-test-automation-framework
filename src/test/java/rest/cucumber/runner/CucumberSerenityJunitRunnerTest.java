@@ -1,5 +1,6 @@
 package rest.cucumber.runner;
 
+import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.junit.CucumberOptions.SnippetType;
 import io.cucumber.picocontainer.PicoFactory;
@@ -9,12 +10,13 @@ import org.apache.logging.log4j.Logger;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
+//@RunWith(Cucumber.class)
 @CucumberOptions(
         objectFactory = PicoFactory.class,
         snippets = SnippetType.UNDERSCORE,
         features = {"src/test/resources/features"},
         glue = {"rest.cucumber.stepDefs", "rest.cucumber.hooks"},
-//        tags = "@all",
+//        tags = "@test",
         plugin = {
                 "pretty",
                 "usage:target/cucumber-reports/cucumber-usage.json",

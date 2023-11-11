@@ -11,8 +11,8 @@ import rest.cucumber.pages.ReqresAPI;
 import rest.cucumber.pojo.reqres.users.User;
 import rest.cucumber.utils.AssertUtils;
 import rest.cucumber.utils.JsonUtils;
-import rest.cucumber.utils.apis.ResponseUtils;
 import rest.cucumber.utils.TestContext;
+import rest.cucumber.utils.apis.ResponseUtils;
 
 import java.util.Map;
 
@@ -54,10 +54,11 @@ public class UsersFunctionalitySteps extends BaseSteps {
     @Then("I verify response body")
     public void iVerifyResponseBody(String docString) {
         Map<String, Object> _map = JsonUtils.jsonStringToType(docString);
-        System.out.println(_map);
+//        System.out.println(_map);
         User user = ResponseUtils.deserializeJsonResponseToObject(this.ctx.response, User.class);
-        System.out.println(user);
-    }
+//        System.out.println(user);
 
+        TestContext.setSyncVal("USER", user);
+    }
 
 }

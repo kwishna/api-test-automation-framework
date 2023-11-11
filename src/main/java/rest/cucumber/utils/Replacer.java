@@ -1,11 +1,18 @@
 package rest.cucumber.utils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Induces parameters inside a text.
+ */
 public class Replacer {
 
     /**
@@ -22,6 +29,8 @@ public class Replacer {
         }
         return "";
     }
+
+    // ----------------------------------------------------------------
 
     /**
      * @param rawString
@@ -56,6 +65,7 @@ public class Replacer {
         return rawString;
     }
 
+
     /**
      * @param rawString
      * @param prop
@@ -74,5 +84,48 @@ public class Replacer {
         return rawString;
     }
 
+    // ----------------------------------------------------------------
 
+    /**
+     * @param rawString
+     * @return
+     */
+    public static String induceSystemParameters(String rawString) {
+        return induceParameters(rawString, System.getProperties());
+    }
+
+    /**
+     * @param path
+     * @return
+     * @throws IOException
+     */
+    public static Path induceSystemParameters(Path path) throws IOException {
+        String rawString = Files.readString(path);
+        rawString = induceSystemParameters(rawString);
+        return Files.writeString(path, rawString, StandardOpenOption.CREATE_NEW);
+    }
+
+    /**
+     * @param path
+     * @param map
+     * @return
+     * @throws IOException
+     */
+    public static Path induceParameters(Path path, Map<String, String> map) throws IOException {
+        String rawString = Files.readString(path);
+        rawString = induceParameters(rawString, map);
+        return Files.writeString(path, rawString, StandardOpenOption.CREATE_NEW);
+    }
+
+    /**
+     * @param path
+     * @param prop
+     * @return
+     * @throws IOException
+     */
+    public static Path induceParameters(Path path, Properties prop) throws IOException {
+        String rawString = Files.readString(path);
+        rawString = induceParameters(rawString, prop);
+        return Files.writeString(path, rawString, StandardOpenOption.CREATE_NEW);
+    }
 }
