@@ -23,12 +23,12 @@ public class TestSteps {
     public void iWantToVerifyScenario(@Transpose DataTable table) {
 
         System.out.println("--------------------------------");
-        System.out.println(SerenityRest.lastResponse().body().prettyPrint());
+//        System.out.println(SerenityRest.lastResponse().body().prettyPrint());
         System.out.println("--------------------------------");
 
         System.out.println("--------------------------------");
-        User user = (User) TestContext.getSyncVal("USER");
-        System.out.println(user);
+//        User user = (User) TestContext.getSyncVal("USER");
+//        System.out.println(user);
         System.out.println("--------------------------------");
 
         System.out.println("--------------------------------");
