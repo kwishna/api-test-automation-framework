@@ -1,5 +1,6 @@
 Feature: As an user I want to verify a scenario so that I can validate complete functionality
 
+  @debug
   Scenario: Test - 1
     Given I set up the headers
       | Content-Type | application/json |
@@ -25,7 +26,6 @@ Feature: As an user I want to verify a scenario so that I can validate complete 
       """
     Then I clear rest-assured
 
-  @debug
   Scenario: Test - 2
     Given I want to verify a scenario
       | Apple | Mango | Cat | Rat |

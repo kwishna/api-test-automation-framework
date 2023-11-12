@@ -22,7 +22,7 @@ import org.junit.runner.RunWith;
                 "html:target/cucumber-reports/cucumber-report.html",
                 "json:target/cucumber-reports/cucumber.json",
                 "pretty:target/cucumber-reports/cucumber-pretty.txt",
-//                "rerun:rerun/failed_scenarios.txt",
+                "rerun:rerun/failed_scenarios.txt",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 //                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
         }

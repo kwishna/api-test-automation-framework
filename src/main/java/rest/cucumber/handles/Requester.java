@@ -1,10 +1,10 @@
 package rest.cucumber.handles;
 
+import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import net.serenitybdd.rest.SerenityRest;
-import io.restassured.http.Method;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import rest.cucumber.pages.BaseAPI;
@@ -17,37 +17,37 @@ public class Requester {
 
     private Response makeGetRequest(String path) {
         LOGGER.debug("Making 'GET' request");
-        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).get(path).thenReturn();
+        return SerenityRest.given().spec(BaseAPI.getRequestSpecMngr().getSpec()).get(path).thenReturn();
     }
 
     private Response makePostRequest(String path) {
         LOGGER.debug("Making 'POST' request");
-        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).post(path).thenReturn();
+        return SerenityRest.given().spec(BaseAPI.getRequestSpecMngr().getSpec()).post(path).thenReturn();
     }
 
     private Response makePutRequest(String path) {
         LOGGER.debug("Making 'PUT' request");
-        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).put(path).thenReturn();
+        return SerenityRest.given().spec(BaseAPI.getRequestSpecMngr().getSpec()).put(path).thenReturn();
     }
 
     private Response makePatchRequest(String path) {
         LOGGER.debug("Making 'PATCH' request");
-        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).patch(path).thenReturn();
+        return SerenityRest.given().spec(BaseAPI.getRequestSpecMngr().getSpec()).patch(path).thenReturn();
     }
 
     private Response makeHeadRequest(String path) {
         LOGGER.debug("Making 'HEAD' request");
-        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).head(path).thenReturn();
+        return SerenityRest.given().spec(BaseAPI.getRequestSpecMngr().getSpec()).head(path).thenReturn();
     }
 
     private Response makeOptionsRequest(String path) {
         LOGGER.debug("Making 'OPTIONS' request");
-        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).options(path).thenReturn();
+        return SerenityRest.given().spec(BaseAPI.getRequestSpecMngr().getSpec()).options(path).thenReturn();
     }
 
     private Response makeDeleteRequest(String path) {
         LOGGER.debug("Making 'DELETE' request");
-        return SerenityRest.given(BaseAPI.getRequestSpecMngr().getSpec()).delete(path).thenReturn();
+        return SerenityRest.given().spec(BaseAPI.getRequestSpecMngr().getSpec()).delete(path).thenReturn();
     }
 
     public Response makeRequest(String path, Method method) {
@@ -65,37 +65,37 @@ public class Requester {
 
     private Response makeGetRequest(RequestSpecification reqSpec) {
         LOGGER.debug("Making 'GET' request");
-        return SerenityRest.given(reqSpec).get().thenReturn();
+        return SerenityRest.given().spec(reqSpec).get().thenReturn();
     }
 
     private Response makePostRequest(RequestSpecification reqSpec) {
         LOGGER.debug("Making 'POST' request");
-        return SerenityRest.given(reqSpec).post().thenReturn();
+        return SerenityRest.given().spec(reqSpec).post().thenReturn();
     }
 
     private Response makePutRequest(RequestSpecification reqSpec) {
         LOGGER.debug("Making 'PUT' request");
-        return SerenityRest.given(reqSpec).put().thenReturn();
+        return SerenityRest.given().spec(reqSpec).put().thenReturn();
     }
 
     private Response makePatchRequest(RequestSpecification reqSpec) {
         LOGGER.debug("Making 'PATCH' request");
-        return SerenityRest.given(reqSpec).patch().thenReturn();
+        return SerenityRest.given().spec(reqSpec).patch().thenReturn();
     }
 
     private Response makeHeadRequest(RequestSpecification reqSpec) {
         LOGGER.debug("Making 'HEAD' request");
-        return SerenityRest.given(reqSpec).head().thenReturn();
+        return SerenityRest.given().spec(reqSpec).head().thenReturn();
     }
 
     private Response makeOptionsRequest(RequestSpecification reqSpec) {
         LOGGER.debug("Making 'OPTIONS' request");
-        return SerenityRest.given(reqSpec).options().thenReturn();
+        return SerenityRest.given().spec(reqSpec).options().thenReturn();
     }
 
     private Response makeDeleteRequest(RequestSpecification reqSpec) {
         LOGGER.debug("Making 'DELETE' request");
-        return SerenityRest.given(reqSpec).delete().thenReturn();
+        return SerenityRest.given().spec(reqSpec).delete().thenReturn();
     }
 
     public Response makeRequest(RequestSpecification reqSpec, Method method) {
@@ -115,37 +115,37 @@ public class Requester {
 
     private Response makeGetRequest(RequestSpecification reqSpec, String path) {
         LOGGER.debug("Making 'GET' request");
-        return SerenityRest.given(reqSpec).get(path).thenReturn();
+        return SerenityRest.given().spec(reqSpec).get(path).thenReturn();
     }
 
     private Response makePostRequest(RequestSpecification reqSpec, String path) {
         LOGGER.debug("Making 'POST' request");
-        return SerenityRest.given(reqSpec).post(path).thenReturn();
+        return SerenityRest.given().spec(reqSpec).post(path).thenReturn();
     }
 
     private Response makePutRequest(RequestSpecification reqSpec, String path) {
         LOGGER.debug("Making 'PUT' request");
-        return SerenityRest.given(reqSpec).put(path).thenReturn();
+        return SerenityRest.given().spec(reqSpec).put(path).thenReturn();
     }
 
     private Response makePatchRequest(RequestSpecification reqSpec, String path) {
         LOGGER.debug("Making 'PATCH' request");
-        return SerenityRest.given(reqSpec).patch(path).thenReturn();
+        return SerenityRest.given().spec(reqSpec).patch(path).thenReturn();
     }
 
     private Response makeHeadRequest(RequestSpecification reqSpec, String path) {
         LOGGER.debug("Making 'HEAD' request");
-        return SerenityRest.given(reqSpec).head(path).thenReturn();
+        return SerenityRest.given().spec(reqSpec).head(path).thenReturn();
     }
 
     private Response makeOptionsRequest(RequestSpecification reqSpec, String path) {
         LOGGER.debug("Making 'OPTIONS' request");
-        return SerenityRest.given(reqSpec).options(path).thenReturn();
+        return SerenityRest.given().spec(reqSpec).options(path).thenReturn();
     }
 
     private Response makeDeleteRequest(RequestSpecification reqSpec, String path) {
         LOGGER.debug("Making 'DELETE' request");
-        return SerenityRest.given(reqSpec).delete(path).thenReturn();
+        return SerenityRest.given().spec(reqSpec).delete(path).thenReturn();
     }
 
     public Response makeRequest(RequestSpecification reqSpec, String path, Method method) {
@@ -265,40 +265,40 @@ public class Requester {
 
     private Response makeGetRequest(RequestSpecification reqSpec, String path, Object... obj) {
         LOGGER.debug("Making 'GET' request");
-        return SerenityRest.given(reqSpec).get(path, obj).thenReturn();
+        return SerenityRest.given().spec(reqSpec).get(path, obj).thenReturn();
     }
 
     private Response makePostRequest(RequestSpecification reqSpec, String path, Object... obj) {
         LOGGER.debug("Making 'POST' request");
-        return SerenityRest.given(reqSpec).post(path, obj).thenReturn();
+        return SerenityRest.given().spec(reqSpec).post(path, obj).thenReturn();
     }
 
     private Response makePutRequest(RequestSpecification reqSpec, String path, Object... obj) {
         LOGGER.debug("Making 'PUT' request");
-        return SerenityRest.given(reqSpec).put(path, obj).thenReturn();
+        return SerenityRest.given().spec(reqSpec).put(path, obj).thenReturn();
     }
 
     private Response makePatchRequest(RequestSpecification reqSpec, String path, Object... obj) {
         LOGGER.debug("Making 'PATCH' request");
-        return SerenityRest.given(reqSpec).patch(path, obj).thenReturn();
+        return SerenityRest.given().spec(reqSpec).patch(path, obj).thenReturn();
     }
 
     private Response makeHeadRequest(RequestSpecification reqSpec, String path, Object... obj) {
         LOGGER.debug("Making 'HEAD' request");
-        return SerenityRest.given(reqSpec).head(path, obj).thenReturn();
+        return SerenityRest.given().spec(reqSpec).head(path, obj).thenReturn();
     }
 
     private Response makeOptionsRequest(RequestSpecification reqSpec, String path, Object... obj) {
         LOGGER.debug("Making 'OPTIONS' request");
-        return SerenityRest.given(reqSpec).options(path, obj).thenReturn();
+        return SerenityRest.given().spec(reqSpec).options(path, obj).thenReturn();
     }
 
     private Response makeDeleteRequest(RequestSpecification reqSpec, String path, Object... obj) {
         LOGGER.debug("Making 'DELETE' request");
-        return SerenityRest.given(reqSpec).options(path, obj).thenReturn();
+        return SerenityRest.given().spec(reqSpec).options(path, obj).thenReturn();
     }
 
-    public Response   makeRequest(RequestSpecification reqSpec, Method method, String path, Object... obj) {
+    public Response makeRequest(RequestSpecification reqSpec, Method method, String path, Object... obj) {
         return switch (method) {
             case GET -> makeGetRequest(reqSpec, path, obj);
             case POST -> makePostRequest(reqSpec, path, obj);
@@ -315,37 +315,37 @@ public class Requester {
 
     private Response makeGetRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
         LOGGER.debug("Making 'GET' request");
-        return SerenityRest.given(reqSpec).get(path, pathParams).thenReturn();
+        return SerenityRest.given().spec(reqSpec).get(path, pathParams).thenReturn();
     }
 
     private Response makePostRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
         LOGGER.debug("Making 'POST' request");
-        return SerenityRest.given(reqSpec).post(path, pathParams).thenReturn();
+        return SerenityRest.given().spec(reqSpec).post(path, pathParams).thenReturn();
     }
 
     private Response makePutRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
         LOGGER.debug("Making 'PUT' request");
-        return SerenityRest.given(reqSpec).put(path, pathParams).thenReturn();
+        return SerenityRest.given().spec(reqSpec).put(path, pathParams).thenReturn();
     }
 
     private Response makePatchRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
         LOGGER.debug("Making 'PATCH' request");
-        return SerenityRest.given(reqSpec).patch(path, pathParams).thenReturn();
+        return SerenityRest.given().spec(reqSpec).patch(path, pathParams).thenReturn();
     }
 
     private Response makeHeadRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
         LOGGER.debug("Making 'HEAD' request");
-        return SerenityRest.given(reqSpec).head(path, pathParams).thenReturn();
+        return SerenityRest.given().spec(reqSpec).head(path, pathParams).thenReturn();
     }
 
     private Response makeOptionsRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
         LOGGER.debug("Making 'OPTIONS' request");
-        return SerenityRest.given(reqSpec).options(path, pathParams).thenReturn();
+        return SerenityRest.given().spec(reqSpec).options(path, pathParams).thenReturn();
     }
 
     private Response makeDeleteRequest(RequestSpecification reqSpec, String path, Map<String, ?> pathParams) {
         LOGGER.debug("Making 'DELETE' request");
-        return SerenityRest.given(reqSpec).options(path, pathParams).thenReturn();
+        return SerenityRest.given().spec(reqSpec).options(path, pathParams).thenReturn();
     }
 
     public Response makeRequest(RequestSpecification reqSpec, Method method, String path, Map<String, ?> pathParams) {
