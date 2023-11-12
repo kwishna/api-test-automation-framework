@@ -74,11 +74,11 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>5.3.2</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>io.rest-assured</groupId>-->
+        <!--            <artifactId>rest-assured</artifactId>-->
+        <!--            <version>5.3.2</version>-->
+        <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator -->
         <dependency>
@@ -106,6 +106,20 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>2.15.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml/jackson-databind-databind -->
+        <dependency>
+            <groupId>com.fasterxml</groupId>
+            <artifactId>jackson-xml-databind</artifactId>
+            <version>0.6.2</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
@@ -171,14 +185,14 @@
             <version>4.0.19</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.serenity-bdd.maven.plugins/maven-surefire-plugin -->
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>3.0.0-M7</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.serenity-bdd.maven.plugins/maven-failsafe-plugin -->
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
@@ -263,9 +277,16 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
+        <!--        <dependency>-->
+        <!--            <groupId>net.masterthought</groupId>-->
+        <!--            <artifactId>cucumber-reporting</artifactId>-->
+        <!--            <version>5.7.7</version>-->
+        <!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/net.masterthought/maven-cucumber-reporting -->
         <dependency>
             <groupId>net.masterthought</groupId>
-            <artifactId>cucumber-reporting</artifactId>
+            <artifactId>maven-cucumber-reporting</artifactId>
             <version>5.7.7</version>
         </dependency>
 
@@ -277,12 +298,14 @@
             <version>1.14.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.codoid.products/fillo -->
         <dependency>
             <groupId>com.codoid.products</groupId>
             <artifactId>fillo</artifactId>
             <version>1.22</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
@@ -310,19 +333,6 @@
             <version>2.24.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.fasterxml/jackson-databind-databind -->
-        <dependency>
-            <groupId>com.fasterxml</groupId>
-            <artifactId>jackson-xml-databind</artifactId>
-            <version>0.6.2</version>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis -->
         <!--ScribeJava is a simple OAuth client for Java which helps manage the OAuth flow-->
@@ -353,26 +363,26 @@
         <!--        </dependency>-->
 
         <!--         JUNIT 5 Dependencies -->
-<!--        <dependency>-->
-<!--            <groupId>io.cucumber</groupId>-->
-<!--            <artifactId>cucumber-junit-platform-engine</artifactId>-->
-<!--            <version>7.14.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.junit.platform</groupId>-->
-<!--            <artifactId>junit-platform-launcher</artifactId>-->
-<!--            <version>1.10.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.junit.platform</groupId>-->
-<!--            <artifactId>junit-platform-suite</artifactId>-->
-<!--            <version>1.10.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter-engine</artifactId>-->
-<!--            <version>5.10.1</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.cucumber</groupId>-->
+        <!--            <artifactId>cucumber-junit-platform-engine</artifactId>-->
+        <!--            <version>7.14.0</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.platform</groupId>-->
+        <!--            <artifactId>junit-platform-launcher</artifactId>-->
+        <!--            <version>1.10.1</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.platform</groupId>-->
+        <!--            <artifactId>junit-platform-suite</artifactId>-->
+        <!--            <version>1.10.1</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.jupiter</groupId>-->
+        <!--            <artifactId>junit-jupiter-engine</artifactId>-->
+        <!--            <version>5.10.1</version>-->
+        <!--        </dependency>-->
 
 
     </dependencies>
@@ -405,6 +415,7 @@
                     <enablePreview>true</enablePreview>
                     <source>17</source>
                     <target>17</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -420,6 +431,8 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.0.0-M7</version>
                 <configuration>
+                    <failIfNoTests>true</failIfNoTests>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <parallel>classesAndMethods</parallel>
                     <systemPropertyVariables>
                         <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
@@ -497,13 +510,6 @@
                 <groupId>net.serenity-bdd.maven.plugins</groupId>
                 <artifactId>serenity-maven-plugin</artifactId>
                 <version>4.0.18</version>
-                <!--                <dependencies>-->
-                <!--                    <dependency>-->
-                <!--                        <groupId>net.serenity-bdd</groupId>-->
-                <!--                        <artifactId>serenity-single-page-report</artifactId>-->
-                <!--                        <version>4.0.19</version>-->
-                <!--                    </dependency>-->
-                <!--                </dependencies>-->
                 <configuration>
                     <featureFilesDirectory>${basedir}/src/test/resources/features</featureFilesDirectory>
                     <allowDuplicateFeatureNames>true</allowDuplicateFeatureNames>
@@ -528,27 +534,32 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>net.masterthought</groupId>-->
-            <!--                <artifactId>cucumber-reporting</artifactId>-->
-            <!--                <version>5.7.7</version>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <id>execution</id>-->
-            <!--                        <phase>verify</phase>-->
-            <!--                        <goals>-->
-            <!--                            <goal>generate</goal>-->
-            <!--                        </goals>-->
-            <!--                        <configuration>-->
-            <!--                            <projectName>api-test-automation-framework</projectName>-->
-            <!--                            <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>-->
-            <!--                            <cucumberOutput>${project.build.directory}/cucumber-reports/cucumber.json</cucumberOutput>-->
-            <!--                            <skippedFails>true</skippedFails>-->
-            <!--                            <enableFlashCharts>false</enableFlashCharts>-->
-            <!--                        </configuration>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>5.7.7</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>${project.name}</projectName>
+                            <skip>false</skip>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
+                            <jsonFiles>
+                                <param>**/cucumber.json</param>
+                            </jsonFiles>
+                            <mergeFeaturesById>false</mergeFeaturesById>
+                            <mergeFeaturesWithRetest>true</mergeFeaturesWithRetest>
+                            <checkBuildResult>true</checkBuildResult>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

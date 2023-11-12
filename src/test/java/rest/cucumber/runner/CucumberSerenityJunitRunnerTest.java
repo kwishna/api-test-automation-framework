@@ -1,6 +1,5 @@
 package rest.cucumber.runner;
 
-import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.junit.CucumberOptions.SnippetType;
 import io.cucumber.picocontainer.PicoFactory;
@@ -25,7 +24,7 @@ import org.junit.runner.RunWith;
                 "pretty:target/cucumber-reports/cucumber-pretty.txt",
 //                "rerun:rerun/failed_scenarios.txt",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
-                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+//                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
         }
 )
 public class CucumberSerenityJunitRunnerTest {

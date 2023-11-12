@@ -21,6 +21,7 @@ import java.util.Map;
 public class JsonUtils {
 
     private static final Logger LOGGER = LogManager.getLogger(JsonUtils.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * Serialize a Java object to a JSON string
@@ -30,11 +31,9 @@ public class JsonUtils {
      */
     public static String objectToJson(Object object) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(object);
         } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception as needed
-            return null;
+            throw new RuntimeException("Error converting Object to JSON string", e);
         }
     }
 
@@ -47,10 +46,9 @@ public class JsonUtils {
      */
     public static void objectIntoFile(File file, Object obj) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(file, obj);
         } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception as needed
+            throw new RuntimeException("Error converting Object to file", e);
         }
     }
 
@@ -63,11 +61,9 @@ public class JsonUtils {
      */
     public static <T> T fileToClass(File file, Class<T> clazz) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(file, clazz);
         } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception as needed
-            return null;
+            throw new RuntimeException("Error converting file to class", e);
         }
     }
 
@@ -79,11 +75,9 @@ public class JsonUtils {
      */
     public static String objectToPrettyJson(Object object) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
         } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception as needed
-            return null;
+            throw new RuntimeException("Error converting Object to pretty string", e);
         }
     }
 
@@ -97,11 +91,9 @@ public class JsonUtils {
      */
     public static <T> T jsonResponseToObject(Response response, Class<T> clazz) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(response.asString(), clazz);
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Response to class", e);
         }
     }
 
@@ -125,11 +117,10 @@ public class JsonUtils {
      */
     public static Map<String, Object> jsonStringToType(String jsonString) {
         try {
-            return new ObjectMapper().readValue(jsonString, new TypeReference<>() {
+            return objectMapper.readValue(jsonString, new TypeReference<>() {
             });
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Json String to Map", e);
         }
     }
 
@@ -143,10 +134,9 @@ public class JsonUtils {
     public static Map<String, Object> objectToMap(Object obj) {
         try {
             // Convert the object to a Map
-            return new ObjectMapper().convertValue(obj, Map.class);
+            return objectMapper.convertValue(obj, Map.class);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Object to Map", e);
         }
     }
 
@@ -160,20 +150,18 @@ public class JsonUtils {
      */
     public static <T> T jsonStringToType(String jsonString, Class<?> T) {
         try {
-            return new ObjectMapper().readValue(jsonString, new TypeReference<T>() {
+            return objectMapper.readValue(jsonString, new TypeReference<T>() {
             });
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Json String to class type", e);
         }
     }
 
-public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
+    public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
         try {
-            return new ObjectMapper().readValue(jsonString, clazz);
+            return objectMapper.readValue(jsonString, clazz);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Json string to class", e);
         }
     }
 
@@ -187,11 +175,10 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      */
     public static <T> T mapToType(Map<String, Object> map, Class<?> T) {
         try {
-            return new ObjectMapper().readValue(mapToJson(map), new TypeReference<T>() {
+            return objectMapper.readValue(mapToJson(map), new TypeReference<T>() {
             });
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Map to class", e);
         }
     }
 
@@ -199,16 +186,14 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      * Converts Map to a Class.
      *
      * @param map
-     * @param T
      * @param <T>
      * @return
      */
     public static <T> T mapToObject(Map<String, Object> map, Class<T> clazz) {
         try {
-            return new ObjectMapper().readValue(mapToJson(map), clazz);
+            return objectMapper.readValue(mapToJson(map), clazz);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Map to class", e);
         }
     }
 
@@ -221,10 +206,9 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      */
     public static String mapToJson(Map<String, Object> map) {
         try {
-            return new ObjectMapper().writeValueAsString(map);
+            return objectMapper.writeValueAsString(map);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Map to JSON string", e);
         }
     }
 
@@ -237,11 +221,10 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      */
     public static List<Object> jsonArrayToList(String jsonArrayString) {
         try {
-            return new ObjectMapper().readValue(jsonArrayString, new TypeReference<>() {
+            return objectMapper.readValue(jsonArrayString, new TypeReference<>() {
             });
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting Json array string to List of object", e);
         }
     }
 
@@ -254,10 +237,9 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      */
     public static String listToJsonArray(List<Object> list) {
         try {
-            return new ObjectMapper().writeValueAsString(list);
+            return objectMapper.writeValueAsString(list);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting List to Json array string", e);
         }
     }
 
@@ -270,12 +252,10 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      */
     public static String prettyPrintJson(String jsonString) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
             return writer.writeValueAsString(objectMapper.readTree(jsonString));
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error pretty printing JSON String", e);
         }
     }
 
@@ -289,15 +269,13 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      */
     public static String mergeJson(String json1, String json2) throws IOException {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             JsonNode node1 = objectMapper.readTree(json1);
             JsonNode node2 = objectMapper.readTree(json2);
             // Merge JSON objects, with values from the second JSON overwriting the first
             ((ObjectNode) node1).setAll((ObjectNode) node2);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(node1);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error merging JSON", e);
         }
     }
 
@@ -310,9 +288,6 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      */
     public static boolean compareJson(String json1, String json2) {
         try {
-            // Create ObjectMapper
-            ObjectMapper objectMapper = new ObjectMapper();
-
             // Parse JSON strings into JsonNode objects
             JsonNode node1 = objectMapper.readTree(json1);
             JsonNode node2 = objectMapper.readTree(json2);
@@ -335,13 +310,11 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
      */
     public static String jsonToXml(String json) throws IOException {
         try {
-            ObjectMapper jsonMapper = new ObjectMapper();
             XmlMapper xmlMapper = new XmlMapper();
-            JsonNode jsonNode = jsonMapper.readTree(json);
+            JsonNode jsonNode = objectMapper.readTree(json);
             return xmlMapper.writeValueAsString(jsonNode);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error converting JSON to XML", e);
         }
     }
 
@@ -366,7 +339,7 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
     }
 
     public static boolean isJsonKeyPresent(String jsonResponse, String key) throws Exception {
-        return new ObjectMapper().readTree(jsonResponse).has(key);
+        return objectMapper.readTree(jsonResponse).has(key);
     }
 
 //    public static void assertJsonEquals(String expectedJson, String actualJson) {
@@ -375,6 +348,60 @@ public static <T> T jsonStringToObject(String jsonString, Class<T> clazz) {
 
     public static String getJsonElementType(String jsonResponse, String elementPath) {
         return new JsonPath(jsonResponse).get(elementPath).getClass().getSimpleName();
+    }
+
+    /**
+     * Convert a JSON string to a JsonNode.
+     *
+     * @param jsonString The JSON string to convert.
+     * @return The JsonNode representation of the JSON string.
+     */
+    public static JsonNode toJsonNode(String jsonString) {
+        try {
+            return objectMapper.readTree(jsonString);
+        } catch (Exception e) {
+            throw new RuntimeException("Error converting JSON string to JsonNode", e);
+        }
+    }
+
+    /**
+     * Convert an object to a JsonNode.
+     *
+     * @param object The object to convert.
+     * @return The JsonNode representation of the object.
+     */
+    public static JsonNode toJsonNode(Object object) {
+        return objectMapper.valueToTree(object);
+    }
+
+    /**
+     * Convert a JsonNode to an object of the specified class.
+     *
+     * @param node  The JsonNode to convert.
+     * @param clazz The target class.
+     * @param <T>   The type of the target class.
+     * @return An object of the specified class.
+     */
+    public static <T> T fromJsonNode(JsonNode node, Class<T> clazz) {
+        try {
+            return objectMapper.treeToValue(node, clazz);
+        } catch (Exception e) {
+            throw new RuntimeException("Error converting JsonNode to object", e);
+        }
+    }
+
+    /**
+     * Convert a JsonNode to a string.
+     *
+     * @param node The JsonNode to convert.
+     * @return The string representation of the JsonNode.
+     */
+    public static String toJsonString(JsonNode node) {
+        try {
+            return objectMapper.writeValueAsString(node);
+        } catch (Exception e) {
+            throw new RuntimeException("Error converting JsonNode to JSON string", e);
+        }
     }
 
 }

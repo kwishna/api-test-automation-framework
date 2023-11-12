@@ -2,45 +2,101 @@ package rest.cucumber;
 
 import rest.cucumber.utils.Replacer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Rough {
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
+//        String input = "This is a ${project.name} located at ${project.dir}.";
+//        String pattern = "\\{([^}]*)\\}";
+//
+//        Pattern regex = Pattern.compile(pattern);
+//        Matcher matcher = regex.matcher(input);
+//
+//        while (matcher.find()) {
+//            System.out.println("Match: " + matcher.group(1));
+//        }
+//    }
 
-        String books = """
-                <response version-api="2.0">
-                        <value>
-                            <books>
-                                <book available="20" id="1">
-                                    <title>${animal}</title>
-                                    <author id="1">Miguel de Cervantes</author>
-                                </book>
-                                <book available="14" id="2">
-                                    <title>${fruit}</title>
-                                   <author id="2">JD Salinger</author>
-                               </book>
-                               <book available="13" id="3">
-                                   <title>${country}</title>
-                                   <author id="3">Lewis Carroll</author>
-                               </book>
-                               <book available="5" id="4">
-                                   <title>${os}</title>
-                                   <author id="4">Miguel de Cervantes</author>
-                               </book>
-                           </books>
-                       </value>
-                </response>
-                       """;
+    public static void main(String[] args) throws IOException {
 
-        Map<String, String> _map = new HashMap<>();
-        _map.put("animal", "Cat");
-        _map.put("fruit", "Apple");
-        _map.put("country", "India");
-        _map.put("os", "Windows");
+        String X = """
+                {
+                    "data": {
+                        "id": 2,
+                        "email": "janet.weaver@reqres.in",
+                        "first_name": "${sun.stdout.encoding}",
+                        "last_name": "${ file.encoding }",
+                        "avatar": "https://reqres.in/img/faces/2-image.jpg"
+                    },
+                    "support": {
+                        "url": "https://reqres.in/#support-heading",
+                        "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+                    }
+                }
+                """;
 
-        String _result = Replacer.induceParameters(books, _map);
-        System.out.println(_result);
+        System.out.println("--------------------------------");
+//        System.out.println(substituteSystemParameters(X));
+        System.out.println("--------------------------------");
+
+        Path path = Paths.get("test.json");
+
+        String rawString = Replacer.substituteSystemParameters(Files.readString(path));
+
+        Path targetDirectory = Paths.get("target", "subs");
+        Files.createDirectories(targetDirectory);
+
+        Path targetPath = targetDirectory.resolve(path.getFileName());
+        System.out.println(targetPath);
+
+        Files.writeString(targetPath, rawString, StandardOpenOption.CREATE);
+    }
+
+    public static String substituteParameters(String rawString, Properties prop) {
+        Pattern find = Pattern.compile("\\$\\{[^{}]*\\}");
+        Matcher matches = find.matcher(rawString);
+        while (matches.find()) {
+            String matchedValue = matches.group().trim();
+            String paramKey = getKey(matchedValue);
+            System.out.println("PARAM KEY '" + paramKey + "'");
+            String paramValue = prop.getProperty(paramKey.trim());
+            Objects.requireNonNull(paramValue, "Parameter Key '" + paramKey + "' Not Found In Provided Properties: " + prop);
+            rawString = substituteParameters(rawString, paramKey, paramValue);
+        }
+        return rawString;
+    }
+
+    public static String substituteSystemParameters(String rawString) {
+        return substituteParameters(rawString, System.getProperties());
+    }
+
+    private static String getKey(String matchedParam) {
+        System.out.println("Matched Param :: " + matchedParam);
+        Pattern find = Pattern.compile("\\{([^}]*)\\}");
+        Matcher matches = find.matcher(matchedParam);
+        if (matches.find()) {
+            String grp = matches.group(1);
+            System.out.println("Get Key group :: " + grp);
+            return grp;
+        }
+        return "";
+    }
+
+    public static String substituteParameters(String rawString, String paramkey, String paramValue) {
+        Pattern pattern = Pattern.compile("\\$\\{" + paramkey + "}");
+        Matcher matches = pattern.matcher(rawString);
+        while (matches.find()) {
+            rawString = pattern.matcher(rawString).replaceAll(paramValue);
+        }
+        return rawString;
     }
 }

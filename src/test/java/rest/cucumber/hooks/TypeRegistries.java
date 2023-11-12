@@ -1,9 +1,9 @@
 package rest.cucumber.hooks;
 
-import io.cucumber.java.DataTableType;
-
-import java.util.HashMap;
-import java.util.Map;
+//import io.cucumber.java.DataTableType;
+//
+//import java.util.HashMap;
+//import java.util.Map;
 
 public class TypeRegistries {
 

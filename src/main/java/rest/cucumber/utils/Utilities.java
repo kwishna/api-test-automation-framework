@@ -1,5 +1,6 @@
 package rest.cucumber.utils;
 
+import io.cucumber.datatable.DataTable;
 import rest.cucumber.config.Configurations;
 
 import java.io.FileWriter;
@@ -38,7 +39,7 @@ public final class Utilities {
             Files.write(
                     Paths.get(OUTPUT_FOLDER.toAbsolutePath() + "/Data_" + getTimeStamp() + ".txt"),
                     data.getBytes(),
-                    StandardOpenOption.CREATE_NEW
+                    StandardOpenOption.CREATE
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +59,7 @@ public final class Utilities {
             Files.write(
                     Paths.get(OUTPUT_FOLDER.toAbsolutePath() + "/" + fileName + getTimeStamp() + ".txt"),
                     data.getBytes(),
-                    StandardOpenOption.CREATE_NEW
+                    StandardOpenOption.CREATE
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +83,7 @@ public final class Utilities {
     }
 
 
-    public static Map<String, String> injectSysProperty(Map<String, String> row) {
+    public static Map<String, String> substituteSysProperty(Map<String, String> row) {
 
         final Map<String, String> finalMap = new HashMap<>();
 
@@ -101,9 +102,7 @@ public final class Utilities {
                 } else {
                     System.out.println("NO PROPERTY FOUND TO INJECT FOR :: " + cleanedValue);
                 }
-            }
-
-            else if (value.startsWith("$${") && value.endsWith("}")) {
+            } else if (value.startsWith("$${") && value.endsWith("}")) {
 
                 String cleanedValue = value.substring(2, value.length() - 1).trim();
                 String systemPropertyValue = TestContext.getSyncVal(cleanedValue).toString();
@@ -113,9 +112,43 @@ public final class Utilities {
                 } else {
                     System.out.println("NO PROPERTY FOUND TO INJECT FOR :: " + cleanedValue);
                 }
+            } else {
+                finalMap.put(key, value);
             }
+        }
+        return finalMap;
+    }
 
-            else {
+    public static Map<String, String> substituteSysProperty(DataTable table) {
+
+        final Map<String, String> finalMap = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : table.asMap().entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            // If the value contains "${VALUE}", then
+            if (value.startsWith("${") && value.endsWith("}")) {
+
+                String cleanedValue = value.substring(2, value.length() - 1).trim();
+                String systemPropertyValue = System.getProperty(cleanedValue);
+
+                if (systemPropertyValue != null) {
+                    finalMap.put(key, systemPropertyValue);
+                } else {
+                    System.out.println("NO PROPERTY FOUND TO INJECT FOR :: " + cleanedValue);
+                }
+            } else if (value.startsWith("$${") && value.endsWith("}")) {
+
+                String cleanedValue = value.substring(2, value.length() - 1).trim();
+                String systemPropertyValue = TestContext.getSyncVal(cleanedValue).toString();
+
+                if (systemPropertyValue != null) {
+                    finalMap.put(key, systemPropertyValue);
+                } else {
+                    System.out.println("NO PROPERTY FOUND TO INJECT FOR :: " + cleanedValue);
+                }
+            } else {
                 finalMap.put(key, value);
             }
         }

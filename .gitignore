@@ -29,7 +29,6 @@ build/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -39,3 +38,4 @@ build/
 ### Mac OS ###
 .DS_Store
 allure-results
+allure-report

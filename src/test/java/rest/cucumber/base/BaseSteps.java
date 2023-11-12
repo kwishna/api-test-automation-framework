@@ -18,7 +18,9 @@ public class BaseSteps {
 
     private void startSevices() {
         try {
-            Process process = Runtime.getRuntime().exec("java -jar apichallenges.jar");
+            ProcessBuilder builder = new ProcessBuilder();
+            Process process = builder.command("java -jar apichallenges.jar").start();
+//            Process process = Runtime.getRuntime().exec("java -jar apichallenges.jar");
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 if (process.isAlive()) process.destroyForcibly();
             }));
