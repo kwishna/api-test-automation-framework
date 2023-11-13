@@ -20,7 +20,7 @@
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
         </Root>
-        <Logger name="rest.cucumber" level="debug">
+        <Logger name="devils.dare" level="debug">
             <AppenderRef ref="File"/>
         </Logger>
     </Loggers>

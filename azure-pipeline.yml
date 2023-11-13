@@ -1,0 +1,97 @@
+trigger:
+  - main
+
+parameters:
+  - name: TEST_ENV
+    displayName: 'Select the environment'
+    type: string
+    values:
+      - DEV
+      - QA
+      - UAT
+      - PROD
+
+  - name: BASE_URL
+    displayName: 'Enter the base URL'
+    type: string
+    default: 'https://reqres.in'
+
+  - name: RETRY_COUNT
+    displayName: 'Number of times retry failed tests'
+    type: string
+    default: '0'
+
+  - name: CUCUMBER_TAGS
+    displayName: 'Cucumber tag to filter tests'
+    type: string
+    default: '@smoke'
+
+jobs:
+  - job: RunTests
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    variables:
+      TESTDIR: '$(System.DefaultWorkingDirectory)/$(PROJ_PATH)/'
+      MEMORY: '4096'
+
+    steps:
+      - checkout: self
+
+      - script: |
+          echo "Selected Environment: $(TEST_ENV)"
+          echo "Base URL: $(BASE_URL)"
+          echo "Retry Count: $(RETRY_COUNT)"
+          
+          # Set the environment variables
+          export TEST_ENV=$(TEST_ENV)
+          export BASE_URL=$(BASE_URL)
+          export RETRY_COUNT=$(RETRY_COUNT)
+        displayName: 'Set Environment Variables'
+
+      - script: 'mvn clean verify -Dtest.env=$(TEST_ENV) -Dbase.url=$(BASE_URL) -Dcucumber.filter.tags=($(CUCUMBER_TAGS)) and (not @skip) -Dfailsafe.rerunFailingTestsCount=$(RETRY_COUNT)'
+        displayName: 'Run Tests'
+
+      - task: PublishTestResults@2
+        condition: succeeded()
+        inputs:
+          testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          testRunTitle: 'Test Results'
+
+      - task: PublishCodeCoverageResults@1
+        condition: succeeded()
+        inputs:
+          codeCoverageTool: 'JaCoCo'
+          summaryFileLocation: '$(System.DefaultWorkingDirectory)/target/site/jacoco/jacoco.xml'
+          reportDirectory: '$(System.DefaultWorkingDirectory)/target/site/jacoco'
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/target'
+          artifact: 'TestArtifacts'
+          publishLocation: 'pipeline'
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/target/site/serenity'
+          artifact: 'SerenityArtifacts'
+          publishLocation: 'pipeline'
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/target/cucumber-reports'
+          artifact: 'CucumberReports'
+          publishLocation: 'pipeline'
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/target/extent-reports_$(Build.BuildId)/Html'
+          artifact: 'ExtentReports'
+          publishLocation: 'pipeline'
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/target/failsafe-reports'
+          artifact: 'FailsafeReports'
+          publishLocation: 'pipeline'
+
