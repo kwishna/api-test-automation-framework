@@ -1,4 +1,4 @@
-package devils.dare.apis.rough_files;
+package devils.dare.rough_files;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

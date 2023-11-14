@@ -1,4 +1,4 @@
-package devils.dare.apis.rough_files;
+package devils.dare.rough_files;
 
 import devils.dare.apis.pojo.models.Colors;
 import devils.dare.commons.utils.PropertiesUtils;

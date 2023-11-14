@@ -1,4 +1,4 @@
-package devils.dare.apis.rough_files;
+package devils.dare.rough_files;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

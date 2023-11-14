@@ -1,4 +1,4 @@
-package devils.dare.apis.rough_files;
+package devils.dare.rough_files;
 
 import io.restassured.common.mapper.ObjectDeserializationContext;
 import io.restassured.path.json.JsonPath;

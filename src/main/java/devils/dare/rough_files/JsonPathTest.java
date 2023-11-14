@@ -1,4 +1,4 @@
-package devils.dare.apis.rough_files;
+package devils.dare.rough_files;
 
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.path.json.JsonPath;
@@ -11,11 +11,154 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static devils.dare.rough_files.RestAssuredOneJson.JPaths.queryPath;
+import static io.restassured.RestAssured.when;
+import static net.serenitybdd.rest.RestRequests.expect;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+/*
+    1. Collection Operations: ----------------------------------------------------------------
+    def prices = jsonPath.get("store.book*.price") // Extract all book prices
+    def totalPrice = prices.sum() // Calculate the sum of prices
+    def averagePrice = prices.sum() / prices.size() // Calculate the average price
+
+    2. Closure and Filtering: -----------------------------------------------------------------
+    def expensiveBooks = jsonPath.get("store.book.findAll { it.price > 15 }")
+
+    3. Transformation: ------------------------------------------------------------------------
+    def bookTitles = jsonPath.get("store.book.title").collect { it.toUpperCase() }
+
+    4. Dynamic Features: -----------------------------------------------------------------------
+    def title = jsonPath.get("store.book[0].title")
+    def price = jsonPath.get("store.book[0].price")
+
+    5. String Interpolation: --------------------------------------------------------------------
+    def bookIndex = 0
+    def title = jsonPath.get("store.book[${bookIndex}].title")
+
+    6. Integration with Java: -------------------------------------------------------------------
+
+    def json = """
+    {
+      "store": {
+        "book": [
+          {
+            "title": "Book 1",
+            "price": 10.99
+          },
+          {
+            "title": "Book 2",
+            "price": 19.99
+          }
+        ],
+        "bicycle": {
+          "color": "red",
+          "price": 129.99
+        }
+      }
+    }
+    """
+
+    def jsonPath = JsonPath.from(json)
+
+    def expensiveBooks = jsonPath.get("store.book.findAll { it.price > 15 }")
+    def totalPrice = jsonPath.get("store.book*.price.sum()")
+
+    println "Expensive Books: $expensiveBooks"
+    println "Total Price: $totalPrice"
+
+    1. Safe Navigation Operator (?.):
+    def title = jsonPath.get("store.book[5]?.title")
+
+    2. Dynamic Method Invocation:
+    def method = "toUpperCase"
+    def title = jsonPath.get("store.book[0].title").invokeMethod(method)
+
+    3. JsonSlurper:
+    def jsonSlurper = new groovy.json.JsonSlurper()
+    def jsonData = jsonSlurper.parseText(json)
+    def bookTitles = jsonData.store.book.collect { it.title }
+
+    4. Destructuring Assignment:
+    def (firstTitle, secondTitle) = jsonPath.get("store.book*.title")
+
+    5. Spread Operator (*.):
+    def allTitles = jsonPath.get("store.book*.title.flatten()")
+
+    6. JsonBuilder:
+    def jsonBuilder = new groovy.json.JsonBuilder()
+
+    def book = [
+        title: "New Book",
+        price: 29.99
+    ]
+
+    def jsonString = jsonBuilder {
+        store {
+            book book
+        }
+    }
+
+    println jsonString
+
+    7. Metaprogramming:
+    String.metaClass.reverse = { -> delegate.reverse() }
+    def reversedTitle = jsonPath.get("store.book[0].title".reverse())
+
+// ----------------------------------------------------------------------------------------
+    XPath	JSONPath	    Description
+    /	    $	            the root object/element
+    .	    @	            the current object/element
+    /	    . or []	        child operator
+    ..	    n/a	            parent operator
+    //	    ..	            recursive descent. JSONPath borrows this syntax from E4X.
+    *	    * wildcard.     All objects/elements regardless their names.
+    @	    n/a	attribute access. JSON structures don't have attributes.
+    []	    []	subscript operator. XPath uses it to iterate over element collections and for predicates. In Javascript and JSON it is the native array operator.
+    |	    [,]	Union operator in XPath results in a combination of node sets. JSONPath allows alternate names or array indices as a set.
+    n/a	    [start:end:step]	array slice operator borrowed from ES4.
+    []	    ?()	            applies a filter (script) expression.
+    n/a	    ()	            script expression, using the underlying script engine.
+    ()	    n/a	            grouping in Xpath
+
+// ----------------------------------------------------------------------------------------
+
+    Function	    Description	                                        Output type
+    min()	        Provides the min value of an array of numbers	    Double
+    max()	        Provides the max value of an array of numbers	    Double
+    avg()	        Provides the average value of an array of numbers	Double
+    stddev()	    Provides the standard deviation value of an array of numbers	Double
+    length()	    Provides the length of an array	Integer
+    sum()	        Provides the sum value of an array of numbers	Double
+    keys()	        Provides the property keys (An alternative for terminal tilde ~)	Set<E>
+    concat(X)	    Provides a concatinated version of the path output with a new item	like input
+    append(X)	    add an item to the json path output array	like input
+    first()	        Provides the first item of an array	Depends on the array
+    last()	        Provides the last item of an array	Depends on the array
+    index(X)	Provides the item of an array of index: X, if the X is negative, take from backwards	Depends on the array
+
+// ----------------------------------------------------------------------------------------
+ */
 public class JsonPathTest {
 
+    private static final String LOTTO = """
+            {
+                "lotto":{
+                    "lottoId":5,
+                    "winning-numbers":[2, 45, 34, 23, 7, 5, 3],
+                    "winners":[
+                        {
+                              "winnerId":23,
+                              "numbers":[2, 45, 34, 23, 3, 5]
+                        },{
+                              "winnerId":54,
+                              "numbers":[52, 3, 12, 11, 18, 22]
+                        }
+                    ]
+                }
+            }
+            """;
     private final String JSON = """
             { "store": {
                 "book": [
@@ -55,7 +198,6 @@ public class JsonPathTest {
                         "atoms": %d                    }
                   }
             }""".formatted(Long.MAX_VALUE);
-
     private final String JSON2 = """
             [
                 {
@@ -75,22 +217,18 @@ public class JsonPathTest {
                 }
             ]
             """;
-
-
     private final String JSON_MAP = """
             {
                 "price1" : 12.3,
                 "price2": 15.0
             }
             """;
-
     private final String JSON_PATH_STARTING_WITH_NUMBER = """
             {
                 "0" : 12.3,
                 "1": 15.0
             }
             """;
-
     private final String JSON_PATH_WITH_BOOLEAN = """
             { "map" :
                 {
@@ -335,7 +473,7 @@ public class JsonPathTest {
         assertThat(priceAsString, is("8.95"));
     }
 
-//    @Test(expectedExceptions = JsonPathException.class)
+    //    @Test(expectedExceptions = JsonPathException.class)
     @Test
     public void malformedJson() {
         String MALFORMED_JSON = """
@@ -355,7 +493,7 @@ public class JsonPathTest {
 
     @Test
     public void getObjectWorksWhenPathPointsToATypeRefMap() {
-        final Map<String, Object> book = JsonPath.from(JSON).getObject("store.book[2]", new TypeRef<Map<String, Object>>() {
+        final Map<String, Object> book = JsonPath.from(JSON).getObject("store.book[2]", new TypeRef<>() {
         });
         assertThat(book.get("category"), Matchers.equalTo("fiction"));
         assertThat(book.get("author"), Matchers.equalTo("Herman Melville"));
@@ -364,7 +502,7 @@ public class JsonPathTest {
 
     @Test
     public void getObjectWorksWhenPathPointsToATypeRefList() {
-        final List<Float> prices = JsonPath.from(JSON).getObject("store.book.price", new TypeRef<List<Float>>() {
+        final List<Float> prices = JsonPath.from(JSON).getObject("store.book.price", new TypeRef<>() {
         });
         assertThat(prices, containsInAnyOrder(8.95, 12, 8.99, 22.99));
     }
@@ -399,53 +537,6 @@ public class JsonPathTest {
     public void getObjectAsStringWorksWhenPathPointsToAString() {
         final String category = JsonPath.from(JSON).getObject("store.book.category[0]", String.class);
         assertThat(category, equalTo("reference"));
-    }
-
-    @Test
-    public void jsonPathSupportsPrettifiyingJson() {
-        final String prettyJson = JsonPath.with(JSON2).prettify();
-        assertThat(prettyJson, equalTo("""
-                [
-                    {
-                        "email": "name1@mail.com",
-                        "alias": "name one",
-                        "phone": "3456789"
-                    },
-                    {
-                        "email": "name2@mail.com",
-                        "alias": "name two",
-                        "phone": "1234567"
-                    },
-                    {
-                        "email": "name3@mail.com",
-                        "alias": "name three",
-                        "phone": "2345678"
-                    }
-                ]"""));
-
-    }
-
-    @Test
-    public void jsonPathSupportsPrettyPrintingJson() {
-        final String prettyJson = JsonPath.with(JSON2).prettyPrint();
-        assertThat(prettyJson, equalTo("""
-                [
-                    {
-                        "email": "name1@mail.com",
-                        "alias": "name one",
-                        "phone": "3456789"
-                    },
-                    {
-                        "email": "name2@mail.com",
-                        "alias": "name two",
-                        "phone": "1234567"
-                    },
-                    {
-                        "email": "name3@mail.com",
-                        "alias": "name three",
-                        "phone": "2345678"
-                    }
-                ]"""));
     }
 
     @Test
@@ -777,13 +868,6 @@ public class JsonPathTest {
         assertThat(jsonPath.getList("groups.class", String.class), hasItems("A klassen"));
     }
 
-
-    @Test
-    public void unicode_json_values_are_pretty_printed_without_unicode_escaping() {
-        final String prettyJson = JsonPath.with("{\"some\":\"ŘÍŠŽŤČÝŮŇÚĚĎÁÉÓ\"}").prettyPrint();
-        assertThat(prettyJson, equalTo("{\n    \"some\": \"ŘÍŠŽŤČÝŮŇÚĚĎÁÉÓ\"\n}"));
-    }
-
     @Test
     public void need_to_escape_lists_with_hyphen_and_brackets() {
         String json = """
@@ -814,4 +898,432 @@ public class JsonPathTest {
         JsonPath jsonPath = JsonPath.from(json);
         assertThat(jsonPath.getString("root.items[0]"), is(nullValue()));
     }
+
+    @Test
+    public void groceriesContainsChocolateAndCoffee() {
+        expect().
+                body("shopping.category.find { it.@type == 'groceries' }", hasItems("Chocolate", "Coffee")).
+                when().
+                get("/shopping");
+    }
+
+    @Test
+    public void groceriesContainsChocolateAndCoffeeUsingDoubleStarNotation() {
+        expect().
+                body("**.find { it.@type == 'groceries' }", hasItems("Chocolate", "Coffee")).
+                when().
+                get("/shopping");
+    }
+
+    @Test
+    public void advancedJsonValidation() {
+        expect().
+                statusCode(allOf(greaterThanOrEqualTo(200), lessThanOrEqualTo(300))).
+                rootPath("store.book").
+                body("findAll { book -> book.price < 10 }.title", hasItems("Sayings of the Century", "Moby Dick")).
+                body("author.collect { it.length() }.sum()", equalTo(53)).
+                when().
+                get("/jsonStore");
+    }
+
+    @Test
+    public void advancedJsonValidation2() {
+        expect().
+                statusCode(allOf(greaterThanOrEqualTo(200), lessThanOrEqualTo(300))).
+                rootPath("store.book").
+                body("findAll { book -> book.price < 10 }.title", hasItems("Sayings of the Century", "Moby Dick")).
+                body("price.min()", equalTo(8.95f)).
+                body("price.max()", equalTo(22.99f)).
+                body("min { it.price }.title", equalTo("Sayings of the Century")).
+                body("author*.length().sum()", equalTo(53)).
+                body("author*.length().sum(2, { it * 2 })", is(108)).
+                when().
+                get("/jsonStore");
+    }
+
+    @Test
+    public void products() {
+        when().
+                get("/products").
+                then().
+                body("price.sum()", is(38.0d)).
+                body("dimensions.width.min()", is(1.0f)).
+                body("name.collect { it.length() }.max()", is(16)).
+                body("dimensions.multiply(2).height.sum()", is(21.0));
+    }
+
+    @Test
+    public void queryPathTest() {
+        String books = """
+                <response version-api="2.0">
+                        <value>
+                            <books>
+                                <book available="20" id="1">
+                                    <title>Don Quixote</title>
+                                    <author id="1">Miguel de Cervantes</author>
+                                </book>
+                                <book available="14" id="2">
+                                    <title>Catcher in the Rye</title>
+                                   <author id="2">JD Salinger</author>
+                               </book>
+                               <book available="13" id="3">
+                                   <title>Alice in Wonderland</title>
+                                   <author id="3">Lewis Carroll</author>
+                               </book>
+                               <book available="5" id="4">
+                                   <title>Don Quixote</title>
+                                   <author id="4">Miguel de Cervantes</author>
+                               </book>
+                           </books>
+                       </value>
+                    </response>
+                                """;
+        queryPath("$", books);
+        queryPath("response", books);
+        queryPath("response.value.books.book[0].author", books);
+        queryPath("response.value.books.book[0]", books);
+        queryPath("response.value.books.book[0]['@id']", books);
+        // Example shows a simple use of *, which only iterates over the direct children of the node.
+        // Look for any node with a tag name equal to 'book' having an id with a value of '2' directly under the 'books' node.
+        queryPath("""
+                response.value.books.'*'.find { node ->
+                    node.name() == 'book' && node.@id == '2'
+                }
+                """, books);
+        // ** is the same as looking for something everywhere in the tree from this point down.
+        queryPath("""
+                response.'**'.find { book ->
+                     book.author.text() == 'Lewis Carroll'
+                 }.@id
+                        """, books);
+        queryPath("""
+                response.value.books.book.findAll { book ->
+                          book.@id.toInteger() > 2
+                      }*.title.size()
+                                """, books);
+        queryPath("""
+                response.value.books.book.findAll { book ->
+                            book.@id.toInteger() > 2 }*.title
+                """, books);
+    }
+
+    @Test
+    public void jp() {
+        String books = """
+                  {
+                  "response": {
+                    "value": {
+                      "books": {
+                        "book": [
+                          {
+                            "title": "Don Quixote",
+                            "author": "Miguel de Cervantes"
+                          },
+                          {
+                            "title": "Catcher in the Rye",
+                            "author": "JD Salinger"
+                          },
+                          {
+                            "title": "Alice in Wonderland",
+                            "author": "Lewis Carroll"
+                          },
+                          {
+                            "title": "Don Quixote",
+                            "author": "Miguel de Cervantes"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+                """;
+        String user = """
+                {
+                    "firstName": "John",
+                    "lastName": "doe",
+                    "age": 26,
+                    "address": {
+                        "streetAddress": "naist street",
+                        "city": "Nara",
+                        "postalCode": "630-0192"
+                    },
+                    "phoneNumbers": [
+                        {
+                            "type": "iPhone",
+                            "number": "0123-4567-8888"
+                        },
+                        {
+                            "type": "home",
+                            "number": "0123-4567-8910"
+                        }
+                    ]
+                }
+                """;
+        String store = """
+                {
+                   "store": {
+                       "book": [
+                             {
+                                 "category": "reference",
+                                 "author": "Nigel Rees",
+                                 "title": "Sayings of the Century",
+                                 "price": 8.95
+                             },
+                             {
+                                 "category": "fiction",
+                                 "author": "Evelyn Waugh",
+                                 "title": "Sword of Honour",
+                                 "price": 12.99
+                             },
+                             {
+                                 "category": "fiction",
+                                 "author": "Herman Melville",
+                                 "title": "Moby Dick",
+                                 "isbn": "0-553-21311-3",
+                                 "price": 9.99
+                             },
+                             {
+                                 "category": "fiction",
+                                 "author": "J. R. R. Tolkien",
+                                 "title": "The Lord of the Rings",
+                                 "isbn": "0-395-19395-8",
+                                 "price": 22.99
+                             },
+                             {
+                                 "category": "horror",
+                                 "author": "Krishna Singh",
+                                 "title": "Snakes In The Ganga",
+                                 "isbn": "0-235-14536-6",
+                                 "price": 33
+                             }
+                       ],
+                       "bicycle": {
+                             "color": "red",
+                             "price": 19.95
+                       }
+                     },
+                     "city":"Bangalore"
+                  }
+                   """;
+        String persons = """
+                [
+                    {
+                        "id": 1,
+                        "name": "John Smith",
+                        "description": null,
+                        "shortDescription": "No recorded interests.",
+                        "alias": "JS",
+                        "preferences": [
+                            {
+                                "id": 1,
+                                "description": "likes candy and papaya",
+                                "image": "papaya.jpg",
+                                "name": "Papaya",
+                                "dependentPreferences": [
+                                    {
+                                        "id": 1,
+                                        "description": "Fruit must be ripe",
+                                        "image": "ripe-papaya.jpg",
+                                        "name": "pap"
+                                    }
+                                ]
+                            }
+                         ]
+                    },
+                    {
+                        "id": 2,
+                        "name": "Jane Smith",
+                        "description": null,
+                        "shortDescription": "No recorded interests.",
+                        "alias": "JS",
+                        "preferences": [
+                            {
+                                "id": 1,
+                                "description": "likes candy and papaya",
+                                "image": "papaya.jpg",
+                                "name": "Papaya",
+                                "dependentPreferences": [
+                                    {
+                                        "id": 1,
+                                        "description": "Candy must be Skittles",
+                                        "image": "Skittles.jpg",
+                                        "name": "skt"
+                                    }
+                                ]
+                            }
+                         ]
+                    }
+                ]
+                """;
+        String football = """
+                {
+                  "count": 20,
+                  "teams": [
+                    {
+                      "id": 322,
+                      "name": "Hull City FC",
+                      "shortName": "Hull",
+                      "squadMarketValue": null,
+                      "crestUrl": "http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg"
+                    },
+                    {
+                      "id": 338,
+                      "name": "Leicester City FC",
+                      "shortName": "Foxes",
+                      "squadMarketValue": null,
+                      "crestUrl": "http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png"
+                    },
+                    {
+                      "id": 340,
+                      "name": "Southampton FC",
+                      "shortName": "Southampton",
+                      "squadMarketValue": null,
+                      "crestUrl": "http://upload.wikimedia.org/wikipedia/de/c/c9/FC_Southampton.svg"
+                    }
+                  ]
+                }
+                """;
+        String players = """
+                {
+                  "count": 24,
+                  "players": [
+                    {
+                      "id": 439,
+                      "name": "David de Gea",
+                      "position": "Keeper",
+                      "jerseyNumber": 1,
+                      "dateOfBirth": "1990-11-07",
+                      "nationality": "Spain",
+                      "contractUntil": "2019-06-30",
+                      "marketValue": null
+                    },
+                    {
+                      "id": 440,
+                      "name": "Sergio Romero",
+                      "position": "Keeper",
+                      "jerseyNumber": 20,
+                      "dateOfBirth": "1987-02-22",
+                      "nationality": "Argentina",
+                      "contractUntil": "2018-06-30",
+                      "marketValue": null
+                    },
+                    {
+                      "id": 441,
+                      "name": "Eric Bailly",
+                      "position": "Centre-Back",
+                      "jerseyNumber": 3,
+                      "dateOfBirth": "1994-04-12",
+                      "nationality": "Cote d'Ivoire",
+                      "contractUntil": "2020-06-30",
+                      "marketValue": null
+                    }
+                  ]
+                }
+                """;
+        //        queryPath("$", books);
+        //        queryPath("response", books);
+        //        queryPath("response.value.books.book[0].author", books);
+        //        queryPath("response.value.books.book[0]", books);
+        //        queryPath("phoneNumbers[1].number", user);
+        //
+        //        queryPath("find { it.name == 'John Smith' }.preferences.find { it.image == 'papaya.jpg' }.dependentPreferences.description", persons);
+        //        queryPath("response.value.books.book.find { it.author == 'Lewis Carroll' }.title", books);
+        //        queryPath("teams.name[-1]", football);
+        //        queryPath("teams.name[0,1]", football);
+        //
+        //        queryPath("players.findAll { it.jerseyNumber > 1 }.name", players);
+        //        queryPath("players.max { it.jerseyNumber }.name", players);
+        //        queryPath("players.min { it.jerseyNumber }.name", players);
+        //        queryPath("players.collect { it.jerseyNumber }.sum()", players);
+        //        queryPath("players.findAll { it.position == 'Keeper' }.find { it.nationality == 'Argentina' }.name", players);
+        //
+        //        queryPath("store.book[*].title", store); // Doesn't Work
+        //        queryPath("store.book[*]", store); // Doesn't Work
+        //
+        //        queryPath("store.bicycle.color", store);
+        //        queryPath("store.book[1].title", store);
+        //        queryPath("store.book[-1].title", store);
+        //        queryPath("store.book.findAll { it.category == 'reference' }", store);
+        //        queryPath("store.book.findAll { it.category in ['reference','fiction'] }", store);
+        //        queryPath("store.book.findAll { it.category=='reference'}.size()", store);
+        //        queryPath("store.book.findAll { it.price < 12.0 }", store);
+        //        queryPath("store.book.findAll { it.category != 'reference' }", store);
+        //        queryPath("store.book.findAll { it.category == 'reference' || it.category == 'fiction' }", store);
+        //        queryPath("store.book.findAll { it.category == 'reference' && it.category ==  'fiction' }", store);
+        //        queryPath("store.book.findAll { it.category == 'reference' && it.author ==  'Herman Melville' }", store);
+        //        queryPath("store.book.findAll { it.category =~/ref.*/ || it.category=~/icti.*/ }", store);
+        //
+        //        queryPath("store.bicycle.price.toInteger();", store);
+        //        queryPath("store.bicycle.price.any();", store);
+        //        queryPath("store.book.get(1);", store);
+        //        queryPath("store.book.every { it.category == 'reference' };", store);
+        //        queryPath("store.book.any { it.category == 'reference' };", store);
+        //        queryPath("store.book.any { it.category.contains('reference') };", store);
+        //        queryPath("store.book.author.get(0).toUpperCase();", store);
+        //
+        //        queryPath("store.book[1..3]", store);
+        //        queryPath("store.book[1,3]", store);
+        //        queryPath("store.book[-1,-2,-3].asReversed()", store);
+        //        queryPath("store.book.price.average()", store);
+        //        queryPath("store.book.price", store);
+        //        queryPath("store.book.price*.plus(3)", store);
+        //        queryPath("store.book.price*.div(3)", store);
+        //        queryPath("store.book.price*.minus(15)", store);
+        //        queryPath("store.book.price*.multiply(3)", store);
+        //        queryPath("store.book.price*.minus(15)*.abs()", store);
+        //        queryPath("store.book.price*.toInteger()", store);
+        //        queryPath("store.book.price.findAll { Math.toIntExact(it.toLong()) % 2 == 0 }", store);
+        //        queryPath("store.book.price.grep { Math.toIntExact(it.toLong()) % 2 == 0 }", store);
+        //        queryPath("store.book.category", store);
+        //        queryPath("store.book.category.unique()", store);
+        //        queryPath("store.book.unique()", store);
+        //        queryPath("store.book.toUnique { it.category == 'horror' }", store);
+        //        queryPath("store.book.price.sort()", store);
+        //        queryPath("store.book.price.sort( { (a, b) -> (a == b) ? 0 : (a < b) ? 1 : -1 } )", store);
+        //        queryPath("store.book.price.max()", store);
+        //        queryPath("store.book.price.min()", store);
+        //        queryPath("store.book.collect { it.author }", store);
+        //        queryPath("store.book.price.join('-')", store);
+        //
+        //        queryPath("store.book[0].minus(['category':'reference']);", store);
+        //        queryPath("store.book.removeAll { it.key == 'reference' }", store);
+        //        queryPath("store.book.retainAll { it -> it.price % 2 == 0 }", store);
+        //        queryPath("store.book*.findAll { it.key == 'price' }", store);
+        //        queryPath("store.book*.findAll { it.key == 'author' }*.author", store);
+        //        queryPath("store.book.collect { entry -> entry.category }", store);
+        //
+        //        queryPath("store.book*.each { println(it) }", store);
+        //        queryPath("store.book.each { println(it) }", store);
+        //
+        //        queryPath("store.book.each { it.price > 30 }", store);
+
+        /*
+        assert nums.min() == 1
+                assert nums.max() == 3
+                assert nums.sum() == 6
+                assert nums.indices == [0, 1, 2]
+                assert nums.swap(0, 2) == [3, 2, 1] as int[]
+         */
+
+    }
+
+    @Test
+    public void
+    extracting_first_lotto_winner_to_java_object() {
+        final Winner winner = JsonPath.from(LOTTO).getObject("lotto.winners[0]", Winner.class);
+        assertThat(winner.getNumbers(), hasItems(2, 45, 34, 23, 3, 5));
+        assertThat(winner.getWinnerId(), equalTo(23));
+    }
+
+    @Test
+    public void
+    getting_numbers_greater_than_ten_for_lotto_winner_with_id_equal_to_23() {
+        List<Integer> numbers = JsonPath.from(LOTTO)
+                .getList("lotto.winners.find { it.winnerId == 23 }.numbers.findAll { it > 10 }", Integer.class);
+        assertThat(numbers, hasItems(45, 34, 23));
+        assertThat(numbers, hasSize(3));
+    }
+
+    // https://docs.groovy-lang.org/latest/html/api/org/codehaus/groovy/runtime/DefaultGroovyMethods.html
+
 }
