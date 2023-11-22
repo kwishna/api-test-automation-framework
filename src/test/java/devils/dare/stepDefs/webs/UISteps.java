@@ -18,7 +18,7 @@ public class UISteps extends BaseSteps {
 
     @Given("User navigates To URL: {string}")
     public void user_navigates_to_url(String url) {
-        googlePg.openUrl(url);
+        googlePg.openTheUrl(url);
     }
 
     @And("User clicks on 'Slow calculator'")
