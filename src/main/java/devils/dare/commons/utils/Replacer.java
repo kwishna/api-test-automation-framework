@@ -61,7 +61,7 @@ public class Replacer {
      * @param map
      * @return
      */
-    public static String substituteParameters(String rawString, Map<String, String> map) {
+    public static String substituteMapParameters(String rawString, Map<String, String> map) {
         Pattern find = Pattern.compile("\\$\\{[^{}]*\\}");
 //        Pattern find = Pattern.compile("\\$\\{.*?}");
         Matcher matches = find.matcher(rawString);
@@ -75,13 +75,12 @@ public class Replacer {
         return rawString;
     }
 
-
     /**
      * @param rawString
      * @param prop
      * @return
      */
-    public static String substituteParameters(String rawString, Properties prop) {
+    public static String substitutePropsParameters(String rawString, Properties prop) {
         Pattern find = Pattern.compile("\\$\\{[^{}]*\\}");
         Matcher matches = find.matcher(rawString);
         while (matches.find()) {
@@ -101,7 +100,7 @@ public class Replacer {
      * @return
      */
     public static String substituteSystemParameters(String rawString) {
-        return substituteParameters(rawString, System.getProperties());
+        return substitutePropsParameters(rawString, System.getProperties());
     }
 
     /**
@@ -123,7 +122,7 @@ public class Replacer {
      */
     public static Path substituteParameters(Path path, Map<String, String> map) {
         String rawString = fileContentAsString(path);
-        rawString = substituteParameters(rawString, map);
+        rawString = substituteMapParameters(rawString, map);
         return saveToNewFile(path, rawString);
     }
 
@@ -134,7 +133,7 @@ public class Replacer {
      */
     public static Path substituteParameters(Path path, Properties prop) {
         String rawString = fileContentAsString(path);
-        rawString = substituteParameters(rawString, prop);
+        rawString = substitutePropsParameters(rawString, prop);
         return saveToNewFile(path, rawString);
 
     }

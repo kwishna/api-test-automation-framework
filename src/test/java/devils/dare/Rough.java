@@ -1,15 +1,11 @@
 package devils.dare;
 
-import io.restassured.path.json.JsonPath;
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.Set;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsIterableContaining.hasItems;
 
 /*
   Basic JSONPath Expressions:
@@ -91,7 +87,11 @@ public class Rough {
 //        String X = JsonPath.from(res).get("[0]['access_code']");
 //        System.out.println("access_code : " + X);
 
-        List<Float> allPrices = JsonPath.from(res).get("store.book.price");
-        System.out.println(allPrices.stream().reduce(Float::sum).orElseThrow());
+//        List<Float> allPrices = JsonPath.from(res).get("store.book.price");
+//        System.out.println(allPrices.stream().reduce(Float::sum).orElseThrow());
+
+        Set<Object> actualSet = Set.of("A", "B", "C", "D");
+        String[] expected = new String[]{"B", "A", "D", "C"};
+        assertThat(actualSet, hasItems(expected));
     }
 }

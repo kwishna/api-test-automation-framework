@@ -23,7 +23,7 @@ public class ResponseSpecsManager {
 
     private static final Logger LOGGER = LogManager.getLogger(ResponseSpecsManager.class);
 
-    private ResponseSpecBuilder requestSpecBuilder;
+    private final ResponseSpecBuilder requestSpecBuilder;
 
     public ResponseSpecsManager() {
         requestSpecBuilder = new ResponseSpecBuilder();

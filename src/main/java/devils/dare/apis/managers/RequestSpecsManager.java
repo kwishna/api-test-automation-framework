@@ -33,7 +33,7 @@ public class RequestSpecsManager {
 
     private static final Logger LOGGER = LogManager.getLogger(RequestSpecsManager.class);
 
-    private RequestSpecBuilder requestSpecBuilder;
+    private final RequestSpecBuilder requestSpecBuilder;
 
     public RequestSpecsManager() {
         requestSpecBuilder = new RequestSpecBuilder();

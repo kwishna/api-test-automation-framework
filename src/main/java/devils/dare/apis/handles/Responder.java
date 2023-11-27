@@ -1,6 +1,7 @@
 package devils.dare.apis.handles;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -11,8 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Responder {
@@ -79,6 +82,15 @@ public class Responder {
         return response.headers();
     }
 
+    public Set<String> getResponseHeaderKeys(Response response) {
+        Headers headers = response.headers();
+        Set<String> keys = new HashSet<String>();
+        for (Header header : headers) {
+            keys.add(header.getName());
+        }
+        return keys;
+    }
+
     public String getHeaderValue(Response response, String headerName) {
         return response.headers().get(headerName).getValue();
     }
@@ -89,6 +101,10 @@ public class Responder {
 
     public String extractStringFromBody(Response response, String path) {
         return response.body().jsonPath().getString(path);
+    }
+
+    public Set<String> getResponseBodyKeys(Response response) {
+        return response.path("$");
     }
 
     public <T> List<T> extractListFromBody(Response response, String path, Class<T> clazz) {
