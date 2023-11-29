@@ -1,11 +1,8 @@
 package devils.dare;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import io.restassured.path.json.JsonPath;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsIterableContaining.hasItems;
+import java.util.*;
 
 /*
   Basic JSONPath Expressions:
@@ -67,11 +64,13 @@ public class Rough {
                                             "price": 22.99
                                         }
                     		        ],
-                    	"bicycle": {
-                    			"color": "red",
-                    			"price": 19.95
-                    		}
-                    	}
+                            "bicycle": {
+                                    "color": "red",
+                                    "price": 19.95
+                                },
+                            "nothing": 0
+                    	},
+                    	"name": "The Lord of the Rings"
                     }
                 """;
 
@@ -90,8 +89,39 @@ public class Rough {
 //        List<Float> allPrices = JsonPath.from(res).get("store.book.price");
 //        System.out.println(allPrices.stream().reduce(Float::sum).orElseThrow());
 
-        Set<Object> actualSet = Set.of("A", "B", "C", "D");
-        String[] expected = new String[]{"B", "A", "D", "C"};
-        assertThat(actualSet, hasItems(expected));
+//        Set<Object> actualSet = Set.of("A", "B", "C", "D");
+//        String[] expected = new String[]{"B", "A", "D", "C"};
+//        assertThat(actualSet, hasItems(expected));
+
+        Map<Object, Object> map = JsonPath.from(res).getMap("$");
+        System.out.println(getAllKeysFromJson(map));
+    }
+
+    public static Set<Object> getAllKeysFromJson(Map<Object, Object> map) {
+        Set<Object> keys = new HashSet<>();
+
+        for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            keys.add(entry.getKey());
+
+            if (entry.getValue() instanceof Map) {
+                // Recursive call for inner map
+                keys.addAll(getAllKeysFromJson((Map<Object, Object>) entry.getValue()));
+            } else if (entry.getValue() instanceof List) {
+                // Recursive call for each element in the list
+                for (Object listItem : (List<?>) entry.getValue()) {
+                    if (listItem instanceof Map) {
+                        keys.addAll(getAllKeysFromJson((Map<Object, Object>) listItem));
+                    } else {
+                        // Handle other types in the list
+                        keys.add(listItem);
+                    }
+                }
+            } else {
+                // Handle other types directly
+                keys.add(entry.getKey());
+            }
+        }
+
+        return keys;
     }
 }
