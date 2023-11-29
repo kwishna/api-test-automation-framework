@@ -1,5 +1,8 @@
 package devils.dare;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.path.json.JsonPath;
 
 import java.util.*;
@@ -28,7 +31,7 @@ public class Rough {
 //        }
 //    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
 
 //        ExecutorService service = Executors.newFixedThreadPool(5);
 
@@ -93,8 +96,27 @@ public class Rough {
 //        String[] expected = new String[]{"B", "A", "D", "C"};
 //        assertThat(actualSet, hasItems(expected));
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(res);
+
         Map<Object, Object> map = JsonPath.from(res).getMap("$");
-        System.out.println(getAllKeysFromJson(map));
+        System.out.println(getAllKeysFromJson(jsonNode));
+    }
+
+    public static Set<Object> getAllKeysFromJson(JsonNode jsonNode) {
+        Set<Object> keys = new HashSet<>();
+
+        Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.fields();
+        while (fields.hasNext()) {
+            Map.Entry<String, JsonNode> entry = fields.next();
+            keys.add(entry.getKey());
+
+            if (entry.getValue().isObject()) {
+                keys.addAll(getAllKeysFromJson(entry.getValue()));
+            }
+        }
+
+        return keys;
     }
 
     public static Set<Object> getAllKeysFromJson(Map<Object, Object> map) {
