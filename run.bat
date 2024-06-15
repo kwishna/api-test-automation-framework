@@ -1,0 +1,1 @@
+./gradlew Junit4 -Dtest.env="qa" -Dcucumber.filter.tags="@rough"
