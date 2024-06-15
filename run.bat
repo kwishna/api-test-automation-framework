@@ -1,1 +1,1 @@
-./gradlew Junit4 -Dtest.env="qa" -Dcucumber.filter.tags="@rough"
+./gradlew clean TestNG -Dtest.env="qa" -Dcucumber.filter.tags="@rough"

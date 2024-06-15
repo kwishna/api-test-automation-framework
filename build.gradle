@@ -43,6 +43,12 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+tasks.withType(Test).configureEach {
+    systemProperties = [
+            tag: System.getProperty('tag', 'person_test')
+    ]
+}
+
 //tasks {
 //    compileTestJava {
 //        sourceCompatibility = JavaVersion.VERSION_17
@@ -212,6 +218,10 @@ tasks.register('Junit5', Test) {
         loadPropertiesFile()
     }
     useJUnitPlatform {
+//        includeEngines 'junit-vintage'
+//        excludeEngines 'junit-jupiter'
+//        includeTags 'fast'
+//        excludeTags 'slow'
         testClasses {"**/Junit5Runner**"}
     }
     testLogging {
@@ -229,7 +239,14 @@ tasks.register('TestNG', Test) {
         loadPropertiesFile()
     }
     useTestNG {
+//        preserveOrder true
+//        excludeGroups 'integrationTests'
+//        includeGroups 'unitTests'
+        useDefaultListeners = true // Tells TestNG to execute its default reporting structure
+        suites 'src/test/suite.xml' //location of our suite.xml
         testClasses {"**/TestNGRunner**"}
+        testLogging.showStandardStreams = true
+        includeGroups System.getProperty('tag', 'NONE')
     }
     testLogging {
         showStandardStreams = true
