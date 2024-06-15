@@ -39,6 +39,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 //tasks {
 //    compileTestJava {
 //        sourceCompatibility = JavaVersion.VERSION_17
@@ -79,9 +83,10 @@ dependencies {
         implementation "net.serenity-bdd:serenity-screenplay:${serenity_version}"
         implementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenity_version}"
         implementation "net.serenity-bdd:serenity-ensure:${serenity_version}"
+//        implementation "net.serenity-bdd:serenity-junit5:${serenity_version}"
         implementation "io.cucumber:cucumber-java:${cucumber_version}"
-        implementation "org.junit.platform:junit-platform-launcher:${junit_platform_launcher_version}"
-        implementation "io.cucumber:cucumber-junit-platform-engine:${cucumber_junit_platform_engine_version}"
+//        implementation "io.cucumber:cucumber-junit-platform-engine:${cucumber_junit_platform_engine_version}"
+        implementation 'io.cucumber:cucumber-testng:7.18.0'
         implementation "io.cucumber:cucumber-picocontainer:7.18.0"
         implementation "ch.qos.logback:logback-classic:${logback_classic_version}"
         implementation "org.assertj:assertj-core:${assertj_core_version}"
@@ -109,12 +114,9 @@ dependencies {
         implementation 'com.fasterxml:jackson-xml-databind:0.6.2'
 
         // If using JUnit Jupiter
-        implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-        implementation "org.junit.platform:junit-platform-launcher:${junit_platform_suite_version}"
-        implementation "org.junit.platform:junit-platform-suite:${junit_platform_suite_version}"
-
-//        implementation "org.junit.jupiter:junit-jupiter-engine:${junit_jupiter_engine_version}"
-//        implementation "org.junit.vintage:junit-vintage-engine:${junit_vintage_engine_version}"
+//        implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+//        implementation "org.junit.platform:junit-platform-launcher:${junit_platform_suite_version}"
+//        implementation "org.junit.platform:junit-platform-suite:${junit_platform_suite_version}"
 
         // If using JUnit Vintage
 //        testCompileOnly 'junit:junit:4.13.2'
@@ -183,16 +185,6 @@ def loadPropertiesFile() {
 //    }
 //}
 
-//tasks.register('Smoke', Test) {
-//    loadPropertiesFile()
-//    useJUnitPlatform() { includeTags 'smoke' }
-//}
-//
-//tasks.register('Regression', Test) {
-//    loadPropertiesFile()
-//    useJUnitPlatform() { includeTags 'regression' }
-//}
-
 tasks.register('Junit4', Test) {
 //    gradle Junit4 --tests devils.dare.runner.*RunnerTest*
 //    ./gradlew Junit4 -Dtest.env="qa" -Dcucumber.filter.tags="@rough"
@@ -200,7 +192,11 @@ tasks.register('Junit4', Test) {
         loadPropertiesFile()
     }
     useJUnit {
-        testClasses {"**/RunnerTest**"}
+        testClasses {"**/Junit4Runner**"}
+    }
+    testLogging {
+        showStandardStreams = true
+        events TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED
     }
     maxParallelForks = 8
     afterTest { desc, result ->
@@ -215,7 +211,30 @@ tasks.register('Junit5', Test) {
     doFirst {
         loadPropertiesFile()
     }
-    useJUnitPlatform()
+    useJUnitPlatform {
+        testClasses {"**/Junit5Runner**"}
+    }
+    testLogging {
+        showStandardStreams = true
+        events TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED
+    }
+    maxParallelForks = 8
+    afterTest { desc, result ->
+        logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+}
+
+tasks.register('TestNG', Test) {
+    doFirst {
+        loadPropertiesFile()
+    }
+    useTestNG {
+        testClasses {"**/TestNGRunner**"}
+    }
+    testLogging {
+        showStandardStreams = true
+        events TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED
+    }
     maxParallelForks = 8
     afterTest { desc, result ->
         logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
