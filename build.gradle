@@ -195,6 +195,7 @@ def loadPropertiesFile() {
 
 tasks.register('Junit4', Test) {
 //    gradle Junit4 --tests devils.dare.runner.*RunnerTest*
+//    ./gradlew Junit4 -Dtest.env="qa" -Dcucumber.filter.tags="@rough"
     doFirst {
         loadPropertiesFile()
     }
@@ -210,10 +211,10 @@ tasks.register('Junit4', Test) {
 
 tasks.register('Junit5', Test) {
 //    gradle Junit5 --tests devils.dare.runner.*RunnerTest*
+//   ./gradlew Junit5 -Dtest.env="qa" -Dcucumber.filter.tags="@rough"
     doFirst {
         loadPropertiesFile()
     }
-    // Enable JUnit platform if needed (uncomment if necessary)
     useJUnitPlatform()
     maxParallelForks = 8
     afterTest { desc, result ->
