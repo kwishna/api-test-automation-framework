@@ -1,0 +1,287 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:4.1.14"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '4.1.14'
+}
+
+//apply plugin: 'java'
+//apply plugin: 'eclipse'
+//apply plugin: 'idea'
+//apply plugin: "net.serenity-bdd.serenity-gradle-plugin"
+
+defaultTasks 'clean', 'test', 'aggregate'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+group = 'devils.dare'
+version = '0.0.1-SNAPSHOT'
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test).configureEach {
+    systemProperties = [
+            tag: System.getProperty('tag', 'person_test')
+    ]
+}
+
+//tasks {
+//    compileTestJava {
+//        sourceCompatibility = JavaVersion.VERSION_17
+//        targetCompatibility = JavaVersion.VERSION_17
+//    }
+//}
+
+//allure {
+//    version = '2.12.1'
+//    downloadLinkFormat = 'https://dl.bintray.com/qameta/maven/io/qameta/allure/allure-commandline/%s/allure-commandline-%<s.zip'
+//    useJUnit5 {
+//        version = '2.12.1'
+//    }
+//    autoconfigure = false
+//    aspectjweaver = true
+//    aspectjVersion = "${aspectj_version}"
+//}
+
+ext {
+    serenity_version = '4.1.20'
+    junit_platform_launcher_version = "1.10.2"
+    cucumber_junit_platform_engine_version = "7.16.1"
+    junit_platform_suite_version = "1.10.2"
+    junit_jupiter_engine_version = "5.10.2"
+    junit_vintage_engine_version = "5.10.2"
+    logback_classic_version = "1.2.10"
+    assertj_core_version = "3.23.1"
+    cucumber_version = "7.18.0"
+
+//    cucumberTags = System.getProperty('cucumber.tags', '@smoke')
+}
+
+dependencies {
+    dependencies {
+        implementation "net.serenity-bdd:serenity-rest-assured:${serenity_version}"
+        implementation "net.serenity-bdd:serenity-core:${serenity_version}"
+        implementation "net.serenity-bdd:serenity-cucumber:${serenity_version}"
+        implementation "net.serenity-bdd:serenity-screenplay:${serenity_version}"
+        implementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenity_version}"
+        implementation "net.serenity-bdd:serenity-ensure:${serenity_version}"
+//        implementation "net.serenity-bdd:serenity-junit5:${serenity_version}"
+        implementation "io.cucumber:cucumber-java:${cucumber_version}"
+//        implementation "io.cucumber:cucumber-junit-platform-engine:${cucumber_junit_platform_engine_version}"
+        implementation 'io.cucumber:cucumber-testng:7.18.0'
+        implementation "io.cucumber:cucumber-picocontainer:7.18.0"
+        implementation "ch.qos.logback:logback-classic:${logback_classic_version}"
+        implementation "org.assertj:assertj-core:${assertj_core_version}"
+        implementation "org.apache.commons:commons-collections4:4.5.0-M1"
+        implementation "commons-io:commons-io:2.16.1"
+        implementation "org.apache.commons:commons-csv:1.7"
+        implementation "org.apache.commons:commons-lang3:3.14.0"
+        implementation "org.apache.commons:commons-csv:1.11.0"
+        implementation "org.apache.logging.log4j:log4j-core:2.23.1"
+        implementation "org.apache.logging.log4j:log4j-api:2.23.1"
+        implementation 'org.projectlombok:lombok:1.18.32'
+        implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
+        implementation 'org.aeonbits.owner:owner-java8:1.0.12'
+        implementation 'org.apache.poi:poi:5.2.5'
+        implementation 'org.apache.poi:poi-ooxml:5.2.5'
+        implementation 'com.aventstack:extentreports:5.1.1'
+        implementation 'net.datafaker:datafaker:2.2.2'
+        implementation 'tech.grasshopper:extentreports-cucumber7-adapter:1.14.0'
+        implementation 'io.rest-assured:json-schema-validator:5.4.0'
+        implementation 'org.wiremock:wiremock:3.6.0'
+        implementation 'com.codoid.products:fillo:1.22'
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.17.1'
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
+        implementation 'com.fasterxml.jackson.core:jackson-core:2.17.1'
+        implementation 'com.fasterxml:jackson-xml-databind:0.6.2'
+
+        // If using JUnit Jupiter
+//        implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+//        implementation "org.junit.platform:junit-platform-launcher:${junit_platform_suite_version}"
+//        implementation "org.junit.platform:junit-platform-suite:${junit_platform_suite_version}"
+
+        // If using JUnit Vintage
+//        testCompileOnly 'junit:junit:4.13.2'
+//        testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.9.2'
+//        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+
+        // If using JUnit 4
+        implementation 'junit:junit:4.13.2'
+
+    }
+}
+
+serenity {
+    outputDirectory = 'build/site/serenity' // Specify the directory where aggregated reports will be generated
+//    projectKey = null           // String, overwrites 'serenity.project.key'
+//    issueTrackerUrl = null      // String, base URL for the issue tracking system to be referred to in the reports
+//    jiraUrl = null
+//     String, If the base JIRA URL is defined, Serenity will build the issue tracker url using the standard JIRA form
+//    jiraProject = null          // String, ff defined, the JIRA project id will be prepended to issue numbers
+//    requirementsBaseDir = null  // String, overwrites 'serenity.test.requirements.basedir'
+    requirementsDir = "${project.rootDir}\\src\\test\\resources\\features"
+    // String, overwrites 'serenity.requirements.dir'
+    testRoot = "${project.rootDir}\\src\\test"             // String, overwrites 'serenity.test.root'
+    generateOutcomes = true     // generate report
+//    reports = []                // extended report types for reports-task
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+// set system environment using a file
+def loadPropertiesFile() {
+    def env = project.hasProperty('test.env') ? project.property('test.env') : 'QA'
+    def propertiesFile = file("${project.rootDir}/src/test/resources/configs/${env}.properties")
+
+    if (propertiesFile.exists()) {
+        def props = new Properties()
+        propertiesFile.withInputStream { stream ->
+            props.load(stream)
+        }
+        props.each { key, value ->
+            System.setProperty(key as String, value as String)
+        }
+    } else {
+        throw new GradleException("Properties file for environment '${env}' not found at ${propertiesFile.asPath}")
+    }
+}
+
+
+//tasks.register('cucumberCli') {
+//    dependsOn assemble, testClasses
+//    loadPropertiesFile()
+//    doLast {
+//        javaexec {
+//            main = "io.cucumber.core.cli.Main"
+//            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+//            args = [
+//                    '--plugin', 'pretty',
+//                    '--plugin', 'html:target/cucumber-report.html',
+//                    '--glue', 'devils.dare',
+//                    'src/test/resources']
+//        }
+//    }
+//}
+
+tasks.register('Junit4', Test) {
+//    gradle Junit4 --tests devils.dare.runner.*RunnerTest*
+//    ./gradlew Junit4 -Dtest.env="qa" -Dcucumber.filter.tags="@rough"
+    doFirst {
+        loadPropertiesFile()
+    }
+    useJUnit {
+        testClasses {"**/Junit4Runner**"}
+    }
+    testLogging {
+        showStandardStreams = true
+        events TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED
+    }
+    maxParallelForks = 8
+    afterTest { desc, result ->
+        logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+//    finalizedBy 'aggregate'
+}
+
+tasks.register('Junit5', Test) {
+//    gradle Junit5 --tests devils.dare.runner.*RunnerTest*
+//   ./gradlew Junit5 -Dtest.env="qa" -Dcucumber.filter.tags="@rough"
+    doFirst {
+        loadPropertiesFile()
+    }
+    useJUnitPlatform {
+//        includeEngines 'junit-vintage'
+//        excludeEngines 'junit-jupiter'
+//        includeTags 'fast'
+//        excludeTags 'slow'
+        testClasses {"**/Junit5Runner**"}
+    }
+    testLogging {
+        showStandardStreams = true
+        events TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED
+    }
+    maxParallelForks = 8
+    afterTest { desc, result ->
+        logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+}
+
+tasks.register('TestNG', Test) {
+    doFirst {
+        loadPropertiesFile()
+    }
+    useTestNG {
+//        preserveOrder true
+//        excludeGroups 'integrationTests'
+//        includeGroups 'unitTests'
+        useDefaultListeners = true // Tells TestNG to execute its default reporting structure
+        suites 'src/test/suite.xml' //location of our suite.xml
+        testClasses {"**/TestNGRunner**"}
+        testLogging.showStandardStreams = true
+        includeGroups System.getProperty('tag', 'NONE')
+    }
+    testLogging {
+        showStandardStreams = true
+        events TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED
+    }
+    maxParallelForks = 8
+    afterTest { desc, result ->
+        logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+}
+
+test {
+    loadPropertiesFile()
+//    systemProperty "cucumber.options", System.getProperty("cucumber.options")
+    useJUnitPlatform()
+
+    testLogging {
+        showStandardStreams = true
+        events TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED
+    }
+
+//    finalizedBy 'aggregate'
+}
+
+tasks.withType(Test).configureEach {
+    doFirst {
+        systemProperties System.getProperties()
+        systemProperties['junit.jupiter.execution.parallel.enabled'] = true
+        systemProperties['junit.jupiter.execution.parallel.mode.default'] = "same_thread"
+        systemProperties['junit.jupiter.execution.parallel.config.strategy'] = "fixed"
+        systemProperties['junit.jupiter.execution.parallel.config.fixed.parallelism'] = 5
+        systemProperties['junit.jupiter.execution.parallel.mode.classes.default'] = "concurrent"
+    }
+}
+
+gradle.startParameter.continueOnFailure = true
+
+//test.finalizedBy(aggregate)
