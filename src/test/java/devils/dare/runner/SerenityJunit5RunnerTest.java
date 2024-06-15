@@ -1,5 +1,7 @@
 package devils.dare.runner;
 
+//import net.serenitybdd.junit5.SerenityJUnit5Extension;
+//import org.junit.jupiter.api.extension.ExtendWith;
 /**
  *  // https://github.com/serenity-bdd/serenity-junit-starter/blob/master/src/test/java/starter/acceptancetests/WhenSearchingForTerms.java
  *      <dependency>
@@ -10,5 +12,5 @@ package devils.dare.runner;
  *         </dependency>
  */
 //@ExtendWith(SerenityJUnit5Extension.class)
-//public class SerenityJunit5Runner {
+//public class SerenityJunit5RunnerTest {
 //}

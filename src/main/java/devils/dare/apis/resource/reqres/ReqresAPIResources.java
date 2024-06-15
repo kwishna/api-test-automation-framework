@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public enum ReqresAPIResources {
 
     LIST_USERS("/api/users"),
@@ -14,6 +13,10 @@ public enum ReqresAPIResources {
 
     private final String resource;
 
+    ReqresAPIResources(String path) {
+        resource = path;
+    }
+    
     public static ReqresAPIResources of(String name) {
         ReqresAPIResources[] vals = ReqresAPIResources.values();
         for (ReqresAPIResources val : vals) {

@@ -1,6 +1,6 @@
 Feature: As an user I want to verify a scenario so that I can validate complete functionality
 
-  @debug
+  @rough
   Scenario: Test
     Given I want to verify a scenario
       | Apple | Mango | Cat | Rat |
