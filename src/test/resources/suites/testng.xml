@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="API Test">
+  <test thread-count="5" name="APIs">
+  	<classes>
+  		<class name="devils.dare.runner.CucumberTestNGRunnerTest"/>
+  	</classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
