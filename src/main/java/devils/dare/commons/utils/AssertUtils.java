@@ -3,8 +3,9 @@ package devils.dare.commons.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hamcrest.Matcher;
-import org.junit.Assert;
+//import org.junit.Assert;
 import devils.dare.commons.listeners.ExtentLogger;
+import org.testng.Assert;
 
 import java.util.Arrays;
 import java.util.List;

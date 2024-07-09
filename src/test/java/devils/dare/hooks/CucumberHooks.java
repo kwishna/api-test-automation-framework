@@ -1,5 +1,6 @@
 package devils.dare.hooks;
 
+import devils.dare.apis.utils.ScenarioContext;
 import io.cucumber.java.*;
 import net.serenitybdd.core.Serenity;
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +25,7 @@ public class CucumberHooks {
         //				.load();
         Collection<String> tags = scenario.getSourceTagNames();
         LOGGER.info("Starting :: " + scenario.getName());
+        ScenarioContext.init();
     }
 
     @BeforeStep
@@ -48,5 +50,6 @@ public class CucumberHooks {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+        ScenarioContext.clear();
     }
 }

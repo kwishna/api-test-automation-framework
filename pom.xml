@@ -257,18 +257,18 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>7.14.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.cucumber</groupId>-->
+<!--            <artifactId>cucumber-junit</artifactId>-->
+<!--            <version>7.14.0</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
-        <!--        <dependency>-->
-        <!--            <groupId>io.cucumber</groupId>-->
-        <!--            <artifactId>cucumber-testng</artifactId>-->
-        <!--            <version>7.14.0</version>-->
-        <!--        </dependency>-->
+                <dependency>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>cucumber-testng</artifactId>
+                    <version>7.14.0</version>
+                </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
         <dependency>
@@ -378,6 +378,12 @@
         <!--            <artifactId>junit-jupiter-engine</artifactId>-->
         <!--            <version>5.10.1</version>-->
         <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.10.2</version>
+        </dependency>
 
 
     </dependencies>
@@ -433,12 +439,12 @@
                     <argLine>-Xmx2048m</argLine>
                     <argLine>-XX:MaxPermSize=256m</argLine>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <!--                    <suiteXmlFiles>-->
-                    <!--                        <suiteXmlFile>testng.xml</suiteXmlFile>-->
-                    <!--                    </suiteXmlFiles>-->
-                    <includes>
-                        <include>**/*RunnerTest.java</include>
-                    </includes>
+                                        <suiteXmlFiles>
+                                            <suiteXmlFile>testng.xml</suiteXmlFile>
+                                        </suiteXmlFiles>
+<!--                    <includes>-->
+<!--                        <include>**/*RunnerTest.java</include>-->
+<!--                    </includes>-->
                 </configuration>
                 <executions>
                     <execution>

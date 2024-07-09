@@ -83,11 +83,6 @@ public class SerenityStepListener extends RestStepListener {
     }
 
     @Override
-    public void stepFailed(StepFailure failure, List<ScreenshotAndHtmlSource> screenshotList) {
-
-    }
-
-    @Override
     public void lastStepFailed(StepFailure failure) {
 
     }
