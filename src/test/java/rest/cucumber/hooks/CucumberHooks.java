@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.ScenarioContext;
 
 public class CucumberHooks {
 
@@ -16,6 +17,7 @@ public class CucumberHooks {
 
     @Before
     public void beforeScenario(Scenario scenario) {
+        ScenarioContext.init();
         // Be
         //		Dotenv
         //				.configure()
@@ -40,6 +42,7 @@ public class CucumberHooks {
 
     @After
     public void afterScenario(Scenario scenario) {
+        ScenarioContext.clear();
         // After Scenario
         LOGGER.info("Completed :: " + scenario.getName());
         try {
