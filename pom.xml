@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>rest.cucumber</groupId>
+    <groupId>devils.dare</groupId>
     <artifactId>api-test-automation-framework</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -15,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
         <cucumber.filter.tags>@debug</cucumber.filter.tags>
+        <webdriver.driver>chrome</webdriver.driver>
         <test.env>dev</test.env>
     </properties>
 
@@ -49,7 +50,7 @@
         <dependency>
             <groupId>com.github.javadev</groupId>
             <artifactId>underscore11</artifactId>
-            <version>1.19</version>
+            <version>1.40</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
@@ -63,7 +64,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
-            <version>1.7</version>
+            <version>1.10.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
@@ -74,11 +75,11 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>5.3.2</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>io.rest-assured</groupId>-->
+        <!--            <artifactId>rest-assured</artifactId>-->
+        <!--            <version>5.3.2</version>-->
+        <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator -->
         <dependency>
@@ -106,6 +107,20 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>2.15.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml/jackson-databind-databind -->
+        <dependency>
+            <groupId>com.fasterxml</groupId>
+            <artifactId>jackson-xml-databind</artifactId>
+            <version>0.6.2</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
@@ -157,14 +172,28 @@
             <version>4.0.18</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.serenity-bdd.maven.plugins/maven-surefire-plugin -->
+        <!-- https://mvnrepository.com/artifact/net.serenity-bdd/serenity-single-page-report -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-single-page-report</artifactId>
+            <version>4.0.19</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.serenity-bdd/serenity-navigator-report -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-navigator-report</artifactId>
+            <version>4.0.19</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>3.0.0-M7</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.serenity-bdd.maven.plugins/maven-failsafe-plugin -->
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
@@ -249,9 +278,16 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
+        <!--        <dependency>-->
+        <!--            <groupId>net.masterthought</groupId>-->
+        <!--            <artifactId>cucumber-reporting</artifactId>-->
+        <!--            <version>5.7.7</version>-->
+        <!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/net.masterthought/maven-cucumber-reporting -->
         <dependency>
             <groupId>net.masterthought</groupId>
-            <artifactId>cucumber-reporting</artifactId>
+            <artifactId>maven-cucumber-reporting</artifactId>
             <version>5.7.7</version>
         </dependency>
 
@@ -263,12 +299,14 @@
             <version>1.14.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.codoid.products/fillo -->
         <dependency>
             <groupId>com.codoid.products</groupId>
             <artifactId>fillo</artifactId>
             <version>1.22</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
@@ -296,23 +334,56 @@
             <version>2.24.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+
+        <!-- https://mvnrepository.com/artifact/com.github.scribejava/scribejava-apis -->
+        <!--ScribeJava is a simple OAuth client for Java which helps manage the OAuth flow-->
         <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
+            <groupId>com.github.scribejava</groupId>
+            <artifactId>scribejava-apis</artifactId>
+            <version>8.3.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.fasterxml/jackson-databind-databind -->
+        <!-- https://mvnrepository.com/artifact/org.wiremock/wiremock -->
         <dependency>
-            <groupId>com.fasterxml</groupId>
-            <artifactId>jackson-xml-databind</artifactId>
-            <version>0.6.2</version>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>3.3.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <!--        <dependency>-->
+        <!--            <groupId>ch.qos.logback</groupId>-->
+        <!--            <artifactId>logback-classic</artifactId>-->
+        <!--            <version>1.4.11</version>-->
+        <!--        </dependency>-->
+
+        <!--         JUNIT 5 Dependencies -->
+        <!--        <dependency>-->
+        <!--            <groupId>io.cucumber</groupId>-->
+        <!--            <artifactId>cucumber-junit-platform-engine</artifactId>-->
+        <!--            <version>7.14.0</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.platform</groupId>-->
+        <!--            <artifactId>junit-platform-launcher</artifactId>-->
+        <!--            <version>1.10.1</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.platform</groupId>-->
+        <!--            <artifactId>junit-platform-suite</artifactId>-->
+        <!--            <version>1.10.1</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.junit.jupiter</groupId>-->
+        <!--            <artifactId>junit-jupiter-engine</artifactId>-->
+        <!--            <version>5.10.1</version>-->
+        <!--        </dependency>-->
+
 
     </dependencies>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.openclover</groupId>
@@ -327,8 +398,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
+                    <enablePreview>true</enablePreview>
                     <source>17</source>
                     <target>17</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -344,12 +417,14 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.0.0-M7</version>
                 <configuration>
-                    <!--                    <parallel>classesAndMethods</parallel>-->
+                    <failIfNoTests>true</failIfNoTests>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <parallel>classesAndMethods</parallel>
                     <systemPropertyVariables>
                         <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
-                        <!--                        <PLAYWRIGHT_JAVA_SRC>${project.basedir}</PLAYWRIGHT_JAVA_SRC>-->
                     </systemPropertyVariables>
-                    <systemPropertiesFile>${project.basedir}/src/test/resources/${test.env}.config.properties
+                    <systemPropertiesFile>
+                        ${project.basedir}/src/test/resources/${test.env}.config.properties
                     </systemPropertiesFile>
                     <forkCount>8</forkCount>
                     <reuseForks>false</reuseForks>
@@ -424,6 +499,7 @@
                 <configuration>
                     <featureFilesDirectory>${basedir}/src/test/resources/features</featureFilesDirectory>
                     <allowDuplicateFeatureNames>true</allowDuplicateFeatureNames>
+                    <reports>single-page-html,navigator</reports>
                     <!--                    <tags>@junit</tags>-->
                 </configuration>
                 <executions>
@@ -444,28 +520,57 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>net.masterthought</groupId>-->
-            <!--                <artifactId>cucumber-reporting</artifactId>-->
-            <!--                <version>5.7.7</version>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <id>execution</id>-->
-            <!--                        <phase>verify</phase>-->
-            <!--                        <goals>-->
-            <!--                            <goal>generate</goal>-->
-            <!--                        </goals>-->
-            <!--                        <configuration>-->
-            <!--                            <projectName>api-test-automation-framework</projectName>-->
-            <!--                            <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>-->
-            <!--                            <cucumberOutput>${project.build.directory}/cucumber-reports/cucumber.json</cucumberOutput>-->
-            <!--                            <skippedFails>true</skippedFails>-->
-            <!--                            <enableFlashCharts>false</enableFlashCharts>-->
-            <!--                        </configuration>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>5.7.7</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>${project.name}</projectName>
+                            <skip>false</skip>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
+                            <jsonFiles>
+                                <param>**/cucumber.json</param>
+                            </jsonFiles>
+                            <mergeFeaturesById>false</mergeFeaturesById>
+                            <mergeFeaturesWithRetest>true</mergeFeaturesWithRetest>
+                            <checkBuildResult>true</checkBuildResult>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <test.env>dev</test.env>
+            </properties>
+        </profile>
+        <profile>
+            <id>preprod</id>
+            <properties>
+                <test.env>preprod</test.env>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <test.env>prod</test.env>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

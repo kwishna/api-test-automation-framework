@@ -59,7 +59,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.30'
 }
 
-group = 'rest.cucumber'
+group = 'devils.dare'
 version = '1.0-SNAPSHOT'
 description = 'api-test-automation-framework'
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -80,13 +80,20 @@ test {
     jvmArgs '-XX:MaxPermSize=512m'
     maxParallelForks = 8
     useJUnit()
+    systemProperties System.getProperties()
+    testLogging.showStandardStreams = true
+    //    useJUnitPlatform()
     testLogging {
         exceptionFormat "full"
     }
     include '**/*Test.java' // Example: Running integration tests with IT suffix
 }
 
-
+serenity {
+    reports = ["single-page-html", "navigator"]
+    // Specify the root package of any JUnit acceptance tests
+    testRoot="starter"
+}
 
 gradle.startParameter.continueOnFailure = true
 
