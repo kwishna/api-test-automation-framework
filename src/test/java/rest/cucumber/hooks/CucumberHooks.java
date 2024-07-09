@@ -4,6 +4,7 @@ import io.cucumber.java.*;
 import net.serenitybdd.core.Serenity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rest.cucumber.utils.ScenarioContext;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -19,6 +20,7 @@ public class CucumberHooks {
         //				.configure()
         //				.systemProperties()
         //				.load();
+        ScenarioContext.init();
         LOGGER.info("Starting :: " + scenario.getName());
     }
 
@@ -37,6 +39,7 @@ public class CucumberHooks {
 
     @After
     public void afterScenario(Scenario scenario) {
+        ScenarioContext.clear();
         // After Scenario
         LOGGER.info("Completed :: " + scenario.getName());
         try {
