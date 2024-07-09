@@ -119,6 +119,8 @@ dependencies {
         implementation 'com.fasterxml.jackson.core:jackson-core:2.17.1'
         implementation 'com.fasterxml:jackson-xml-databind:0.6.2'
 
+        implementation 'org.testng:testng:7.10.2'
+
         // If using JUnit Jupiter
 //        implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 //        implementation "org.junit.platform:junit-platform-launcher:${junit_platform_suite_version}"
@@ -130,7 +132,7 @@ dependencies {
 //        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
 
         // If using JUnit 4
-        implementation 'junit:junit:4.13.2'
+//        implementation 'junit:junit:4.13.2'
 
     }
 }
@@ -234,7 +236,7 @@ tasks.register('Junit5', Test) {
     }
 }
 
-tasks.register('TestNG', Test) {
+tasks.register('ng', Test) {
     doFirst {
         loadPropertiesFile()
     }
@@ -243,10 +245,9 @@ tasks.register('TestNG', Test) {
 //        excludeGroups 'integrationTests'
 //        includeGroups 'unitTests'
         useDefaultListeners = true // Tells TestNG to execute its default reporting structure
-        suites 'src/test/suite.xml' //location of our suite.xml
-        testClasses {"**/TestNGRunner**"}
+        suites "testng.xml"
+//        include "**/*TestNGRunner*"
         testLogging.showStandardStreams = true
-        includeGroups System.getProperty('tag', 'NONE')
     }
     testLogging {
         showStandardStreams = true
