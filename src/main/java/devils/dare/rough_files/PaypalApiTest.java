@@ -2,6 +2,7 @@ package devils.dare.rough_files;
 
 import io.restassured.RestAssured;
 import io.restassured.authentication.FormAuthConfig;
+import io.restassured.filter.cookie.CookieFilter;
 import io.restassured.filter.session.SessionFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
@@ -105,7 +106,7 @@ public class PaypalApiTest {
 	}
 
 	public void formAuthentication(){
-
+		CookieFilter cookieFilter = new CookieFilter(true);
 		filter = new SessionFilter();
 		baseURI = "https://localhost:8080";
 		given().
