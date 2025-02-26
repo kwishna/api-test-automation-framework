@@ -284,4 +284,9 @@ tasks.withType(Test).configureEach {
 
 gradle.startParameter.continueOnFailure = true
 
+tasks.test {
+    useJUnitPlatform()
+    systemProperty("cucumber.junit-platform.naming-strategy", "long")
+}
+
 //test.finalizedBy(aggregate)
