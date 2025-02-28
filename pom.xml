@@ -13,7 +13,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.release>24</maven.compiler.release>
         <cucumber.filter.tags>@debug</cucumber.filter.tags>
         <webdriver.driver>chrome</webdriver.driver>
         <test.env>dev</test.env>
@@ -398,9 +398,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <enablePreview>true</enablePreview>
-                    <source>17</source>
-                    <target>17</target>
+                    <enablePreview>false</enablePreview>
+                    <source>21</source>
+                    <target>21</target>
                     <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
@@ -419,7 +419,11 @@
                 <configuration>
                     <failIfNoTests>true</failIfNoTests>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <parallel>classesAndMethods</parallel>
+                    <parallel>classesAndMethods</parallel> <!-- all, methods, classes -->
+                    <useUnlimitedThreads>true</useUnlimitedThreads>
+                    <threadCount>16</threadCount>
+                    <perCoreThreadCount>false</perCoreThreadCount>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <systemPropertyVariables>
                         <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
                     </systemPropertyVariables>
@@ -439,6 +443,15 @@
                     <includes>
                         <include>**/*RunnerTest.java</include>
                     </includes>
+                    <!-- <properties> -->
+                    <!--    <property> -->
+                    <!--        <name>dataproviderthreadcount</name> -->
+                    <!--        <value>20</value> -->
+                    <!--    </property> -->
+                    <!-- <configurationParameters>
+                        cucumber.junit-platform.naming-strategy=long
+                    </configurationParameters> -->
+                    <!-- </properties> -->
                 </configuration>
                 <executions>
                     <execution>
