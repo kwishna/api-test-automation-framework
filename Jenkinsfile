@@ -254,6 +254,149 @@ pipeline {
             }
         }
 
+        stage('Static Code Analysis') {
+            parallel {
+                stage('SonarQube') {
+                    steps {
+                        withSonarQubeEnv('Sonarqube') {
+                            script {
+                                def sonarParams = ["-Dsonar.branch.name=${env.GIT_BRANCH}"]
+                                if (env.CHANGE_TARGET) {
+                                    sonarParams = [
+                                        "-Dsonar.pullrequest.key=$CHANGE_ID",
+                                        "-Dsonar.pullrequest.branch=$CHANGE_BRANCH",
+                                        "-Dsonar.pullrequest.base=$CHANGE_TARGET"
+                                    ]
+                                }
+
+                                sh """
+                                    export JAVA_HOME=/usr/local/corretto/17/latest
+                                    ${SONAR_HOME}/bin/sonar-scanner ${sonarParams.join(" ")}
+                                """
+                            }
+                        }
+                    }
+                }
+
+                // ✅ ESLint (for JS/TS projects)
+                stage('ESLint') {
+                    steps {
+                        sh '''
+                            if [ -f .eslintrc.js ] || [ -f .eslintrc.json ]; then
+                                npm run lint || true
+                            else
+                                echo "No ESLint config found."
+                            fi
+                        '''
+                    }
+                }
+
+                // ✅ Jacoco (Java code coverage)
+                stage('Jacoco Coverage') {
+                    steps {
+                        sh 'mvn clean test jacoco:report'
+                    }
+                    post {
+                        success {
+                            recordCoverage tools: [jacoco()]
+                        }
+                    }
+                }
+
+                // ✅ Black Duck Scan
+                stage('BlackDuck Scan') {
+                    steps {
+                        script {
+                            withCredentials([string(credentialsId: 'blackduck-api-token', variable: 'BD_TOKEN')]) {
+                                sh '''
+                                    ./synopsys-detect.sh \
+                                        --blackduck.url=https://your-blackduck-url \
+                                        --blackduck.api.token=$BD_TOKEN \
+                                        --detect.project.name=my-project \
+                                        --detect.project.version.name=1.0.0 \
+                                        --detect.tools=SIGNATURE_SCAN \
+                                        --detect.source.path=.
+                                '''
+                            }
+                        }
+                    }
+                }
+
+                // ✅ OWASP Dependency-Check
+                stage('Dependency Vulnerabilities (OWASP)') {
+                    steps {
+                        sh '''
+                            dependency-check.sh \
+                                --project "MyProject" \
+                                --scan ./ \
+                                --format HTML \
+                                --out dependency-check-report
+                        '''
+                    }
+                    post {
+                        success {
+                            publishHTML([
+                                reportDir: 'dependency-check-report',
+                                reportFiles: 'dependency-check-report.html',
+                                reportName: 'OWASP Dependency Check'
+                            ])
+                        }
+                    }
+                }
+
+                // ✅ Checkstyle
+                stage('Checkstyle') {
+                    steps {
+                        sh 'mvn checkstyle:checkstyle'
+                    }
+                    post {
+                        success {
+                            recordIssues tools: [checkStyle(pattern: '**/target/checkstyle-result.xml')]
+                        }
+                    }
+                }
+
+                // ✅ PMD
+                stage('PMD') {
+                    steps {
+                        sh 'mvn pmd:pmd'
+                    }
+                    post {
+                        success {
+                            recordIssues tools: [pmdParser(pattern: '**/target/pmd.xml')]
+                        }
+                    }
+                }
+
+                // ✅ SpotBugs
+                stage('SpotBugs') {
+                    steps {
+                        sh 'mvn com.github.spotbugs:spotbugs-maven-plugin:spotbugs'
+                    }
+                    post {
+                        success {
+                            recordIssues tools: [spotBugs(pattern: '**/target/spotbugsXml.xml')]
+                        }
+                    }
+                }
+
+                // ✅ Prettier (for formatting check)
+                stage('Prettier Check') {
+                    steps {
+                        sh 'npm run prettier -- --check "**/*.{js,ts,jsx,tsx}"'
+                    }
+                }
+
+                /*
+                // ✅ Other tools to consider:
+                - detekt (Kotlin)
+                - scalastyle (Scala)
+                - rubocop (Ruby)
+                - pylint/flake8 (Python)
+                */
+            }
+        }
+
         stage('SonarQube Scan (Generic)') {
             steps {
                 withSonarQubeEnv('Sonarqube') {
