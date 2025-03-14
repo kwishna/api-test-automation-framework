@@ -418,6 +418,107 @@ pipeline {
             }
         }
 
+        stage('Cloud and Containers') {
+            stage('Docker Build & Push') {
+                when {
+                    expression { return env.BUILD_IMAGE == 'true' }
+                }
+                steps {
+                    script {
+                        def imageName = "nexus-host:port/org/app:${env.BUILD_ID}"
+
+                        sh """
+                            docker build -t ${imageName} .
+                            docker push ${imageName}
+                        """
+
+                        echo "Docker image pushed: ${imageName}"
+                    }
+                }
+            }
+
+            stage('Docker Image Scan (Trivy)') {
+                steps {
+                    sh '''
+                        trivy image --severity CRITICAL,HIGH nexus-host:port/org/app:${BUILD_ID} || true
+                    '''
+                }
+            }
+
+            stage('Terraform Validate & Plan') {
+                when {
+                    expression { fileExists('infra/main.tf') }
+                }
+                steps {
+                    dir('infra') {
+                        sh '''
+                            terraform init
+                            terraform validate
+                            terraform plan -out=tfplan
+                        '''
+                    }
+                }
+            }
+
+            stage('Checkov - IaC Security Scan') {
+                when {
+                    expression { fileExists('infra/main.tf') || fileExists('.checkov.yaml') }
+                }
+                steps {
+                    sh '''
+                        checkov -d infra/ --framework terraform
+                    '''
+                }
+            }
+
+            stage('Kubernetes Deployment') {
+                when {
+                    expression { fileExists('k8s/deployment.yaml') }
+                }
+                steps {
+                    script {
+                        withKubeConfig([credentialsId: 'kube-config']) {
+                            sh '''
+                                kubectl apply -f k8s/deployment.yaml
+                                kubectl rollout status deployment/my-app
+                            '''
+                        }
+                    }
+                }
+            }
+
+            stage('Helm Deployment') {
+                when {
+                    expression { fileExists('charts/') }
+                }
+                steps {
+                    script {
+                        withKubeConfig([credentialsId: 'kube-config']) {
+                            sh '''
+                                helm upgrade --install my-app charts/my-app \
+                                    --namespace prod \
+                                    --set image.tag=${BUILD_ID}
+                            '''
+                        }
+                    }
+                }
+            }
+
+            stage('AWS CLI Operations') {
+                when {
+                    expression { env.TARGET_CLOUD == 'aws' }
+                }
+                steps {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-creds']]) {
+                        sh '''
+                            aws s3 ls
+                            aws ecr describe-repositories
+                        '''
+                    }
+                }
+            }
+        }
+
         stage('Test') {
             when {
                 branch 'main'
